@@ -1,0 +1,3 @@
+# hsf
+hsf.client.factory = com.galaxy.hsf.rpc.protocol.hsf.HSFRPCProtocol4ClientFactory
+hsf.server.factory = com.galaxy.hsf.rpc.protocol.hsf.HSFRPCProtocol4ServerFactory

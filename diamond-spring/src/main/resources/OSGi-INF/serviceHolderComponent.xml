@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="ServiceHolderComponent">
+    <implementation class="com.galaxy.hsf.service.HSFServiceHolderComponent"/>
+    <reference name="Publisher" 
+        interface="com.galaxy.hsf.service.metadata.Publisher" 
+        cardinality="0..1" bind="setPublisher" unbind="unsetPublisher" 
+        policy="dynamic"/>
+     <reference name="Consumer" 
+        interface="com.galaxy.hsf.service.metadata.Consumer" 
+        cardinality="0..1" bind="setConsumer" unbind="unsetConsumer" 
+        policy="dynamic"/>
+    <reference name="MetadataService"
+        interface="com.galaxy.hsf.service.metadata.MetadataService"
+        bind="setMetadataService" unbind="unsetMetadataService"
+        cardinality="0..1" policy="dynamic"/>
+</component>

@@ -1,0 +1,18 @@
+# repository
+repository.client.factory = com.galaxy.hsf.repository.client.impl.database.DatabaseRepositoryClientFactory
+
+repository.client.local.cache.enable = true
+repository.client.local.cache.type = MEMORY_LRU
+repository.client.local.cache.maxEntries = 4096
+#repository.client.local.cache.maxEntriesInMemory = 1024
+
+repository.client.certificate.type = database
+repository.client.certificate.appName = hsf
+repository.client.certificate.secret = 378206
+repository.client.certificate.namespace = hsf
+repository.client.certificate.username = repository
+repository.client.certificate.password = repository
+repository.client.certificate.url = jdbc:mysql://localhost:3306/repository
+repository.client.certificate.driverClassName = com.mysql.jdbc.Driver
+
+# 
