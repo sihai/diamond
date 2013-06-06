@@ -7,8 +7,8 @@ package com.galaxy.hsf.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.service.HSFService;
 import com.galaxy.hsf.service.ServiceInvoker;
 import com.galaxy.hsf.service.ServiceRegister;

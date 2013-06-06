@@ -7,9 +7,9 @@ package com.galaxy.hsf.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.service.HSFService;
 import com.galaxy.hsf.service.ServiceInvoker;
 import com.galaxy.hsf.service.ServiceRegister;
@@ -54,17 +54,11 @@ public abstract class AbstractHSFService extends AbstractLifeCycle implements HS
 	@Override
 	public void initialize() {
 		super.initialize();
-		serviceRegister.initialize();
-		serviceSubscriber.initialize();
-		serviceInvoker.initialize();
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
-		serviceRegister.destroy();
-		serviceSubscriber.destroy();
-		serviceInvoker.destroy();
 	}
 
 	public void register(ServiceMetadata metadata) throws HSFException {

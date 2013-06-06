@@ -6,10 +6,10 @@ package com.galaxy.hsf.rpc;
 
 import java.lang.reflect.Method;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 
 /**
  * 

@@ -10,12 +10,12 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.hsf.address.AddressWriteService;
+import com.galaxy.diamond.metadata.MetadataWriteService;
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.address.Protocol;
 import com.galaxy.hsf.address.ServiceAddress;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
 import com.galaxy.hsf.service.ServiceRegister;
 
@@ -36,26 +36,26 @@ public abstract class AbstractServiceRegister extends AbstractLifeCycle implemen
 	/**
 	 * 
 	 */
-	protected AddressWriteService writeService;
+	protected MetadataWriteService metadataWriteService;
 	
 	/**
 	 * 
 	 * @param rpcProvider
-	 * @param writeService
+	 * @param metadataWriteService
 	 */
-	public AbstractServiceRegister(RPCProtocolProvider rpcProtocolProvider, AddressWriteService writeService) {
+	public AbstractServiceRegister(RPCProtocolProvider rpcProtocolProvider, MetadataWriteService metadataWriteService) {
 		this.rpcProtocolProvider = rpcProtocolProvider;
-		this.writeService = writeService;
+		this.metadataWriteService = metadataWriteService;
 	}
 	
 	@Override
 	public void register(ServiceMetadata metadata) throws HSFException {
-		writeService.publish(metadata2Adress(metadata));
+		metadataWriteService.register(metadata);
 	}
 
 	@Override
 	public void unregister(ServiceMetadata metadata) throws HSFException {
-		writeService.remove(metadata2Adress(metadata));
+		metadataWriteService.unregister(metadata);
 	}
 	
 	/**

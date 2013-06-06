@@ -6,12 +6,14 @@ package com.galaxy.hsf.router;
 
 import java.util.List;
 
+import com.galaxy.hsf.common.lifecycle.LifeCycle;
+
 /**
  * 
  * @author sihai
  *
  */
-public interface ServiceRouter {
+public interface ServiceRouter extends LifeCycle {
 	
 	/**
 	 * 

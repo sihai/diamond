@@ -4,8 +4,6 @@
  */
 package com.galaxy.hsf.network;
 
-import com.galaxy.hsf.common.HSFRequest;
-import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
 
 /**
@@ -20,7 +18,7 @@ public interface HSFNetworkServer extends LifeCycle {
 	 * @param handler
 	 * @return
 	 */
-	HSFRequestHandler register(HSFRequestHandler handler);
+	NetworkRequestHandler register(NetworkRequestHandler handler);
 	
 	/**
 	 * 
@@ -47,7 +45,7 @@ public interface HSFNetworkServer extends LifeCycle {
 		 * @param request
 		 * @param response
 		 */
-		void completed(HSFRequest request, HSFResponse response);
+		void completed(NetworkRequest request, Object response);
 	}
 	
 	/**
@@ -55,13 +53,13 @@ public interface HSFNetworkServer extends LifeCycle {
 	 * @author sihai
 	 *
 	 */
-	interface HSFRequestHandler {
+	interface NetworkRequestHandler {
 		
 		/**
 		 * 
 		 * @param request
 		 * @param callback
 		 */
-		void handle(HSFRequest request, ResponseCallback callback);
+		void handle(NetworkRequest request, ResponseCallback callback);
 	}
 }

@@ -21,7 +21,7 @@ public class DefaultRPCInvoker extends AbstractRPCInvoker {
 	 * 
 	 * @param handler
 	 */
-	public DefaultRPCInvoker(HSFNetworkServer.HSFRequestHandler handler) {
+	public DefaultRPCInvoker(HSFNetworkServer.NetworkRequestHandler handler) {
 		super(handler);
 	}
 	

@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import com.galaxy.hsf.network.HSFNetworkServer;
-import com.galaxy.hsf.network.HSFNetworkServer.HSFRequestHandler;
+import com.galaxy.hsf.network.HSFNetworkServer.NetworkRequestHandler;
 import com.galaxy.hsf.network.factory.HSFNetworkServerFactory;
 import com.galaxy.hsf.rpc.protocol.AbstractRPCProtocol4Server;
 import com.galaxy.hsf.rpc.protocol.RPCProtocolConfiguration;
@@ -36,7 +36,7 @@ public class HSFRPCProtocol4Server extends AbstractRPCProtocol4Server {
 	/**
 	 * 
 	 */
-	private HSFRequestHandler handler;
+	private NetworkRequestHandler handler;
 	
 	/**
 	 * 
@@ -44,7 +44,7 @@ public class HSFRPCProtocol4Server extends AbstractRPCProtocol4Server {
 	 * @param networkServerFactory
 	 * @param handler
 	 */
-	public HSFRPCProtocol4Server(RPCProtocolConfiguration configuration, HSFNetworkServerFactory networkServerFactory, HSFRequestHandler handler) {
+	public HSFRPCProtocol4Server(RPCProtocolConfiguration configuration, HSFNetworkServerFactory networkServerFactory, NetworkRequestHandler handler) {
 		super(configuration);
 		this.networkServerFactory = networkServerFactory;
 		this.handler = handler;

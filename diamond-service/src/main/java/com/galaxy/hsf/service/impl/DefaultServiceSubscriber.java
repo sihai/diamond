@@ -4,7 +4,7 @@
  */
 package com.galaxy.hsf.service.impl;
 
-import com.galaxy.hsf.address.AddressReadService;
+import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
 
 /**
@@ -17,9 +17,9 @@ public class DefaultServiceSubscriber extends AbstractServiceSubscriber {
 	/**
 	 * 
 	 * @param rpcProtocolProvider
-	 * @param readService
+	 * @param addressingService
 	 */
-	public DefaultServiceSubscriber(RPCProtocolProvider rpcProtocolProvider, AddressReadService readService) {
-		super(rpcProtocolProvider, readService);
+	public DefaultServiceSubscriber(RPCProtocolProvider rpcProtocolProvider, AddressingService addressingService) {
+		super(rpcProtocolProvider, addressingService);
 	}
 }

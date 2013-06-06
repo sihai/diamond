@@ -5,7 +5,7 @@
 package com.galaxy.hsf.network.factory;
 
 import com.galaxy.hsf.network.HSFNetworkServer;
-import com.galaxy.hsf.network.HSFNetworkServer.HSFRequestHandler;
+import com.galaxy.hsf.network.HSFNetworkServer.NetworkRequestHandler;
 
 /**
  * 
@@ -19,5 +19,5 @@ public interface HSFNetworkServerFactory {
 	 * @param handler
 	 * @return
 	 */
-	HSFNetworkServer newNetworkServer(HSFRequestHandler handler);
+	HSFNetworkServer newNetworkServer(NetworkRequestHandler handler);
 }

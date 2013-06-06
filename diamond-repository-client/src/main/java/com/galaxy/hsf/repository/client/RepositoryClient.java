@@ -5,6 +5,7 @@
 package com.galaxy.hsf.repository.client;
 
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
+import com.galaxy.hsf.repository.client.exception.SequenceNotMatchException;
 import com.galaxy.hsf.repository.client.factory.DataFactory;
 import com.galaxy.hsf.repository.client.listener.Listener;
 
@@ -36,14 +37,16 @@ public interface RepositoryClient extends DataFactory, LifeCycle {
 	/**
 	 * Put one data into repository
 	 * @param data
+	 * @throws SequenceNotMatchException
 	 */
-	void put(Data data);
+	void put(Data data) throws SequenceNotMatchException;
 	
 	/**
 	 * Delete one data local and remote server
 	 * @param key
+	 * @throws SequenceNotMatchException
 	 */
-	void delete(Key key);
+	void delete(Key key) throws SequenceNotMatchException;
 	
 	//===================================================================
 	//					Listener interface

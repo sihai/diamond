@@ -103,6 +103,14 @@ public class ServiceAddress {
 		return Collections.unmodifiableSet(addressMap.keySet());
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return addressMap.isEmpty();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

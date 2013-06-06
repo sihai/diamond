@@ -18,12 +18,12 @@ public interface Callback {
 	 * @param request
 	 * @param response
 	 */
-	void succeed(Request request, Response response);
+	void succeed(Object request, Object response);
 	
 	/**
 	 * 
 	 * @param request
 	 * @param exception
 	 */
-	void failed(Request request, NetworkException exception);
+	void failed(Object request, NetworkException exception);
 }

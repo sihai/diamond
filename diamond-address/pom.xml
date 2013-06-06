@@ -31,13 +31,12 @@
 		
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>diamond-repository-client</artifactId>
+			<artifactId>diamond-metadata</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
 		</dependency>
 		
 		<!-- Log Start -->

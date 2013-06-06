@@ -4,17 +4,14 @@
  */
 package com.galaxy.hsf.network.waverider;
 
-import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.hsf.common.HSFRequest;
-import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.network.AbstractHSFNetworkServer;
-import com.galaxy.hsf.network.Request;
-import com.galaxy.hsf.network.Response;
+import com.galaxy.hsf.network.NetworkRequest;
+import com.galaxy.hsf.network.NetworkResponse;
 import com.galaxy.hsf.network.waverider.command.Command;
 import com.galaxy.hsf.network.waverider.command.CommandFactory;
 import com.galaxy.hsf.network.waverider.command.CommandHandler;
@@ -52,13 +49,13 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 	/**
 	 * 
 	 */
-	private ConcurrentHashMap<Integer, PendingRequest> pendingRequestMap;
+	private ConcurrentHashMap<String, PendingRequest> pendingRequestMap;
 	
 	/**
 	 * 
 	 * @param config
 	 */
-	public HSFWaveriderServer(WaveriderConfig config, HSFRequestHandler handler) {
+	public HSFWaveriderServer(WaveriderConfig config, NetworkRequestHandler handler) {
 		this.config = config;
 		register(handler);
 	}
@@ -68,25 +65,23 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 		super.initialize();
 		callback = new ResponseCallback() {
 			@Override
-			public void completed(HSFRequest request, HSFResponse response) {
-				Response r = new Response();
-				PendingRequest pr = pendingRequestMap.remove(System.identityHashCode(request));
-				r.setRequestId(pr.request.getRequestId());
-				r.setResponse(response);
+			public void completed(NetworkRequest request, Object response) {
+				NetworkResponse r = new NetworkResponse(request.getId(), response);
+				PendingRequest pr = pendingRequestMap.remove(request.getId());
 				pr.session.execute(CommandFactory.createCommand(COMMAND_HSF_RESPONSE, r.marshall()));
 			}
 		};
-		pendingRequestMap = new ConcurrentHashMap<Integer, PendingRequest>();
+		pendingRequestMap = new ConcurrentHashMap<String, PendingRequest>();
 		config.setPort(getServerPort());
 		masterNode = WaveriderFactory.newInstance(config).buildMaster();
 		masterNode.addCommandHandler(COMMAND_HSF_INVOKE, new CommandHandler() {
 
 			@Override
 			public Command handle(Command command) {
-				Request request = Request.unmarshall(command.getPayLoad());
-				pendingRequestMap.put(System.identityHashCode(request.getRequest()), new PendingRequest(request, command.getSession()));
+				NetworkRequest request = NetworkRequest.unmarshall(command.getPayLoad());
+				pendingRequestMap.put(request.getId(), new PendingRequest(request, command.getSession()));
 				// async
-				handler.handle(request.getRequest(), callback);
+				handler.handle(request, callback);
 				return null;
 			}
 			
@@ -103,7 +98,7 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 	}
 	
 	private class PendingRequest {
-		Request request;
+		NetworkRequest request;
 		Session session;
 		
 		/**
@@ -111,7 +106,7 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 		 * @param request
 		 * @param session
 		 */
-		public PendingRequest(Request request, Session session) {
+		public PendingRequest(NetworkRequest request, Session session) {
 			this.request = request;
 			this.session = session;
 		}

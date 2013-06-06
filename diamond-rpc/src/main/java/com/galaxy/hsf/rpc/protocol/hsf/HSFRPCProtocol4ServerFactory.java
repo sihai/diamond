@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.hsf.network.HSFNetworkServer.HSFRequestHandler;
+import com.galaxy.hsf.network.HSFNetworkServer.NetworkRequestHandler;
 import com.galaxy.hsf.network.factory.HSFNetworkServerFactory;
 import com.galaxy.hsf.rpc.protocol.AbstractRPCProtocolFactory;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4Server;
@@ -24,7 +24,7 @@ public class HSFRPCProtocol4ServerFactory extends AbstractRPCProtocolFactory imp
 	public static final String PROTOCOL = "hsf";
 	
 	@Override
-	public RPCProtocol4Server newProtocol(HSFRequestHandler handler) {
+	public RPCProtocol4Server newProtocol(NetworkRequestHandler handler) {
 		try {
 			Properties properties = this.loadConfiguration(String.format("%s-server", PROTOCOL));
 			Class clazz = Class.forName(StringUtils.trim((String)properties.get("network.server.factory")));

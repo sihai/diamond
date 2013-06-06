@@ -27,13 +27,8 @@ public class Data implements Serializable {
 	 * 
 	 */
 	private Serializable value;
-	
-	/**
-	 * 
-	 */
-	private long version = 0;
 
-	public Data(Key key, Serializable value) {
+	public Data(Key key, Serializable value, long sequence) {
 		this.key = key;
 		this.value = value;
 	}
@@ -52,17 +47,5 @@ public class Data implements Serializable {
 
 	public void setValue(Serializable value) {
 		this.value = value;
-	}
-	
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-	
-	public void incVersion() {
-		this.version += 1;
 	}
 }

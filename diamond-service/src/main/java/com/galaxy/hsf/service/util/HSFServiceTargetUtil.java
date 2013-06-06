@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.galaxy.hsf.metadata.MethodSpecial;
+import com.galaxy.diamond.metadata.MethodSpecial;
 
 /**
  * 

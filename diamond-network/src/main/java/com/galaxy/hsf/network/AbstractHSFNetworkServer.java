@@ -30,7 +30,7 @@ public abstract class AbstractHSFNetworkServer extends AbstractLifeCycle impleme
 	/**
 	 * 
 	 */
-	protected HSFRequestHandler handler;
+	protected NetworkRequestHandler handler;
 	
 	@Override
 	public int getServerPort() {
@@ -71,8 +71,8 @@ public abstract class AbstractHSFNetworkServer extends AbstractLifeCycle impleme
 	}
 
 	@Override
-	public HSFRequestHandler register(HSFRequestHandler handler) {
-		HSFRequestHandler old = this.handler;
+	public NetworkRequestHandler register(NetworkRequestHandler handler) {
+		NetworkRequestHandler old = this.handler;
 		this.handler = handler;
 		return old;
 	}

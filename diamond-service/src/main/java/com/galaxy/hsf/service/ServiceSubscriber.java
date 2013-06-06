@@ -4,9 +4,9 @@
  */
 package com.galaxy.hsf.service;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 
 /**
  * 

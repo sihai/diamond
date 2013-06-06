@@ -33,15 +33,21 @@ public class Key implements Serializable {
 	 */
 	private String key;
 	
+	/**
+	 * 
+	 */
+	private long sequence = 0;
+	
 	
 	public Key() {}
 	
-	public Key(String namespace, String key) {
+	public Key(String namespace, String key, long sequence) {
 		if(namespace.contains(NAMESPACE_KEY_SEPARATOR) || key.contains(NAMESPACE_KEY_SEPARATOR)) {
 			throw new IllegalArgumentException(ERROR_MSG);
 		}
 		this.namespace = namespace;
 		this.key = key;
+		this.sequence = sequence;
 	}
 
 	public String getNamespace() {
@@ -66,6 +72,18 @@ public class Key implements Serializable {
 		this.key = key;
 	}
 	
+	public long getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(long sequence) {
+		this.sequence = sequence;
+	}
+	
+	public void incSequence() {
+		this.sequence += 1;
+	}
+	
 	public String getFullKey() {
 		return String.format("%s:%s", namespace, key);
 	}
@@ -78,7 +96,10 @@ public class Key implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return String.format("%s.%s", namespace, key).hashCode();
+		int code = 32 * namespace.hashCode() + 1;
+		code += 32 * key.hashCode();
+		code += sequence;
+		return code;
 	}
 
 	@Override
@@ -92,6 +113,6 @@ public class Key implements Serializable {
 			return false;
 		}
 		
-		return StringUtils.equals(namespace, ((Key)obj).namespace) && StringUtils.equals(key, ((Key)obj).key);
+		return StringUtils.equals(namespace, ((Key)obj).namespace) && StringUtils.equals(key, ((Key)obj).key) && sequence == ((Key)obj).sequence;
 	}
 }

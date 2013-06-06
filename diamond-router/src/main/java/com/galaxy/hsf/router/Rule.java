@@ -22,5 +22,4 @@ package com.galaxy.hsf.router;
  */
 public class Rule {
 
-	private List<String>
 }

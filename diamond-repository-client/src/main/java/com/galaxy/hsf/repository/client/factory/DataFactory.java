@@ -25,15 +25,17 @@ public interface DataFactory {
 	 * 
 	 * @param key
 	 * @param value
+	 * @param sequence -1 for new
 	 * @return
 	 */
-	Data newData(String key, String value);
+	Data newData(String key, String value, long sequence);
 	
 	/**
 	 * 
 	 * @param key
 	 * @param value
+	 * @param sequence -1 for new
 	 * @return
 	 */
-	Data newData(Key key, String value);
+	Data newData(Key key, String value,  long sequence);
 }

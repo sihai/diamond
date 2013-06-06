@@ -4,7 +4,7 @@
  */
 package com.galaxy.hsf.service.impl;
 
-import com.galaxy.hsf.address.AddressWriteService;
+import com.galaxy.diamond.metadata.MetadataWriteService;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
 
 /**
@@ -17,9 +17,9 @@ public class DefaultServiceRegister extends AbstractServiceRegister {
 	/**
 	 * 
 	 * @param rpcProtocolProvider
-	 * @param writeService
+	 * @param metadataWriteService
 	 */
-	public DefaultServiceRegister(RPCProtocolProvider rpcProtocolProvider, AddressWriteService writeService) {
-		super(rpcProtocolProvider, writeService);
+	public DefaultServiceRegister(RPCProtocolProvider rpcProtocolProvider, MetadataWriteService metadataWriteService) {
+		super(rpcProtocolProvider, metadataWriteService);
 	}
 }

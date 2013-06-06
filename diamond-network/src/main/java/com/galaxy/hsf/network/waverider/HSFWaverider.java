@@ -4,8 +4,8 @@
  */
 package com.galaxy.hsf.network.waverider;
 
-import com.galaxy.hsf.network.Request;
-import com.galaxy.hsf.network.Response;
+import com.galaxy.hsf.network.NetworkRequest;
+import com.galaxy.hsf.network.NetworkResponse;
 
 /**
  * 
@@ -18,15 +18,15 @@ public interface HSFWaverider {
 	Long COMMAND_HSF_RESPONSE = 100L;
 	
 	class PendingRequest {
-		Request request;
-		Response response;
+		NetworkRequest request;
+		NetworkResponse response;
 		
 		/**
 		 * 
 		 * @param request
 		 * @param response
 		 */
-		public PendingRequest(Request request, Response response) {
+		public PendingRequest(NetworkRequest request, NetworkResponse response) {
 			this.request = request;
 			this.response = response;
 		}

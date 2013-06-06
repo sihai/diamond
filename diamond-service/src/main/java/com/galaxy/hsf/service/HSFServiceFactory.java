@@ -10,11 +10,31 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.galaxy.diamond.metadata.MetadataReadService;
+import com.galaxy.diamond.metadata.MetadataWriteService;
+import com.galaxy.diamond.metadata.factory.MetadataReadServiceFactory;
+import com.galaxy.diamond.metadata.factory.MetadataWriteServiceFactory;
+import com.galaxy.hsf.address.AddressingService;
+import com.galaxy.hsf.address.factory.AddressingServiceFactory;
+import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.repository.client.Certificate;
 import com.galaxy.hsf.repository.client.RepositoryClient;
 import com.galaxy.hsf.repository.client.cache.Cache;
 import com.galaxy.hsf.repository.client.factory.AbstractRepositoryClientFactory;
 import com.galaxy.hsf.repository.client.impl.database.DatabaseCertificate;
+import com.galaxy.hsf.router.ServiceRouter;
+import com.galaxy.hsf.router.ServiceRouterFactory;
+import com.galaxy.hsf.router.plugin.RouterPlugin;
+import com.galaxy.hsf.router.plugin.random.RandomRouterPlugin;
+import com.galaxy.hsf.rpc.RPCProtocolProvider;
+import com.galaxy.hsf.rpc.RPCProtocolProviderFactory;
+import com.galaxy.hsf.service.impl.DefaultHSFService;
+import com.galaxy.hsf.service.impl.DefaultServiceInvoker;
+import com.galaxy.hsf.service.impl.DefaultServiceRegister;
+import com.galaxy.hsf.service.impl.DefaultServiceSubscriber;
+import com.galaxy.hsf.service.request.HSFNetworkRequestHandler;
+import com.galaxy.hsf.service.request.executor.HSFRequestExecutor;
+import com.galaxy.hsf.service.request.executor.impl.DefaultHSFRequestExecutor;
 
 
 /**
@@ -25,6 +45,8 @@ import com.galaxy.hsf.repository.client.impl.database.DatabaseCertificate;
 public class HSFServiceFactory {
 
 	public static final String HSF_CONFIG_FILE_NAME = "hsf.cnf";
+	
+	// 
 	
 	public static final String REPOSITORY_CLIENT_FACTORY = "repository.client.factory";
 	
@@ -59,6 +81,48 @@ public class HSFServiceFactory {
 	public static final String REPOSITORY_CLIENT_CERTIFICATE_DRIVER_CLASS_NAME = "repository.client.certificate.driverClassName";
 	
 	
+	//
+	public static final String METADATA_READ_FACTORY = "metadata.read.factory";
+	
+	public static final String METADATA_WRITE_FACTORY = "metadata.write.factory";
+	
+	public static final String ADDRESSING_FACTORY = "addressing.factory";
+	
+	public static final String RPC_PROVIDER_FACTORY = "rpc.provider.factory";
+	
+	public static final String ROUTER_PLUGIN = "router.plugin";
+	
+	public static final String ROUTER_FACTORY = "router.factory";
+	
+	// 
+	private static RepositoryClient repositoryClient;
+	
+	// 
+	private static MetadataReadService metadataReadService;
+	private static MetadataWriteService metadataWriteService;
+	
+	// 
+	private static AddressingService addressingService;
+	
+	//
+	private static HSFRequestExecutor executor;
+	
+	private static HSFNetworkServer.NetworkRequestHandler handler;
+	
+	//
+	private static RPCProtocolProvider rpcProtocolProvider;
+	
+	//
+	private static RouterPlugin plugin;
+	
+	private static ServiceRouter router;
+	
+	// 
+	private static DefaultServiceRegister register;
+	private static DefaultServiceSubscriber subscriber;
+	private static DefaultServiceInvoker invoker;
+	
+	
 	private static final HSFService hsfService;
 	
 	static {
@@ -67,6 +131,62 @@ public class HSFServiceFactory {
 	
 	public static HSFService getHSFService() {
 		return hsfService;
+	}
+	
+	public static void destroy() {
+		if(null != hsfService) {
+			hsfService.stop();
+			hsfService.destroy();
+		}
+		// 
+		if(null != invoker) {
+			invoker.stop();
+			invoker.destroy();
+		}
+		if(null != subscriber) {
+			subscriber.stop();
+			subscriber.destroy();
+		}
+		if(null != register) {
+			register.stop();
+			register.destroy();
+		}
+		if(null != router) {
+			router.stop();
+			router.destroy();
+		}
+		if(null != plugin) {
+			plugin.stop();
+			plugin.destroy();
+		}
+		if(null != rpcProtocolProvider) {
+			rpcProtocolProvider.stop();
+			rpcProtocolProvider.destroy();
+		}
+		/*if(null != handler) {
+			handler.stop();
+			handler.destroy();
+		}*/
+		if(null != executor) {
+			executor.stop();
+			executor.destroy();
+		}
+		if(null != addressingService) {
+			addressingService.stop();
+			addressingService.destroy();
+		}
+		if(null != metadataWriteService) {
+			metadataWriteService.stop();
+			metadataWriteService.destroy();
+		}
+		if(null != metadataReadService) {
+			metadataReadService.stop();
+			metadataReadService.destroy();
+		}
+		if(null != repositoryClient) {
+			repositoryClient.stop();
+			repositoryClient.destroy();
+		}
 	}
 	
 	/**
@@ -85,11 +205,47 @@ public class HSFServiceFactory {
 			}
 			
 			// Repository
-			RepositoryClient repositoryClient = newRepositoryClient(properties);
+			repositoryClient = newRepositoryClient(properties);
+			
+			// Metadata
+			metadataReadService = newMetadataReadService(properties, repositoryClient);
+			metadataWriteService = newMetadataWriteService(properties, repositoryClient);
+			
+			// Addressing
+			addressingService = newAddressingService(properties, metadataReadService); 
+			
+			// Network
+			// RPC will initialize network if need
+			executor = newHSFRequestExecutor(properties);
+			handler = newNetworkRequestHandler(properties, executor);
+			
+			// RPC
+			rpcProtocolProvider = newRPCProtocolProvider(properties, handler);
+			
+			// Router
+			// Plugin
+			plugin = newRouterPlugin(properties, repositoryClient);
+			router = newServiceRouter(properties, addressingService, plugin);
 			
 			// 
-		} catch (IOException e) {
+			register = new DefaultServiceRegister(rpcProtocolProvider, metadataWriteService);
+			register.initialize();
+			register.start();
 			
+			// 
+			subscriber = new DefaultServiceSubscriber(rpcProtocolProvider, addressingService);
+			subscriber.initialize();
+			subscriber.start();
+						
+			// 
+			invoker = new DefaultServiceInvoker(router, rpcProtocolProvider);
+			invoker.initialize();
+			invoker.start();
+			
+			return new DefaultHSFService(register, subscriber, invoker);
+			
+		} catch (IOException e) {
+			throw new RuntimeException("Create HSF Service failed", e);
 		}
 	}
 	
@@ -218,19 +374,186 @@ public class HSFServiceFactory {
 		}
 		certificate.setNamespace(value);
 		
-		Class clazz = Class.forName(factoryClassName);
-		AbstractRepositoryClientFactory factory = (AbstractRepositoryClientFactory)clazz.newInstance();
-		if(eableLocalCache) {
-			factory.enableCache().withCacheType(type);
-			factory.withMaxEntries(maxEntries);
-			if(Cache.Type.FILE_LRU == type) {
-				factory.withCacheFileName(cacheFileName);
-			} else if(Cache.Type.HYBRID_LRU == type) {
-				factory.withMaxEntriesInMemory(maxEntriesInMemory).withCacheFileName(cacheFileName);
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			AbstractRepositoryClientFactory factory = (AbstractRepositoryClientFactory)clazz.newInstance();
+			if(eableLocalCache) {
+				factory.enableCache().withCacheType(type);
+				factory.withMaxEntries(maxEntries);
+				if(Cache.Type.FILE_LRU == type) {
+					factory.withCacheFileName(cacheFileName);
+				} else if(Cache.Type.HYBRID_LRU == type) {
+					factory.withMaxEntriesInMemory(maxEntriesInMemory).withCacheFileName(cacheFileName);
+				}
+			} else {
+				factory.disableCache();
 			}
-		} else {
-			factory.disableCache();
+			return factory.withCertificate(certificate).newInstace();
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new repository client failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new repository client failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new repository client failed", e);
 		}
-		return factory.withCertificate(certificate).newInstace();
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param repositoryClient
+	 * @return
+	 */
+	private static MetadataReadService newMetadataReadService(Properties properties, RepositoryClient repositoryClient) {
+		String factoryClassName = StringUtils.trim(properties.getProperty(METADATA_READ_FACTORY));
+		if(StringUtils.isBlank(factoryClassName)) {
+			throw new IllegalArgumentException(String.format("Please set %s", METADATA_READ_FACTORY));
+		}
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			MetadataReadServiceFactory factory = (MetadataReadServiceFactory)clazz.newInstance();
+			return factory.newMetadataReadService(repositoryClient);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new metadata read service failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new metadata read service failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new metadata read service failed", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param repositoryClient
+	 * @return
+	 */
+	private static MetadataWriteService newMetadataWriteService(Properties properties, RepositoryClient repositoryClient) {
+		String factoryClassName = StringUtils.trim(properties.getProperty(METADATA_WRITE_FACTORY));
+		if(StringUtils.isBlank(factoryClassName)) {
+			throw new IllegalArgumentException(String.format("Please set %s", METADATA_WRITE_FACTORY));
+		}
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			MetadataWriteServiceFactory factory = (MetadataWriteServiceFactory)clazz.newInstance();
+			return factory.newMetadataWriteService(repositoryClient);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new metadata write service failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new metadata write service failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new metadata write service failed", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param metadataReadService
+	 * @return
+	 */
+	private static AddressingService newAddressingService(Properties properties, MetadataReadService metadataReadService) {
+		String factoryClassName = StringUtils.trim(properties.getProperty(ADDRESSING_FACTORY));
+		if(StringUtils.isBlank(factoryClassName)) {
+			throw new IllegalArgumentException(String.format("Please set %s", ADDRESSING_FACTORY));
+		}
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			AddressingServiceFactory factory = (AddressingServiceFactory)clazz.newInstance();
+			return factory.newAddressingService(metadataReadService);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @return
+	 */
+	private static HSFRequestExecutor newHSFRequestExecutor(Properties properties) {
+		// FIXME
+		return new DefaultHSFRequestExecutor();
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param factory
+	 * @param executor
+	 * @return
+	 */
+	private static HSFNetworkServer.NetworkRequestHandler newNetworkRequestHandler(Properties properties, HSFRequestExecutor executor) {
+		// FIXME
+		return new HSFNetworkRequestHandler(executor);
+	}
+	/**
+	 * 
+	 * @param properties
+	 * @param handler
+	 * @return
+	 */
+	private static RPCProtocolProvider newRPCProtocolProvider(Properties properties, HSFNetworkServer.NetworkRequestHandler handler) {
+		String factoryClassName = StringUtils.trim(properties.getProperty(RPC_PROVIDER_FACTORY));
+		if(StringUtils.isBlank(factoryClassName)) {
+			throw new IllegalArgumentException(String.format("Please set %s", RPC_PROVIDER_FACTORY));
+		}
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			RPCProtocolProviderFactory factory = (RPCProtocolProviderFactory)clazz.newInstance();
+			return factory.newRPCProtocolProvider(handler);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new addressing service failed", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param repositoryClient
+	 */
+	private static RouterPlugin newRouterPlugin(Properties properties, RepositoryClient repositoryClient) {
+		// FIXME
+		RandomRouterPlugin p = new RandomRouterPlugin();
+		p.initialize();
+		p.start();
+		return p;
+	}
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param repositoryClient
+	 * @return
+	 */
+	private static ServiceRouter newServiceRouter(Properties properties, AddressingService addressingService, RouterPlugin plugin) {
+		String factoryClassName = StringUtils.trim(properties.getProperty(ROUTER_FACTORY));
+		if(StringUtils.isBlank(factoryClassName)) {
+			throw new IllegalArgumentException(String.format("Please set %s", ROUTER_FACTORY));
+		}
+		try {
+			Class<?> clazz = Class.forName(factoryClassName);
+			ServiceRouterFactory factory = (ServiceRouterFactory)clazz.newInstance();
+			return factory.newServiceRouter(addressingService, plugin);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("OOPS, new router failed", e);
+		} catch (InstantiationException e) {
+			throw new IllegalArgumentException("OOPS, new router failed", e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("OOPS, new router failed", e);
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		HSFService hsfService = HSFServiceFactory.getHSFService();
 	}
 }

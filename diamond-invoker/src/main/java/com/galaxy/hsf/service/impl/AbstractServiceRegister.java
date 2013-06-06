@@ -10,11 +10,11 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.address.AddressWriteService;
 import com.galaxy.hsf.address.Protocol;
 import com.galaxy.hsf.address.ServiceAddress;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.rpc.RPCProvider;
 import com.galaxy.hsf.service.ServiceRegister;
 

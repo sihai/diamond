@@ -65,7 +65,7 @@ public class ConsumerComponent implements Consumer {
         Object proxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{interfaceClass}, handler);
 
         // 订阅服务信息
-        metadataService.subscriber(metadata);
+        metadataService.addressing(metadata);
 
         for (ConsumerHook hook : hookList) {
 			hook.after(metadata);

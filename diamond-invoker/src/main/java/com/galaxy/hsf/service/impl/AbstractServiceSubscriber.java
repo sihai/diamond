@@ -7,9 +7,9 @@ package com.galaxy.hsf.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.hsf.address.AddressReadService;
+import com.galaxy.diamond.metadata.ServiceMetadata;
+import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.rpc.RPCProvider;
 import com.galaxy.hsf.service.ServiceSubscriber;
 
@@ -30,14 +30,14 @@ public abstract class AbstractServiceSubscriber extends AbstractLifeCycle implem
 	/**
 	 * 
 	 */
-	protected AddressReadService readService;
+	protected AddressingService readService;
 	
 	/**
 	 * 
 	 * @param rpcProvider
 	 * @param readService
 	 */
-	public AbstractServiceSubscriber(RPCProvider rpcProvider, AddressReadService readService) {
+	public AbstractServiceSubscriber(RPCProvider rpcProvider, AddressingService readService) {
 		this.rpcProvider = rpcProvider;
 		this.readService = readService;
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractServiceSubscriber extends AbstractLifeCycle implem
 			rpcProvider.newRPCProtocol(protocol);
 		}
 		// subscribe address of this service
-		readService.subscribe(metadata.getUniqueName());
+		readService.addressing(metadata.getUniqueName());
 	}
 
 }

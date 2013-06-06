@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.galaxy.hsf.repository.client.Data;
 import com.galaxy.hsf.repository.client.Key;
+import com.galaxy.hsf.repository.client.exception.SequenceNotMatchException;
 
 
 /**
@@ -38,8 +39,9 @@ public class DataDAO {
 	/**
 	 * 
 	 * @param data
+	 * @throws SequenceNotMatchException
 	 */
-	public void insert(Data data) {
+	public void insert(Data data) throws SequenceNotMatchException {
 		Connection connection = null;
 		Statement statement = null;
 		try {

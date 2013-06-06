@@ -19,6 +19,7 @@ import com.galaxy.hsf.repository.client.Data;
 import com.galaxy.hsf.repository.client.DataEvent;
 import com.galaxy.hsf.repository.client.Key;
 import com.galaxy.hsf.repository.client.cache.Cache;
+import com.galaxy.hsf.repository.client.exception.SequenceNotMatchException;
 
 /**
  * 
@@ -103,7 +104,7 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 	}
 
 	@Override
-	protected void put2Server(Data data) {
+	protected void put2Server(Data data) throws SequenceNotMatchException {
 		dataDAO.insert(data);
 	}
 	

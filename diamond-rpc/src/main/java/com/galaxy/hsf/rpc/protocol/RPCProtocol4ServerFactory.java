@@ -4,7 +4,7 @@
  */
 package com.galaxy.hsf.rpc.protocol;
 
-import com.galaxy.hsf.network.HSFNetworkServer.HSFRequestHandler;
+import com.galaxy.hsf.network.HSFNetworkServer.NetworkRequestHandler;
 
 
 /**
@@ -19,5 +19,5 @@ public interface RPCProtocol4ServerFactory {
 	 * @param handler
 	 * @return
 	 */
-	RPCProtocol4Server newProtocol(HSFRequestHandler handler);
+	RPCProtocol4Server newProtocol(NetworkRequestHandler handler);
 }

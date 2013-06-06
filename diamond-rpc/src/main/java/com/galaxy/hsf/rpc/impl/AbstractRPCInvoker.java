@@ -6,11 +6,11 @@ package com.galaxy.hsf.rpc.impl;
 
 import java.lang.reflect.Method;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.HSFRequest;
 import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.rpc.RPCInvoker;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
@@ -25,7 +25,7 @@ public abstract class AbstractRPCInvoker extends AbstractLifeCycle implements RP
 	/**
 	 * 
 	 */
-	private HSFNetworkServer.HSFRequestHandler handler;
+	private HSFNetworkServer.NetworkRequestHandler handler;
 	
 	/**
 	 * 
@@ -36,7 +36,7 @@ public abstract class AbstractRPCInvoker extends AbstractLifeCycle implements RP
 	 * 
 	 * @param handler
 	 */
-	public AbstractRPCInvoker(HSFNetworkServer.HSFRequestHandler handler) {
+	public AbstractRPCInvoker(HSFNetworkServer.NetworkRequestHandler handler) {
 		this.handler = handler;
 	}
 	

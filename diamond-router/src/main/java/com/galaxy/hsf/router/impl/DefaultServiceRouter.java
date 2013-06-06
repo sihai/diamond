@@ -9,13 +9,14 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.hsf.address.AddressReadService;
+import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.address.ServiceAddress;
 import com.galaxy.hsf.address.listener.Listener;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.hsf.router.RouteParameter;
 import com.galaxy.hsf.router.ServiceRouter;
 import com.galaxy.hsf.router.plugin.RouterPlugin;
+import com.galaxy.hsf.router.plugin.random.RandomRouterPlugin;
 
 /**
  * 
@@ -28,17 +29,26 @@ public class DefaultServiceRouter extends AbstractLifeCycle implements ServiceRo
 	/**
 	 * 
 	 */
-	private AddressReadService addressReadService;
+	private AddressingService addressingService;
 	
 	/**
 	 * 
 	 */
 	private RouterPlugin plugin;
-
+	
+	/**
+	 * 
+	 * @param plugin
+	 */
+	public DefaultServiceRouter(AddressingService addressingService, RouterPlugin plugin) {
+		this.addressingService = addressingService;
+		this.plugin = plugin;
+	}
+	
 	@Override
 	public void initialize() {
-		
-		addressReadService.register(new Listener() {
+		super.initialize();
+		addressingService.register(new Listener() {
 
 			@Override
 			public void changed(ServiceAddress serviceAddress) {
@@ -49,31 +59,15 @@ public class DefaultServiceRouter extends AbstractLifeCycle implements ServiceRo
 			}
 			
 		});
-		super.initialize();
-		
-		if(null != plugin) {
-			plugin.initialize();
-		}
 	}
 
 	@Override
 	public void stop() {
 		super.stop();
-		if(null != plugin) {
-			plugin.stop();
-		}
 	}
 
 	@Override
 	public List<String> route(RouteParameter parameter) {
 		return plugin.route(parameter.getServiceName(), parameter.getProtocol());
-	}
-
-	public void setAddressReadService(AddressReadService addressReadService) {
-		this.addressReadService = addressReadService;
-	}
-	
-	public void setPlugin(RouterPlugin plugin) {
-		this.plugin = plugin;
 	}
 }

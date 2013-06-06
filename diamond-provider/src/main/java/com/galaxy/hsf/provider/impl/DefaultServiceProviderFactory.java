@@ -4,7 +4,7 @@
  */
 package com.galaxy.hsf.provider.impl;
 
-import com.galaxy.hsf.metadata.ServiceMetadata;
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.provider.ServiceProvider;
 import com.galaxy.hsf.provider.factory.ServiceProviderFactory;
 

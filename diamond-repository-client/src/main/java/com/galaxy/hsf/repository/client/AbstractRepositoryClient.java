@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.hsf.repository.client.cache.Cache;
+import com.galaxy.hsf.repository.client.exception.SequenceNotMatchException;
 import com.galaxy.hsf.repository.client.factory.DummyCacheFactory;
 import com.galaxy.hsf.repository.client.listener.Listener;
 
@@ -86,17 +87,17 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	
 	@Override
 	public Key newKey(String key) {
-		return new Key(this.certificate.getNamespace(), key);
+		return new Key(this.certificate.getNamespace(), key, -1);
 	}
 
 	@Override
-	public Data newData(String key, String value) {
-		return newData(newKey(key), value);
+	public Data newData(String key, String value, long sequence) {
+		return newData(newKey(key), value, sequence);
 	}
 
 	@Override
-	public Data newData(Key key, String value) {
-		return new Data(key, value);
+	public Data newData(Key key, String value, long sequence) {
+		return new Data(key, value, sequence);
 	}
 
 	@Override
@@ -117,15 +118,15 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	}
 
 	@Override
-	public void put(Data data) {
-		// 1. put in local cache first
-		localCache.put(data.getKey(), data);
-		// 2. put in remote server second 
+	public void put(Data data) throws SequenceNotMatchException {
+		// 1. put in remote server second
 		put2Server(data);
+		// 2. put in local cache first
+		localCache.put(data.getKey(), data);
 	}
 
 	@Override
-	public void delete(Key key) {
+	public void delete(Key key) throws SequenceNotMatchException {
 		// 1. delete in local cache first
 		localCache.delete(key);
 		// 2. delete in remote server second
@@ -164,14 +165,16 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	/**
 	 * Put data into remote server
 	 * @param data
+	 * @throws SequenceNotMatchException
 	 */
-	protected abstract void put2Server(Data data);
+	protected abstract void put2Server(Data data) throws SequenceNotMatchException;
 	
 	/**
 	 * Delete data in remote server
 	 * @param key
+	 * @throws SequenceNotMatchException
 	 */
-	protected abstract void deleteFromServer(Key key);
+	protected abstract void deleteFromServer(Key key) throws SequenceNotMatchException;
 	
 	/**
 	 * 

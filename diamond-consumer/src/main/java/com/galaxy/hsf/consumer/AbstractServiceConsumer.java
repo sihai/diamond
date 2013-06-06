@@ -4,8 +4,8 @@
  */
 package com.galaxy.hsf.consumer;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.metadata.ServiceMetadata;
 
 /**
  * 

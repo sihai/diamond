@@ -1,5 +1,5 @@
 # repository
-repository.client.factory = com.galaxy.hsf.repository.client.impl.database.DatabaseRepositoryClientFactory
+repository.client.factory = com.galaxy.diamond.repository.client.impl.database.DatabaseRepositoryClientFactory
 
 repository.client.local.cache.enable = true
 repository.client.local.cache.type = MEMORY_LRU
@@ -15,4 +15,8 @@ repository.client.certificate.password = repository
 repository.client.certificate.url = jdbc:mysql://localhost:3306/repository
 repository.client.certificate.driverClassName = com.mysql.jdbc.Driver
 
-# 
+# metadata
+metadata.read.factory = com.galaxy.diamond.metadata.impl.DefaultMetadataReadServiceFactory
+metadata.write.factory = com.galaxy.diamond.metadata.impl.DefaultMetadataWriteServiceFactory
+
+

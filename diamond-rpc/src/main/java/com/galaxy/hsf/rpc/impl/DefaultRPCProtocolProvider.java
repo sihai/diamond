@@ -16,12 +16,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.hsf.common.HSFRequest;
 import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.network.HSFNetworkServer.ResponseCallback;
+import com.galaxy.hsf.network.NetworkRequest;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4Client;
@@ -64,7 +64,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	/**
 	 * 
 	 */
-	private HSFNetworkServer.HSFRequestHandler handler;
+	private HSFNetworkServer.NetworkRequestHandler handler;
 	
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	 * 
 	 * @param handler
 	 */
-	public DefaultRPCProtocolProvider(HSFNetworkServer.HSFRequestHandler handler) {
+	public DefaultRPCProtocolProvider(HSFNetworkServer.NetworkRequestHandler handler) {
 		this.handler = handler;
 	}
 	
@@ -314,10 +314,10 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	
 	public static void main(String[] args) {
 		try {
-			DefaultRPCProtocolProvider provider = new DefaultRPCProtocolProvider(new HSFNetworkServer.HSFRequestHandler() {
+			DefaultRPCProtocolProvider provider = new DefaultRPCProtocolProvider(new HSFNetworkServer.NetworkRequestHandler() {
 
 				@Override
-				public void handle(HSFRequest request, ResponseCallback callback) {
+				public void handle(NetworkRequest request, ResponseCallback callback) {
 					callback.completed(request, new HSFResponse());
 				}
 				

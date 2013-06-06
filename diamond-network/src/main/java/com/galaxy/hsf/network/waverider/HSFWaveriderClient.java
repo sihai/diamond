@@ -4,6 +4,7 @@
  */
 package com.galaxy.hsf.network.waverider;
 
+import java.net.UnknownHostException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -12,14 +13,15 @@ import org.apache.commons.logging.LogFactory;
 
 import com.galaxy.hsf.network.AbstractNetworkClient;
 import com.galaxy.hsf.network.Callback;
-import com.galaxy.hsf.network.Request;
-import com.galaxy.hsf.network.Response;
+import com.galaxy.hsf.network.NetworkRequest;
+import com.galaxy.hsf.network.NetworkResponse;
 import com.galaxy.hsf.network.exception.NetworkException;
 import com.galaxy.hsf.network.waverider.command.Command;
 import com.galaxy.hsf.network.waverider.command.CommandFactory;
 import com.galaxy.hsf.network.waverider.command.CommandHandler;
 import com.galaxy.hsf.network.waverider.config.WaveriderConfig;
 import com.galaxy.hsf.network.waverider.factory.WaveriderFactory;
+import com.galaxy.hsf.util.NetworkUtil;
 
 /**
  * 
@@ -67,10 +69,10 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 
 			@Override
 			public Command handle(Command command) {
-				Response response = Response.unmarshall(command.getPayLoad());
-				PendingRequest pr = pendingRequestMap.remove(response.getRequestId());
+				NetworkResponse response = NetworkResponse.unmarshall(command.getPayLoad());
+				PendingRequest pr = pendingRequestMap.remove(response.getId());
 				if(null == pr) {
-					logger.error(String.format("Server send response but there is no request for this response: % request id:%d", response.getRequestId()));
+					logger.error(String.format("Server send response but there is no request for this response: % request id:%d", response.getId()));
 					return null;
 				}
 				pr.response = response;
@@ -91,30 +93,41 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 	}
 
 	@Override
-	public Response syncrequest(Request request) {
-		request.setRequestId(alloceId());
-		pendingRequestMap.put(request.getRequestId(), new PendingRequest(request, null));
-		slaveNode.execute(CommandFactory.createCommand(COMMAND_HSF_INVOKE, request.marshall()));
-		synchronized(request) {
-			try {
-				// FIXME
-				request.wait();
-				return pendingRequestMap.get(request.getRequestId()).response;
-			} catch (InterruptedException e) {
-				logger.error(e);
-				Thread.currentThread().interrupt();
-				throw new NetworkException("Interrupted", e);
+	public Object syncrequest(Object request) throws NetworkException {
+		try {
+			String id = alloceId();
+			NetworkRequest r = new NetworkRequest(id, request);
+			pendingRequestMap.put(id, new PendingRequest(r, null));
+			slaveNode.execute(CommandFactory.createCommand(COMMAND_HSF_INVOKE, r.marshall()));
+			synchronized(r) {
+				try {
+					// FIXME
+					request.wait();
+					return pendingRequestMap.get(id).response.getPayload();
+				} catch (InterruptedException e) {
+					logger.error(e);
+					Thread.currentThread().interrupt();
+					throw new NetworkException("Interrupted", e);
+				}
 			}
+		} catch (UnknownHostException e) {
+			throw new NetworkException("OOPS, can not get local ip", e);
 		}
 		
 	}
 
 	@Override
-	public void asyncrequest(Request request, Callback callback) {
+	public void asyncrequest(Object request, Callback callback) {
 		throw new UnsupportedOperationException("At now we not supported");
 	}
 	
-	private String alloceId() {
-		return String.format("hsf-request-%s-%d", "HostName", idGenerator.incrementAndGet());
+	/**
+	 * 
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	private String alloceId() throws UnknownHostException {
+		// FIXME
+		return String.format("hsf-request-%s-%d", NetworkUtil.getLocalIp(), idGenerator.incrementAndGet());
 	}
 }

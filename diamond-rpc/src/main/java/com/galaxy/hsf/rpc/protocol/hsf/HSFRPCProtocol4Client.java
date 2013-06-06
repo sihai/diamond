@@ -20,7 +20,6 @@ import com.galaxy.hsf.common.HSFRequest;
 import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.network.HSFNetworkClient;
-import com.galaxy.hsf.network.Request;
 import com.galaxy.hsf.network.exception.NetworkException;
 import com.galaxy.hsf.network.factory.HSFNetworkClientFactory;
 import com.galaxy.hsf.rpc.protocol.AbstractRPCProtocol4Client;
@@ -85,10 +84,8 @@ public class HSFRPCProtocol4Client extends AbstractRPCProtocol4Client {
 	protected HSFResponse invoke0(HSFRequest request) throws HSFException {
 		Target target = new Target(request.getServiceURL().getHost(), request.getServiceURL().getPort());
 		HSFNetworkClient networkClient = allocHSFNetworkClient(target);
-		Request r = new Request();
-		r.setRequest(request);
 		try {
-			return networkClient.syncrequest(r).getResponse();
+			return (HSFResponse)networkClient.syncrequest(request);
 		} catch (NetworkException e) {
 			throw new HSFException(e);
 		}

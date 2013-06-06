@@ -21,12 +21,12 @@ public interface HSFNetworkClient extends LifeCycle {
 	 * @return
 	 * @throws NetworkException
 	 */
-	Response syncrequest(Request request) throws NetworkException;
+	Object syncrequest(Object request) throws NetworkException;
 	
 	/**
 	 * 
 	 * @param request
 	 * @param callback
 	 */
-	void asyncrequest(Request request, Callback callback);
+	void asyncrequest(Object request, Callback callback);
 }

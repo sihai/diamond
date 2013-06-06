@@ -37,7 +37,12 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
+		</dependency>
+		
+		<dependency>  
+    		<groupId>net.sf.json-lib</groupId>  
+    		<artifactId>json-lib</artifactId>  
+    		<classifier>jdk13</classifier>  
 		</dependency>
 		
 		<!-- Log Start -->
