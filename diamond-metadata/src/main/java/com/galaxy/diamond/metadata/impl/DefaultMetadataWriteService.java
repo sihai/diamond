@@ -15,10 +15,10 @@ import org.apache.commons.logging.LogFactory;
 import com.galaxy.diamond.metadata.MetadataWriteService;
 import com.galaxy.diamond.metadata.PublishHook;
 import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.hsf.repository.client.Data;
-import com.galaxy.hsf.repository.client.Key;
-import com.galaxy.hsf.repository.client.RepositoryClient;
-import com.galaxy.hsf.repository.client.exception.SequenceNotMatchException;
+import com.galaxy.diamond.repository.client.Data;
+import com.galaxy.diamond.repository.client.Key;
+import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.galaxy.diamond.repository.client.exception.SequenceNotMatchException;
 
 /**
  * 

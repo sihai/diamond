@@ -14,14 +14,14 @@ import com.galaxy.diamond.metadata.MetadataReadService;
 import com.galaxy.diamond.metadata.MetadataWriteService;
 import com.galaxy.diamond.metadata.factory.MetadataReadServiceFactory;
 import com.galaxy.diamond.metadata.factory.MetadataWriteServiceFactory;
+import com.galaxy.diamond.repository.client.Certificate;
+import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.galaxy.diamond.repository.client.cache.Cache;
+import com.galaxy.diamond.repository.client.factory.AbstractRepositoryClientFactory;
+import com.galaxy.diamond.repository.client.impl.database.DatabaseCertificate;
 import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.address.factory.AddressingServiceFactory;
 import com.galaxy.hsf.network.HSFNetworkServer;
-import com.galaxy.hsf.repository.client.Certificate;
-import com.galaxy.hsf.repository.client.RepositoryClient;
-import com.galaxy.hsf.repository.client.cache.Cache;
-import com.galaxy.hsf.repository.client.factory.AbstractRepositoryClientFactory;
-import com.galaxy.hsf.repository.client.impl.database.DatabaseCertificate;
 import com.galaxy.hsf.router.ServiceRouter;
 import com.galaxy.hsf.router.ServiceRouterFactory;
 import com.galaxy.hsf.router.plugin.RouterPlugin;
@@ -197,7 +197,7 @@ public class HSFServiceFactory {
 		try {
 			// load default first
 			Properties properties = new Properties();
-			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format("/cnf/%s", HSF_CONFIG_FILE_NAME)));
+			properties.load(HSFServiceFactory.class.getResourceAsStream(String.format("/cnf/%s", HSF_CONFIG_FILE_NAME)));
 			// then try to load custom to override
 			InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(HSF_CONFIG_FILE_NAME);
 			if(null != in) {

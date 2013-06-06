@@ -16,7 +16,18 @@ repository.client.certificate.url = jdbc:mysql://localhost:3306/repository
 repository.client.certificate.driverClassName = com.mysql.jdbc.Driver
 
 # metadata
-metadata.read.factory = com.galaxy.diamond.metadata.impl.DefaultMetadataReadServiceFactory
-metadata.write.factory = com.galaxy.diamond.metadata.impl.DefaultMetadataWriteServiceFactory
+metadata.read.factory = com.galaxy.diamond.metadata.factory.DefaultMetadataReadServiceFactory
+metadata.write.factory = com.galaxy.diamond.metadata.factory.DefaultMetadataWriteServiceFactory
 
+# addressing
+addressing.factory = com.galaxy.hsf.address.factory.DefaultAddressingServiceFactory
+
+# rpc
+rpc.provider.factory = com.galaxy.hsf.rpc.impl.DefaultRPCProtocolProviderFactory
+
+# router
+
+router.factory = com.galaxy.hsf.router.impl.DefaultServiceRouterFactory
+
+# 
 

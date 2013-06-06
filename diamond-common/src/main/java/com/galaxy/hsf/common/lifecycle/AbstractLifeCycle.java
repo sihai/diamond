@@ -26,7 +26,7 @@ public abstract class AbstractLifeCycle implements LifeCycle {
 
 	@Override
 	public void start() {
-		if(this.isInitialized()) {
+		if(!this.isInitialized()) {
 			throw new IllegalStateException("Not initialized");
 		}
 		status = Status.STARTED;
@@ -50,7 +50,7 @@ public abstract class AbstractLifeCycle implements LifeCycle {
 
 	@Override
 	public boolean isInitialized() {
-		return Status.INITIALIZED == status || Status.STARTED == status;
+		return Status.INITIALIZED == status;
 	}
 
 	@Override

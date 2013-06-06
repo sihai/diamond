@@ -20,7 +20,7 @@ public class DefaultAddressingServiceFactory implements AddressingServiceFactory
 		DefaultAddressingService addressingService = new DefaultAddressingService(metadataReadService);
 		addressingService.initialize();
 		addressingService.start();
-		return null;
+		return addressingService;
 	}
 
 }

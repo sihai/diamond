@@ -85,7 +85,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 		properties = new Properties();
 		try {
 			// load default
-			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format("/rpc/protocols/%s", PROTOCOL_PROVIDER_CONFIG_FILE_NAME)));
+			properties.load(this.getClass().getResourceAsStream(String.format("/rpc/protocols/%s", PROTOCOL_PROVIDER_CONFIG_FILE_NAME)));
 			// try to load custom configuration override
 			InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format("%s", PROTOCOL_PROVIDER_CONFIG_FILE_NAME));
 			if(null != in) {

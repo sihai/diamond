@@ -4,8 +4,8 @@
  */
 package com.galaxy.diamond.metadata.impl;
 
+import com.galaxy.diamond.repository.client.RepositoryClient;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.hsf.repository.client.RepositoryClient;
 
 /**
  * 
