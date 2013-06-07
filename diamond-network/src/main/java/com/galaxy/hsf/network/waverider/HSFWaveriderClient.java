@@ -98,6 +98,7 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 
 	@Override
 	public Object syncrequest(Object request) throws NetworkException {
+		long start = System.currentTimeMillis();
 		try {
 			String id = alloceId();
 			NetworkRequest r = new NetworkRequest(id, request);
@@ -116,6 +117,8 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 			}
 		} catch (UnknownHostException e) {
 			throw new NetworkException("OOPS, can not get local ip", e);
+		} finally {
+			System.out.println(String.format("syncrequest consume:%d ms", System.currentTimeMillis() - start));
 		}
 		
 	}

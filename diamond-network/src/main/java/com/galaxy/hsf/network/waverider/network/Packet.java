@@ -253,7 +253,7 @@ public class Packet {
 				if(!endPoint.notifyRead(channel)) {
 					throw new IOException("Socket closed by other thread");
 				}
-				Thread.sleep(1000);
+				Thread.sleep(1);
 			}
 			isRemove = false;
 			rest = header.capacity() - header.position();

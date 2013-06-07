@@ -68,6 +68,8 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 			public void completed(NetworkRequest request, Object response) {
 				NetworkResponse r = new NetworkResponse(request.getId(), response);
 				PendingRequest pr = pendingRequestMap.remove(request.getId());
+				pr.end = System.currentTimeMillis();
+				System.out.println(String.format("Request execute in server consume:%d ms", pr.end - pr.start));
 				pr.session.execute(CommandFactory.createCommand(COMMAND_HSF_RESPONSE, r.marshall()));
 			}
 		};
@@ -79,7 +81,9 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 			@Override
 			public Command handle(Command command) {
 				NetworkRequest request = NetworkRequest.unmarshall(command.getPayLoad());
-				pendingRequestMap.put(request.getId(), new PendingRequest(request, command.getSession()));
+				PendingRequest pr = new PendingRequest(request, command.getSession());
+				pendingRequestMap.put(request.getId(), pr);
+				pr.start = System.currentTimeMillis();
 				// async
 				handler.handle(request, callback);
 				return null;
@@ -100,6 +104,9 @@ public class HSFWaveriderServer extends AbstractHSFNetworkServer implements HSFW
 	private class PendingRequest {
 		NetworkRequest request;
 		Session session;
+		
+		long start;
+		long end;
 		
 		/**
 		 * 

@@ -125,6 +125,7 @@ public class DefaultSession implements Session {
 	public void execute(Command command) throws ExecuteCommandException {
 		try {
 			outputBuffer.put(command);
+			netWorkServer.notifyWrite(channel);
 		} catch (InterruptedException e) {
 			logger.error(e);
 			Thread.currentThread().interrupt();
