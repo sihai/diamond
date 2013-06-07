@@ -17,6 +17,7 @@ import com.galaxy.hsf.address.ServiceAddress;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
+import com.galaxy.hsf.service.MethodInvoker;
 import com.galaxy.hsf.service.ServiceRegister;
 
 /**
@@ -49,8 +50,11 @@ public abstract class AbstractServiceRegister extends AbstractLifeCycle implemen
 	}
 	
 	@Override
-	public void register(ServiceMetadata metadata) throws HSFException {
-		metadataWriteService.register(metadata);
+	public void register(ServiceMetadata metadata, MethodInvoker invoker) throws HSFException {
+		for(Map.Entry<String, Properties> e : metadata.getExportProtocols().entrySet()) {
+			metadata.addAddress(e.getKey(), rpcProtocolProvider.newRPCProtocol4Server(e.getKey()).constructURL(metadata.getUniqueName(), e.getValue()).toString());
+		}
+		this.metadataWriteService.register(metadata);
 	}
 
 	@Override

@@ -24,8 +24,20 @@ public class DefaultHSFRequestExecutor extends AbstractLifeCycle implements HSFR
 	
 	@Override
 	public HSFResponse execute(HSFService service, HSFRequest request) {
-		logger.debug(String.format("%s execute request:%s", this.getClass().getName(), request.toString()));
-		return null;
+		HSFResponse response = new HSFResponse();
+		try {
+			logger.debug(String.format("%s execute request:%s", this.getClass().getName(), request.toString()));
+			Object object = service.invokeLocal(request.getServiceName(), request.getMethod(), request.getParameterTypes(), request.getArgs());
+			// FIXME
+			response.setAppResponse(object);
+			response.succeed();
+		} catch (Throwable t) {
+			t.printStackTrace();
+			response.setErrorMsg(String.format("OOPS: %s", t.getMessage()));
+			response.failed();
+			response.setException(t);
+		}
+		return response;
 	}
 
 }

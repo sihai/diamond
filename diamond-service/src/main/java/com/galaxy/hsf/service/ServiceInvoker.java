@@ -16,6 +16,32 @@ public interface ServiceInvoker extends LifeCycle {
 
 	/**
 	 * 
+	 * @param name
+	 * @param invoker
+	 * @return
+	 */
+	void register(String serviceName, MethodInvoker invoker);
+	
+	/**
+	 * 
+	 * @param serviceName
+	 * @return
+	 */
+	void unregister(String serviceName);
+	
+	/**
+	 * 
+	 * @param serviceName
+	 * @param method
+	 * @param parameterTypes
+	 * @param args
+	 * @return
+	 * @throws HSFException
+	 */
+	Object invokeLocal(String serviceName, String method, String[] parameterTypes, Object[] args) throws HSFException;
+	
+	/**
+	 * 
 	 * @param serviceName
 	 * @param method
 	 * @param parameterTypes
@@ -24,5 +50,5 @@ public interface ServiceInvoker extends LifeCycle {
 	 * @return
 	 * @throws HSFException
 	 */
-	Object invoke(String serviceName, String method, String[] parameterTypes, Object[] args, String protocol) throws HSFException;
+	Object invokeRemote(String serviceName, String method, String[] parameterTypes, Object[] args, String protocol) throws HSFException;
 }

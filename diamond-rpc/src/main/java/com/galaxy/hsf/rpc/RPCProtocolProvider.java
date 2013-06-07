@@ -4,8 +4,6 @@
  */
 package com.galaxy.hsf.rpc;
 
-import java.net.URL;
-
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4Client;
@@ -48,7 +46,7 @@ public interface RPCProtocolProvider extends LifeCycle {
 	 * @return
 	 * @throws HSFException
 	 */
-	RPCProtocol4Client newRPCProtocol4Client(URL url) throws HSFException;
+	RPCProtocol4Client newRPCProtocol4Client(ServiceURL url) throws HSFException;
 	
 	//====================================================================
 	//					Server Side
@@ -80,7 +78,7 @@ public interface RPCProtocolProvider extends LifeCycle {
 	 * @return
 	 * @throws HSFException
 	 */
-	RPCProtocol4Server newRPCProtocol4Server(URL url) throws HSFException;
+	RPCProtocol4Server newRPCProtocol4Server(ServiceURL url) throws HSFException;
 
 	
 	

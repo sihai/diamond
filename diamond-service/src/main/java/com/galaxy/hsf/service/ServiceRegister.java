@@ -18,9 +18,10 @@ public interface ServiceRegister extends LifeCycle {
 	/**
 	 * 
 	 * @param metadata
+	 * @param invoker
 	 * @throws HSFException
 	 */
-	void register(ServiceMetadata metadata) throws HSFException;
+	void register(ServiceMetadata metadata, MethodInvoker invoker) throws HSFException;
 	
 	/**
 	 * 

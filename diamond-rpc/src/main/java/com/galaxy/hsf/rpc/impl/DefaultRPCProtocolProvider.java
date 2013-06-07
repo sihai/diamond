@@ -7,7 +7,6 @@ package com.galaxy.hsf.rpc.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -23,6 +22,7 @@ import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.network.HSFNetworkServer.ResponseCallback;
 import com.galaxy.hsf.network.NetworkRequest;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
+import com.galaxy.hsf.rpc.ServiceURL;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4Client;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4ClientFactory;
@@ -185,7 +185,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	}
 
 	@Override
-	public RPCProtocol4Client newRPCProtocol4Client(URL url) throws HSFException {
+	public RPCProtocol4Client newRPCProtocol4Client(ServiceURL url) throws HSFException {
 		return newRPCProtocol4Client(url.getProtocol());
 	}
 	
@@ -211,7 +211,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	}
 
 	@Override
-	public RPCProtocol4Server newRPCProtocol4Server(URL url) throws HSFException {
+	public RPCProtocol4Server newRPCProtocol4Server(ServiceURL url) throws HSFException {
 		return newRPCProtocol4Server(url.getProtocol());
 	}
 	
@@ -267,7 +267,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	 */
 	private RPCProtocol4Client loadRPCProtocol4Client(String protocol) {
 		try {
-			String factoryClassName = StringUtils.trim(properties.getProperty(String.format("protocol.%s.client.factory", protocol)));
+			String factoryClassName = StringUtils.trim(properties.getProperty(String.format("%s.client.factory", protocol)));
 			if(StringUtils.isBlank(factoryClassName)) {
 				return null;
 			}
@@ -293,7 +293,7 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	 */
 	private RPCProtocol4Server loadRPCProtocol4Server(String protocol) {
 		try {
-			String factoryClassName = StringUtils.trim(properties.getProperty(String.format("protocol.%s.server.factory", protocol)));
+			String factoryClassName = StringUtils.trim(properties.getProperty(String.format("%s.server.factory", protocol)));
 			if(StringUtils.isBlank(factoryClassName)) {
 				return null;
 			}
@@ -324,8 +324,8 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 			});
 			provider.initialize();
 			provider.start();
-			provider.newRPCProtocol4Client(new URL("hsf://127.0.0.1:8206/demoService"));
-			provider.newRPCProtocol4Server(new URL("hsf://127.0.0.1:8206/demoService"));
+			provider.newRPCProtocol4Client(new ServiceURL("hsf://127.0.0.1:8206/demoService"));
+			provider.newRPCProtocol4Server(new ServiceURL("hsf://127.0.0.1:8206/demoService"));
 		} catch (HSFException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,7 +6,6 @@ package com.galaxy.hsf.osgi;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,12 +18,6 @@ import org.osgi.framework.Version;
 
 import com.galaxy.hsf.common.HSFConstants;
 import com.galaxy.hsf.common.exception.HSFException;
-import com.galaxy.hsf.rpc.RPCProtocol;
-import com.galaxy.hsf.rpc.RPCProtocolTemplate;
-import com.galaxy.hsf.service.HSFServiceHolderComponent;
-import com.galaxy.hsf.service.PublishHook;
-import com.galaxy.hsf.service.RPCProtocolTemplateHolder;
-import com.galaxy.hsf.service.metadata.Publisher;
 
 /**
  * 
@@ -106,43 +99,6 @@ public class HSFActivator implements BundleActivator {
 			throw new HSFException("安装bundle过程中出错, 出错原因为：", e);
 		} catch (MalformedURLException e) {
 			throw new HSFException("安装bundle过程中出错, 出错原因为：", e);
-		}
-    }
-	  
-  	public static  void wait4HooksDS(int count) throws InterruptedException {
-        Publisher publisher = HSFServiceHolderComponent.getPublisher();
-        List<PublishHook> hookList = publisher.getHooks();
-        if(hookList.size() == count){
-        	long start = System.currentTimeMillis();
-			long end = System.currentTimeMillis();
-			while((end - start) < 30000) { //默认30s ds注入时间
-				Thread.sleep(500);
-				if(hookList.size() > count) {
-					break;
-				} else {
-					end = System.currentTimeMillis();
-				}
-				
-			}
-        }
-	}
-
-	// wait for DS
-	public static void wait4RPCProtocolDS(String protocol) throws InterruptedException {
-		RPCProtocolTemplate rpcProtocolTemplate = RPCProtocolTemplateHolder.get();
-		RPCProtocol rpcProtocol = rpcProtocolTemplate.getRPCProtocol(protocol);
-		if(null == rpcProtocol){
-			long start = System.currentTimeMillis();
-			long end = System.currentTimeMillis();
-			while((end-start) < 30000) {//默认30s ds注入时间
-				Thread.sleep(500);
-				rpcProtocol = rpcProtocolTemplate.getRPCProtocol(protocol);
-				if(null == rpcProtocol) {
-					break;
-				} else {
-					end = System.currentTimeMillis();
-				}
-			}
 		}
 	}
 }

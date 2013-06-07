@@ -87,7 +87,7 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	
 	@Override
 	public Key newKey(String key) {
-		return new Key(this.certificate.getNamespace(), key, -1);
+		return new Key(this.certificate.getNamespace(), key, -1L);
 	}
 
 	@Override

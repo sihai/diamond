@@ -23,7 +23,9 @@ public class NetworkUtil {
 	 */
 	public static int getFreePort() throws IOException {
 		ServerSocket s = new ServerSocket(0);
-		return s.getLocalPort();
+		int port = s.getLocalPort();
+		s.close();
+		return port;
 	}
 	
 	/**

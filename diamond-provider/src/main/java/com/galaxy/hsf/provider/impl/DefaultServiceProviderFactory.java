@@ -16,8 +16,9 @@ import com.galaxy.hsf.provider.factory.ServiceProviderFactory;
 public class DefaultServiceProviderFactory implements ServiceProviderFactory {
 
 	@Override
-	public ServiceProvider newServiceProvider(ServiceMetadata metadata) {
-		ServiceProvider provider = new DefaultServiceProvider(metadata);
+	public ServiceProvider newServiceProvider(ServiceMetadata metadata, Object target) {
+		DefaultServiceProvider provider = new DefaultServiceProvider(metadata);
+		provider.setTarget(target);
 		provider.initialize();
 		provider.start();
 		return provider;

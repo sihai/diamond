@@ -14,10 +14,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class CommonThreadFactory implements ThreadFactory {
 
-	private String prefix;				// 线程名前缀
-	private ThreadGroup group;			// 线程组
-	private boolean  isDaemon;			// 是否设置为精灵线程
-	private AtomicInteger tNo;			// 线程编号, 线程名的一部分
+	private String prefix;
+	private ThreadGroup group;
+	private boolean  isDaemon;
+	private AtomicInteger tNo;
 	
 	public CommonThreadFactory(String prefix) {
 		this(prefix, null, false);

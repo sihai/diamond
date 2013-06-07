@@ -4,12 +4,19 @@
  */
 package com.galaxy.hsf.common;
 
+import java.io.Serializable;
+
 /**
  * HSF Response
  * @author sihai
  *
  */
-public class HSFResponse {
+public class HSFResponse implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2547794167307553869L;
 
 	/**
 	 * 这个字段表示HSF层是否成功。
@@ -18,8 +25,13 @@ public class HSFResponse {
 	private boolean succeed;
 	
 	private String errorMsg;
+	
+	/**
+	 * 
+	 */
+	private Throwable exception;
 
-    // 业务层的返回值或抛出的异常
+	// 业务层的返回值或抛出的异常
     private Object appResponse;
     
     private transient HSFRequest request;
@@ -34,14 +46,28 @@ public class HSFResponse {
     public boolean isSucceed() {
         return succeed;
     }
+    
+    public void succeed() {
+        this.succeed = true;
+    }
+    
+    public void failed() {
+        this.succeed = false;
+    }
 
     public String getErrorMsg() {
         return errorMsg;
     }
     public void setErrorMsg(String error) {
         errorMsg = error;
-        succeed = false;
     }
+    
+    public Throwable getException() {
+		return exception;
+	}
+	public void setException(Throwable exception) {
+		this.exception = exception;
+	}
 
     public HSFRequest getRequest(){
     	return request;

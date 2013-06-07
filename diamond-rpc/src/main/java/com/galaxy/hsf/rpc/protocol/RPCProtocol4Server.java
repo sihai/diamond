@@ -4,8 +4,9 @@
  */
 package com.galaxy.hsf.rpc.protocol;
 
-import java.net.URL;
 import java.util.Properties;
+
+import com.galaxy.hsf.rpc.ServiceURL;
 
 /**
  * 
@@ -32,5 +33,5 @@ public interface RPCProtocol4Server extends RPCProtocol {
 	 * @param properties
 	 * @return
 	 */
-	URL constructURL(String serviceName, Properties properties);
+	ServiceURL constructURL(String serviceName, Properties properties);
 }

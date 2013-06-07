@@ -13,11 +13,12 @@ import com.galaxy.hsf.provider.ServiceProvider;
  *
  */
 public interface ServiceProviderFactory {
-
+	
 	/**
 	 * 
 	 * @param metadata
+	 * @param target
 	 * @return
 	 */
-	ServiceProvider newServiceProvider(ServiceMetadata metadata);
+	ServiceProvider newServiceProvider(ServiceMetadata metadata, Object target);
 }

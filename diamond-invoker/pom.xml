@@ -39,6 +39,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>diamond-router</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>diamond-rpc</artifactId>
+		</dependency>
 		
 		
 		<!-- Log Start -->

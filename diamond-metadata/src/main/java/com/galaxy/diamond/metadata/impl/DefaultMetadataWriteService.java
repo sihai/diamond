@@ -83,6 +83,7 @@ public class DefaultMetadataWriteService extends AbstractMetadataService impleme
 			for(Map.Entry<String, List<String>> e : old.getAddressMap().entrySet()) {
 				metadata.addAddresses(e.getKey(), e.getValue());
 			}
+			data.setValue(JSONObject.fromObject(metadata).toString());
 		} else {
 			data = repositoryClient.newData(key, JSONObject.fromObject(metadata).toString(), -1);
 		}

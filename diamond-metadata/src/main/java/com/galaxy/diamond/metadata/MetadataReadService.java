@@ -4,6 +4,7 @@
  */
 package com.galaxy.diamond.metadata;
 
+import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
 
 
@@ -19,9 +20,10 @@ public interface MetadataReadService extends LifeCycle {
 	 * 订阅服务元数据信息
 	 * 
 	 * @param serviceName
-	 * @return metadata 元数据对象 
+	 * @return metadata 元数据对象
+	 * @throws HSFException
 	 */
-	ServiceMetadata subscribe(String serviceName);
+	ServiceMetadata subscribe(String serviceName) throws HSFException;
 	
 	/**
 	 * 

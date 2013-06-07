@@ -7,6 +7,7 @@ package com.galaxy.hsf.provider;
 import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.LifeCycle;
+import com.galaxy.hsf.service.MethodInvoker;
 
 
 /**
@@ -21,6 +22,12 @@ public interface ServiceProvider extends LifeCycle {
 	 * @return
 	 */
 	ServiceMetadata getMetadata();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	MethodInvoker getMethodInvoker();
 	
 	/**
 	 * 

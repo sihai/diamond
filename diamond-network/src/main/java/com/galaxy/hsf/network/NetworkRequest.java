@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -23,7 +24,12 @@ import com.galaxy.hsf.network.waverider.network.Packet;
  * @author sihai
  *
  */
-public class NetworkRequest {
+public class NetworkRequest implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7609634706056184869L;
 
 	/**
 	 * 
@@ -64,9 +70,12 @@ public class NetworkRequest {
 		ObjectOutputStream oout = null;
 		try {
 			bout = new ByteArrayOutputStream();
-			dout = new DeflaterOutputStream(bout, new Deflater(Deflater.BEST_SPEED));
-			oout = new ObjectOutputStream(dout);
-			oout.writeObject(this);
+			//dout = new DeflaterOutputStream(bout, new Deflater(Deflater.BEST_SPEED));
+			oout = new ObjectOutputStream(bout);
+			oout.writeInt(id.getBytes().length);
+			oout.write(id.getBytes());
+			oout.writeObject(payload);
+			oout.flush();
 			return ByteBuffer.wrap(bout.toByteArray());
 		} catch (IOException e) {
 			throw new NetworkException("OOPS, OMG Not possible", e);
@@ -102,10 +111,13 @@ public class NetworkRequest {
 
 		try {
 			bin = new ByteArrayInputStream(buffer.array(), Packet.getHeaderSize() + Command.getHeaderSize(), buffer.remaining());
-			iin = new InflaterInputStream(bin);
-			oin = new ObjectInputStream(iin);
-
-			return (NetworkRequest)oin.readObject();
+			//iin = new InflaterInputStream(bin);
+			oin = new ObjectInputStream(bin);
+			int length = oin.readInt();
+			byte[] buf = new byte[length];
+			oin.read(buf);
+			NetworkRequest request = new NetworkRequest(new String(buf), oin.readObject());
+			return request;
 		} catch (IOException e) {
 			throw new NetworkException("OOPS, OMG Not possible", e);
 		} catch (ClassNotFoundException e) {

@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -23,7 +24,12 @@ import com.galaxy.hsf.network.waverider.network.Packet;
  * @author sihai
  *
  */
-public class NetworkResponse {
+public class NetworkResponse implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7640010423289981296L;
 
 	/**
 	 * 
@@ -64,8 +70,8 @@ public class NetworkResponse {
 		ObjectOutputStream oout = null;
 		try {
 			bout = new ByteArrayOutputStream();
-			dout = new DeflaterOutputStream(bout, new Deflater(Deflater.BEST_SPEED));
-			oout = new ObjectOutputStream(dout);
+			//dout = new DeflaterOutputStream(bout, new Deflater(Deflater.BEST_SPEED));
+			oout = new ObjectOutputStream(bout);
 			oout.writeObject(this);
 			return ByteBuffer.wrap(bout.toByteArray());
 		} catch (IOException e) {
@@ -102,9 +108,8 @@ public class NetworkResponse {
 
 		try {
 			bin = new ByteArrayInputStream(buffer.array(), Packet.getHeaderSize() + Command.getHeaderSize(), buffer.remaining());
-			iin = new InflaterInputStream(bin);
-			oin = new ObjectInputStream(iin);
-
+			//iin = new InflaterInputStream(bin);
+			oin = new ObjectInputStream(bin);
 			return (NetworkResponse)oin.readObject();
 		} catch (IOException e) {
 			throw new NetworkException("OOPS, OMG Not possible", e);

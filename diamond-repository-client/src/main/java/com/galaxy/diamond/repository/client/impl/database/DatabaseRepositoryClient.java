@@ -110,7 +110,7 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 	
 	@Override
 	protected void deleteFromServer(Key key) {
-		dataDAO.delete(key.getFullKey());
+		dataDAO.delete(key);
 	}
 
 	@Override

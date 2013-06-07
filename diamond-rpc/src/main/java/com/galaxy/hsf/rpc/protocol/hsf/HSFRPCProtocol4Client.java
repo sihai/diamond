@@ -4,6 +4,7 @@
  */
 package com.galaxy.hsf.rpc.protocol.hsf;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.network.HSFNetworkClient;
 import com.galaxy.hsf.network.exception.NetworkException;
 import com.galaxy.hsf.network.factory.HSFNetworkClientFactory;
+import com.galaxy.hsf.rpc.ServiceURL;
 import com.galaxy.hsf.rpc.protocol.AbstractRPCProtocol4Client;
 import com.galaxy.hsf.rpc.protocol.RPCProtocolConfiguration;
 
@@ -82,10 +84,13 @@ public class HSFRPCProtocol4Client extends AbstractRPCProtocol4Client {
 
 	@Override
 	protected HSFResponse invoke0(HSFRequest request) throws HSFException {
-		Target target = new Target(request.getServiceURL().getHost(), request.getServiceURL().getPort());
-		HSFNetworkClient networkClient = allocHSFNetworkClient(target);
 		try {
+			ServiceURL url = new ServiceURL(request.getServiceURL());
+			Target target = new Target(url.getHost(), url.getPort());
+			HSFNetworkClient networkClient = allocHSFNetworkClient(target);
 			return (HSFResponse)networkClient.syncrequest(request);
+		} catch (MalformedURLException e) {
+			throw new HSFException(e);
 		} catch (NetworkException e) {
 			throw new HSFException(e);
 		}

@@ -24,11 +24,18 @@ public interface ServiceConsumer extends LifeCycle {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	Object getProxy();
+	
+	/**
+	 * 
 	 * @param methodName
 	 * @param parameterTypes
 	 * @param args
+	 * @param protocol
 	 * @return
 	 * @throws HSFException
 	 */
-	Object invoke(String methodName, String[] parameterTypes, Object ... args) throws HSFException;
+	Object invoke(String methodName, String[] parameterTypes, Object[] args, String protocol) throws HSFException;
 }

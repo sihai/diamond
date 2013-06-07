@@ -5,7 +5,6 @@
 package com.galaxy.hsf.service.impl;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import com.galaxy.hsf.common.HSFResponse;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.router.ServiceRouter;
 import com.galaxy.hsf.rpc.RPCProtocolProvider;
+import com.galaxy.hsf.rpc.ServiceURL;
 import com.galaxy.hsf.rpc.protocol.RPCProtocol4Client;
 import com.galaxy.hsf.util.ExceptionUtil;
 
@@ -60,15 +60,16 @@ public class DefaultServiceInvoker extends AbstractServiceInvoker {
 		List<Throwable> exceptions = new ArrayList<Throwable>(retryTimes);
 		for(; i < retryTimes && i < addresses.size(); i++) {
 			try {
-				URL serviceURL = new URL(addresses.get(i));
+				ServiceURL serviceURL = new ServiceURL(addresses.get(i));
 				RPCProtocol4Client rpcProtocol = rpcProtocolProvider.newRPCProtocol4Client(serviceURL);
-				request.setServiceURL(serviceURL);
+				request.setServiceURL(serviceURL.toString());
 				HSFResponse response = rpcProtocol.invoke(request);
 				return response.getAppResponse();
 			} catch (MalformedURLException e) {
 				logger.error(String.format("Wrong address:%s, then try others", addresses.get(i)));
 				exceptions.add(e);
 			} catch (Throwable t) {
+				t.printStackTrace();
 				logger.error(String.format("Invoke address:%s, then try others", addresses.get(i)));
 				exceptions.add(t);
 			}

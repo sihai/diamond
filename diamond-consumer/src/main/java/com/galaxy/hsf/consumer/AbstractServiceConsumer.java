@@ -19,6 +19,14 @@ public abstract class AbstractServiceConsumer extends AbstractLifeCycle implemen
 	 */
 	protected ServiceMetadata metadata = new ServiceMetadata();
 
+	/**
+	 * 
+	 * @param metadata
+	 */
+	public AbstractServiceConsumer(ServiceMetadata metadata) {
+		this.metadata = metadata;
+	}
+	
 	@Override
 	public ServiceMetadata getMetadata() {
 		return metadata;

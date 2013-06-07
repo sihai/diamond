@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.provider.AbstractServiceProvider;
+import com.galaxy.hsf.service.MethodInvoker;
 
 /**
  * 
@@ -32,6 +33,11 @@ public class DefaultServiceProvider extends AbstractServiceProvider {
      * 服务提供对象
      */
     private transient Object target;
+    
+    /**
+     * 
+     */
+    private transient MethodInvoker methodInvoker;
     
     /**
      * 回调处理器，每个服务方法对应的回调方法签名有如下约定：
@@ -83,12 +89,19 @@ public class DefaultServiceProvider extends AbstractServiceProvider {
 		for(Method m : methods) {
 			methodMap.put(getKey(m), m);
 		}
+		
+		generateMethodInvoker();
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
 		methodMap.clear();
+	}
+
+	@Override
+	public MethodInvoker getMethodInvoker() {
+		return methodInvoker;
 	}
 
 	@Override
@@ -136,6 +149,20 @@ public class DefaultServiceProvider extends AbstractServiceProvider {
 
 	public void setCallbackHandler(Object callbackHandler) {
 		this.callbackHandler = callbackHandler;
+	}
+	
+	/**
+	 * 
+	 */
+	private void generateMethodInvoker() {
+		methodInvoker = new MethodInvoker() {
+
+			@Override
+			public Object invoke(String method, String[] parameterTypes, Object[] args) throws HSFException {
+				return DefaultServiceProvider.this.invoke(method, parameterTypes, args);
+			}
+			
+		};
 	}
 	
 	/**

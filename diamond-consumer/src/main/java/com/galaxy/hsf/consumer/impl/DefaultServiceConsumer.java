@@ -4,15 +4,22 @@
  */
 package com.galaxy.hsf.consumer.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.commons.lang.StringUtils;
+import net.sf.cglib.core.NamingPolicy;
+import net.sf.cglib.core.Predicate;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 
+import com.galaxy.diamond.metadata.ServiceMetadata;
 import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.consumer.AbstractServiceConsumer;
+import com.galaxy.hsf.rpc.protocol.hsf.HSFRPCProtocol4Client;
+import com.galaxy.hsf.service.ServiceInvoker;
+import com.galaxy.hsf.service.ServiceSubscriber;
 
 /**
  * 
@@ -24,43 +31,61 @@ public class DefaultServiceConsumer extends AbstractServiceConsumer {
 	/**
 	 * 
 	 */
-	private String targetInterfaceName;
+	private Class<?> interfaceClass;
 	
 	/**
 	 * 
 	 */
-	private Class targetInferface;
+	private ServiceSubscriber subscriber;
 	
 	/**
 	 * 
 	 */
-	private Object target;
+	private ServiceInvoker serviceInvoker;
+	
+	/**
+	 * 
+	 */
+	private Object proxy;
 	
 	/**
 	 * 
 	 */
 	private Map<String, Method> methodMap;
 	
+	/**
+	 * 
+	 * @param metadata
+	 * @param subscriber
+	 * @param serviceInvoker
+	 */
+	public DefaultServiceConsumer(ServiceMetadata metadata, ServiceSubscriber subscriber, ServiceInvoker serviceInvoker) {
+		super(metadata);
+		this.subscriber = subscriber;
+		this.serviceInvoker = serviceInvoker;
+	}
+	
 	@Override
 	public void initialize() {
 		super.initialize();
-		if(null == targetInterfaceName || null == target) {
+		if(null == metadata) {
+			throw new IllegalArgumentException("metadata must not be null");
+		}
+		if(null == metadata.getInterfaceName()) {
 			throw new IllegalArgumentException("Please set targetInterfaceName and target");
 		}
 		try {
-			targetInferface = Class.forName(targetInterfaceName);
+			interfaceClass = Class.forName(metadata.getInterfaceName());
 		} catch (ClassNotFoundException e) {
-			throw new IllegalArgumentException(String.format("Can not load interface:%s", targetInterfaceName), e);
+			throw new IllegalArgumentException(String.format("Can not load interface:%s", metadata.getInterfaceName()), e);
 		}
-		
-		if(!targetInferface.isInstance(target)) {
-			throw new IllegalArgumentException(String.format("Target must implements interface:%s", targetInterfaceName));
+		// subscribe service
+		try {
+			subscriber.subscribe(metadata);
+		} catch (HSFException e) {
+			throw new RuntimeException(String.format("Subscribe service:%s failed", metadata.getUniqueName()), e);
 		}
-		Method[] methods = targetInferface.getDeclaredMethods();
-		methodMap = new HashMap<String, Method>(methods.length);
-		for(Method m : methods) {
-			methodMap.put(getKey(m), m);
-		}
+		generateProxy();
 	}
 
 	@Override
@@ -70,21 +95,13 @@ public class DefaultServiceConsumer extends AbstractServiceConsumer {
 	}
 
 	@Override
-	public Object invoke(String methodName, String[] parameterTypes, Object... args) throws HSFException {
-		String key = getKey(methodName, parameterTypes);
-		Method method = methodMap.get(key);
-		if(null == method) {
-			throw new HSFException(String.format("Can not found method:%s, key:%s", methodName, key));
-		}
-		try {
-			return method.invoke(target, args);
-		} catch (IllegalArgumentException e) {
-			throw new HSFException(e);
-		} catch (IllegalAccessException e) {
-			throw new HSFException(e);
-		} catch (InvocationTargetException e) {
-			throw new HSFException(e);
-		}
+	public Object getProxy() {
+		return proxy;
+	}
+
+	@Override
+	public Object invoke(String methodName, String[] parameterTypes, Object[] args, String protocol) throws HSFException {
+		return serviceInvoker.invokeRemote(metadata.getUniqueName(), methodName, parameterTypes, args, protocol);
 	}
 	
 	/**
@@ -92,30 +109,44 @@ public class DefaultServiceConsumer extends AbstractServiceConsumer {
 	 * @param method
 	 * @return
 	 */
-	private String getKey(Method method) {
-		Class[] cs = method.getParameterTypes();
-		String[] names = new String[cs.length + 1];
-		names[0] = method.getName();
-		for(int i = 0; i < cs.length; i++) {
-			names[i + 1] = cs[i].getName();
+	private String[] getParameterTypes(Method method) {
+		Class<?>[] clazzs = method.getParameterTypes();
+		String[] types = new String[clazzs.length];
+		for(int i = 0; i < clazzs.length; i++) {
+			types[i] = clazzs[i].getName();
 		}
-		return StringUtils.join(names, "-");
+		return types;
 	}
+	
+	private static final AtomicInteger NO = new AtomicInteger(0);
+	/**
+	 * 
+	 */
+	private static NamingPolicy POLICY = new NamingPolicy() {
+
+		@Override
+		public String getClassName(String prefix, String source, Object key, Predicate names) {
+			return String.format("%s-Proxy-%d", DefaultServiceConsumer.class.getSimpleName(), NO.getAndIncrement());
+		}
+		
+	};
 	
 	/**
 	 * 
-	 * @param methodName
-	 * @param parameterTypes
 	 */
-	private String getKey(String methodName, String[] parameterTypes) {
-		return String.format("%s-%s", methodName, StringUtils.join(parameterTypes, "-"));
-	}
+	private void generateProxy() {
+		// TODO
+		Enhancer enhancer = new Enhancer();
+		enhancer.setNamingPolicy(POLICY);
+		enhancer.setInterfaces(new Class[]{interfaceClass});
+		enhancer.setCallback(new MethodInterceptor() {
 
-	public void setTargetInterfaceName(String targetInterfaceName) {
-		this.targetInterfaceName = targetInterfaceName;
-	}
-
-	public void setTarget(Object target) {
-		this.target = target;
+			@Override
+			public Object intercept(Object target, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+				return invoke(method.getName(), getParameterTypes(method), args, HSFRPCProtocol4Client.PROTOCOL);
+			}
+			 
+		});
+		proxy = enhancer.create();
 	}
 }

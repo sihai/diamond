@@ -14,6 +14,7 @@ import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.address.Protocol;
 import com.galaxy.hsf.address.ServiceAddress;
 import com.galaxy.hsf.address.listener.Listener;
+import com.galaxy.hsf.common.exception.HSFException;
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 
 /**
@@ -82,7 +83,7 @@ public class DefaultAddressingService extends AbstractLifeCycle implements Addre
 	}
 
 	@Override
-	public ServiceAddress addressing(String serviceName) {
+	public ServiceAddress addressing(String serviceName) throws HSFException {
 		ServiceAddress address = addressTable.get(serviceName);
 		if(null != address) {
 			return address;

@@ -25,6 +25,7 @@
 		<module>diamond-provider</module>
 		<module>diamond-consumer</module>
 		<module>diamond-spring</module>
+		<module>diamond-integrated-test</module>
 	</modules>
   
 	<properties>
@@ -54,6 +55,8 @@
 		<commons-pool.version>1.6</commons-pool.version>
 		<commons-dbcp.version>20030825.184428</commons-dbcp.version>
 		<mysql-connector-java.version>5.1.24</mysql-connector-java.version>
+		<asm-all.version>3.0</asm-all.version>
+		<cglib.version>3.0</cglib.version>
 		<downloadSources>true</downloadSources>
 	</properties>
   
@@ -146,6 +149,11 @@
 				<artifactId>diamond-repository-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>diamond-integrated-test</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			
 			<!-- Log Start -->
 			<dependency>
@@ -177,6 +185,24 @@
 			</dependency>
 			
 			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm</artifactId>
+				<version>4.0</version>
+			</dependency>
+            
+            <dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-util</artifactId>
+				<version>4.0</version>
+			</dependency>
+            
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>${cglib.version}</version>
+			</dependency>
+			
+			<dependency>
 				<groupId>commons-pool</groupId>
 				<artifactId>commons-pool</artifactId>
 				<version>${commons-pool.version}</version>
@@ -199,7 +225,7 @@
 	    		<groupId>net.sf.json-lib</groupId>  
 	    		<artifactId>json-lib</artifactId>  
 	    		<version>${json-lib.version}</version>  
-	    		<classifier>jdk13</classifier>  
+	    		<classifier>jdk15</classifier>
 			</dependency>
 			
 			<!-- Spring Start-->

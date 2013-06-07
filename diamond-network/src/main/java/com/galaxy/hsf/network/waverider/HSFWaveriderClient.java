@@ -63,6 +63,7 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 	@Override
 	public void initialize() {
 		super.initialize();
+		idGenerator = new AtomicLong(0);
 		pendingRequestMap = new ConcurrentHashMap<String, PendingRequest>();
 		slaveNode = WaveriderFactory.newInstance(config).buildSlave();
 		slaveNode.addCommandHandler(COMMAND_HSF_RESPONSE, new CommandHandler() {
@@ -70,13 +71,15 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 			@Override
 			public Command handle(Command command) {
 				NetworkResponse response = NetworkResponse.unmarshall(command.getPayLoad());
-				PendingRequest pr = pendingRequestMap.remove(response.getId());
+				PendingRequest pr = pendingRequestMap.get(response.getId());
 				if(null == pr) {
 					logger.error(String.format("Server send response but there is no request for this response: % request id:%d", response.getId()));
 					return null;
 				}
 				pr.response = response;
-				pr.request.notifyAll();
+				synchronized(pr.request) {
+					pr.request.notifyAll();
+				}
 				return null;
 			}
 			
@@ -89,6 +92,7 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 	public void destroy() {
 		super.destroy();
 		slaveNode.stop();
+		idGenerator.set(0);
 		pendingRequestMap.clear();
 	}
 
@@ -102,8 +106,8 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 			synchronized(r) {
 				try {
 					// FIXME
-					request.wait();
-					return pendingRequestMap.get(id).response.getPayload();
+					r.wait();
+					return pendingRequestMap.remove(id).response.getPayload();
 				} catch (InterruptedException e) {
 					logger.error(e);
 					Thread.currentThread().interrupt();

@@ -26,7 +26,7 @@ public class HSFRequest implements Serializable {
 	/**
 	 * 
 	 */
-	private URL serviceURL;
+	private String serviceURL;
 
 	/**
 	 * 
@@ -44,7 +44,7 @@ public class HSFRequest implements Serializable {
     private String[] parameterTypes;
 
     // 由于要处理父类、子类问题，因此将参数对象这个地方改为另外的方式来序列化
-    private transient Object[] args;
+    private Object[] args;
 
     /**
      * 
@@ -69,11 +69,11 @@ public class HSFRequest implements Serializable {
 		this.protocol = protocol;
 	}
 
-	public URL getServiceURL() {
+	public String getServiceURL() {
 		return serviceURL;
 	}
 
-	public void setServiceURL(URL serviceURL) {
+	public void setServiceURL(String serviceURL) {
 		this.serviceURL = serviceURL;
 	}
 

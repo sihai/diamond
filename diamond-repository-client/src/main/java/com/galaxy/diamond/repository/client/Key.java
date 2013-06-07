@@ -21,7 +21,7 @@ public class Key implements Serializable {
 	private static final long serialVersionUID = -1171314496745268310L;
 	
 	public static final String NAMESPACE_KEY_SEPARATOR = ":";
-	public static final String ERROR_MSG = String.format("namespace or key must not contains separator of namespace and key:%s ", NAMESPACE_KEY_SEPARATOR);
+	public static final String ERROR_MSG = String.format("namespace or key must not contains separator of namespace and key:\"%s\"", NAMESPACE_KEY_SEPARATOR);
 	
 	/**
 	 * 

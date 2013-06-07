@@ -23,7 +23,7 @@ public abstract class AbstractRPCProtocolFactory {
 	protected Properties loadConfiguration(String fullProtocolName) {
 		try {
 			Properties properties = new Properties();
-			InputStream in =Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format("/rpc/protocols/client/%s.cnf", fullProtocolName));
+			InputStream in = this.getClass().getResourceAsStream(String.format("/rpc/protocols/%s.cnf", fullProtocolName));
 			properties.load(in);
 			
 			// try to load custom override
@@ -31,7 +31,6 @@ public abstract class AbstractRPCProtocolFactory {
 			if(null != in) {
 				properties.load(in); 
 			}
-			properties.load(in);
 			return properties;
 		} catch (IOException e) {
 			throw new RuntimeException(String.format("Load configuration for protocol:%s failed", fullProtocolName), e);

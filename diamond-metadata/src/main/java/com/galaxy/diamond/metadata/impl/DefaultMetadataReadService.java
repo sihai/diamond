@@ -16,6 +16,7 @@ import com.galaxy.diamond.repository.client.Data;
 import com.galaxy.diamond.repository.client.DataEvent;
 import com.galaxy.diamond.repository.client.Key;
 import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.galaxy.hsf.common.exception.HSFException;
 
 /**
  * 
@@ -40,7 +41,7 @@ public class DefaultMetadataReadService extends AbstractMetadataService implemen
 	}
 
 	@Override
-	public ServiceMetadata subscribe(String serviceName) {
+	public ServiceMetadata subscribe(String serviceName) throws HSFException {
 		Key key = repositoryClient.newKey(serviceName);
 		Data data = repositoryClient.get(key, new com.galaxy.diamond.repository.client.listener.AbstractListener(key) {
 
@@ -55,6 +56,10 @@ public class DefaultMetadataReadService extends AbstractMetadataService implemen
 			}
 			
 		});
+		
+		if(null == data) {
+			throw new HSFException(String.format("Can not found service:%s", serviceName));
+		}
 		
 		return (ServiceMetadata)JSONObject.toBean(JSONObject.fromObject((String)data.getValue()), ServiceMetadata.class);
 	}

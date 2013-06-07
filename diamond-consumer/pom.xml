@@ -41,6 +41,11 @@
 			<artifactId>diamond-rpc</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>diamond-service</artifactId>
+		</dependency>
+		
 		<!-- Log Start -->
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -59,6 +64,23 @@
 			<artifactId>log4j</artifactId>
 		</dependency>
 		<!-- Log End -->
+		
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>4.0</version>
+		</dependency>
+           
+           <dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-util</artifactId>
+			<version>4.0</version>
+		</dependency>
+			
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
 		
 		<!-- Spring Start-->
 		<dependency>

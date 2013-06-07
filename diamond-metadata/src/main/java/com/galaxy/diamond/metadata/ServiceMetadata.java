@@ -237,7 +237,11 @@ public final class ServiceMetadata implements Serializable {
 			addressList = new ArrayList<String>(8);
 			addressMap.put(protocol, addressList);
 		}
-		addressList.addAll(addresses);
+		for(String address : addresses) {
+			if(!addressList.contains(address)) {
+				addressList.add(address);
+			}
+		}
 	}
 	
 	public void removeAddresses(String protocol, List<String> addresses) {
@@ -311,7 +315,7 @@ public final class ServiceMetadata implements Serializable {
      * @return
      */
     public String getUniqueName() {
-        return new StringBuilder(interfaceName).append(":").append(version).toString();
+        return new StringBuilder(interfaceName).append("@").append(version).toString();
     }
     
     /**

@@ -5,12 +5,12 @@
 package com.galaxy.hsf.rpc.protocol.hsf;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Properties;
 
 import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.network.HSFNetworkServer.NetworkRequestHandler;
 import com.galaxy.hsf.network.factory.HSFNetworkServerFactory;
+import com.galaxy.hsf.rpc.ServiceURL;
 import com.galaxy.hsf.rpc.protocol.AbstractRPCProtocol4Server;
 import com.galaxy.hsf.rpc.protocol.RPCProtocolConfiguration;
 
@@ -78,9 +78,9 @@ public class HSFRPCProtocol4Server extends AbstractRPCProtocol4Server {
 	}
 
 	@Override
-	public URL constructURL(String serviceName, Properties properties) {
+	public ServiceURL constructURL(String serviceName, Properties properties) {
 		try {
-			return new URL(String.format("%s://%s:%d/%s", getProtocol(), networkServer.getServerIp(), networkServer.getServerPort(), serviceName));
+			return new ServiceURL(String.format("%s://%s:%d/%s", getProtocol(), networkServer.getServerIp(), networkServer.getServerPort(), serviceName));
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException(String.format("Can not construct url for service:%s, protocol:%s", serviceName, getProtocol()), e);
 		}

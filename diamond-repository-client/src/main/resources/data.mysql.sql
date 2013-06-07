@@ -12,6 +12,7 @@ USE `repository`;
 CREATE TABLE data (
 	`key` VARCHAR(128) NOT NULL PRIMARY KEY,
 	`value` VARCHAR(4096),
+	`sequence` BIGINT(22) NOT NULL,
 	create_time DATETIME NOT NULL,
 	last_modified_time DATETIME NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8 COLLATE = utf8_bin;
