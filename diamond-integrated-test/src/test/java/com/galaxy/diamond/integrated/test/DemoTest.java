@@ -40,18 +40,22 @@ public class DemoTest {
 		HSFServiceFactory.getHSFService().register(metadata, provider.getMethodInvoker());
 		// Consumer
 		ServiceMetadata cmetadata = new ServiceMetadata();
-		metadata.setName("test");
-		metadata.setInterfaceName(DemoService.class.getName());
-		metadata.setVersion("0.0.1");
-		metadata.addImportPortocol(HSFRPCProtocol4Client.PROTOCOL, new Properties());
+		cmetadata.setName("test");
+		cmetadata.setInterfaceName(DemoService.class.getName());
+		cmetadata.setVersion("0.0.1");
+		cmetadata.addImportPortocol(HSFRPCProtocol4Client.PROTOCOL, new Properties());
 		ServiceConsumerFactory cfactory = new DefaultServiceConsumerFactory();
-		ServiceConsumer consumer = cfactory.newServiceConsumer(metadata, HSFServiceFactory.getHSFService(), HSFServiceFactory.getHSFService());
+		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, HSFServiceFactory.getHSFService(), HSFServiceFactory.getHSFService());
 		DemoService service = (DemoService)consumer.getProxy();
 		String result = service.service("World");
 		if(!StringUtils.equals(result, "Hello World")) {
 			throw new Exception("failed");
 		}
 		System.out.println(result);
+		
+		for(int i = 0; i < 10000; i++) {
+			System.out.println(service.service(String.format("%d", i)));
+		}
 	}
 
 }
