@@ -21,6 +21,7 @@ import com.galaxy.diamond.repository.client.factory.AbstractRepositoryClientFact
 import com.galaxy.diamond.repository.client.impl.database.DatabaseCertificate;
 import com.galaxy.hsf.address.AddressingService;
 import com.galaxy.hsf.address.factory.AddressingServiceFactory;
+import com.galaxy.hsf.common.resource.ResourceConfig;
 import com.galaxy.hsf.network.HSFNetworkServer;
 import com.galaxy.hsf.router.ServiceRouter;
 import com.galaxy.hsf.router.ServiceRouterFactory;
@@ -94,6 +95,13 @@ public class HSFServiceFactory {
 	
 	public static final String ROUTER_FACTORY = "router.factory";
 	
+	public static final String REQUEST_HANDLER_RESOURCE_CONFIG_MIN_THREAD_COUNT = "request.handler.resource.config.minThreadCount";
+	public static final String REQUEST_HANDLER_RESOURCE_CONFIG_MAX_THREAD_COUNT = "request.handler.resource.config.maxThreadCount";
+	public static final String REQUEST_HANDLER_RESOURCE_CONFIG_KEEP_ALIVE_TIME = "request.handler.resource.config.keepAliveTime";
+	public static final String REQUEST_HANDLER_RESOURCE_CONFIG_QUEUE_SIZE = "request.handler.resource.config.queue.size";
+	
+	
+	
 	// 
 	private static RepositoryClient repositoryClient;
 	
@@ -163,10 +171,10 @@ public class HSFServiceFactory {
 			rpcProtocolProvider.stop();
 			rpcProtocolProvider.destroy();
 		}
-		/*if(null != handler) {
+		if(null != handler) {
 			handler.stop();
 			handler.destroy();
-		}*/
+		}
 		if(null != executor) {
 			executor.stop();
 			executor.destroy();
@@ -489,7 +497,46 @@ public class HSFServiceFactory {
 	 */
 	private static HSFNetworkServer.NetworkRequestHandler newNetworkRequestHandler(Properties properties, HSFRequestExecutor executor) {
 		// FIXME
-		return new HSFNetworkRequestHandler(executor);
+		ResourceConfig config =  new ResourceConfig();
+		String value = properties.getProperty(REQUEST_HANDLER_RESOURCE_CONFIG_MIN_THREAD_COUNT);
+		if(StringUtils.isNotBlank(value)) {
+			try {
+				config.setMinThreadCount(Integer.valueOf(value));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(String.format("Only Positive integer and less then %s allowed for %s", REQUEST_HANDLER_RESOURCE_CONFIG_MIN_THREAD_COUNT, REQUEST_HANDLER_RESOURCE_CONFIG_MAX_THREAD_COUNT));
+			}
+		}
+		value = properties.getProperty(REQUEST_HANDLER_RESOURCE_CONFIG_MAX_THREAD_COUNT);
+		if(StringUtils.isNotBlank(value)) {
+			try {
+				config.setMaxThreadCount(Integer.valueOf(value));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(String.format("Only Positive integer and big then %s allowed for %s", REQUEST_HANDLER_RESOURCE_CONFIG_MAX_THREAD_COUNT, REQUEST_HANDLER_RESOURCE_CONFIG_MIN_THREAD_COUNT));
+			}
+		}
+		if(config.getMaxThreadCount() < config.getMinThreadCount()) {
+			throw new IllegalArgumentException(String.format("Only Positive integer and big then %s allowed for %s", REQUEST_HANDLER_RESOURCE_CONFIG_MAX_THREAD_COUNT, REQUEST_HANDLER_RESOURCE_CONFIG_MIN_THREAD_COUNT));
+		}
+		value = properties.getProperty(REQUEST_HANDLER_RESOURCE_CONFIG_KEEP_ALIVE_TIME);
+		if(StringUtils.isNotBlank(value)) {
+			try {
+				config.setMaxThreadCount(Integer.valueOf(value));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(String.format("Only Positive integer allowed for %s", REQUEST_HANDLER_RESOURCE_CONFIG_KEEP_ALIVE_TIME));
+			}
+		}
+		value = properties.getProperty(REQUEST_HANDLER_RESOURCE_CONFIG_QUEUE_SIZE);
+		if(StringUtils.isNotBlank(value)) {
+			try {
+				config.setQueueSize(Integer.valueOf(value));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(String.format("Only Positive integer allowed for %s", REQUEST_HANDLER_RESOURCE_CONFIG_QUEUE_SIZE));
+			}
+		}
+		HSFNetworkRequestHandler handler = new HSFNetworkRequestHandler(executor, config);
+		handler.initialize();
+		handler.start();
+		return handler;
 	}
 	/**
 	 * 

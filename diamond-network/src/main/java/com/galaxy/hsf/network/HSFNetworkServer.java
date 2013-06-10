@@ -53,7 +53,7 @@ public interface HSFNetworkServer extends LifeCycle {
 	 * @author sihai
 	 *
 	 */
-	interface NetworkRequestHandler {
+	interface NetworkRequestHandler extends LifeCycle {
 		
 		/**
 		 * 

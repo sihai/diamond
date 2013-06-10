@@ -4,7 +4,7 @@
  */
 package com.galaxy.hsf.service.impl;
 
-import java.net.UnknownHostException;
+import java.net.SocketException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -129,7 +129,7 @@ public abstract class AbstractServiceInvoker extends AbstractLifeCycle implement
 			request.setArgs(args);
 			request.setProtocol(protocol);
 			return request;
-		} catch (UnknownHostException e) {
+		} catch (SocketException e) {
 			throw new HSFException("Can not got ip of local host", e);
 		}
 	}

@@ -32,4 +32,10 @@ public interface NetWorkEndPoint extends LifeCycle {
 	 * @return 
 	 */
 	boolean notifyRead(SocketChannel channel);
+	
+	/**
+	 * 等待更多数据
+	 * @param timeout
+	 */
+	void waitMoreData(long timeout) throws InterruptedException;
 }

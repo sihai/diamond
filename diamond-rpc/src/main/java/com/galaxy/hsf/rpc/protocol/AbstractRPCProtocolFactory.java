@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * @author sihai
@@ -43,7 +45,11 @@ public abstract class AbstractRPCProtocolFactory {
 	 * @return
 	 */
 	protected RPCProtocolConfiguration properties2Configuration(Properties properties) {
-		// TODO
-		return new RPCProtocolConfiguration();
+		RPCProtocolConfiguration configuration = new RPCProtocolConfiguration();
+		String value = properties.getProperty("network.max.sessionPreHost");
+		if(StringUtils.isNotBlank(value)) {
+			configuration.setMaxSessionPreHost(Integer.valueOf(StringUtils.trim(value)));
+		}
+		return configuration;
 	}
 }

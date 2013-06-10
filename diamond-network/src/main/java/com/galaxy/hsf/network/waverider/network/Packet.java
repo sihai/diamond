@@ -253,7 +253,11 @@ public class Packet {
 				if(!endPoint.notifyRead(channel)) {
 					throw new IOException("Socket closed by other thread");
 				}
-				Thread.sleep(1);
+				// 等待数据
+				//endPoint.waitMoreData(5);
+				// FIXME 这里貌似引入了至少2ms的延迟
+				//Thread.sleep(1);
+				Thread.yield();
 			}
 			isRemove = false;
 			rest = header.capacity() - header.position();

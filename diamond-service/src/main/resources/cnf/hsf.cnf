@@ -29,5 +29,9 @@ rpc.provider.factory = com.galaxy.hsf.rpc.impl.DefaultRPCProtocolProviderFactory
 
 router.factory = com.galaxy.hsf.router.impl.DefaultServiceRouterFactory
 
-# 
+# request handler
+request.handler.resource.config.minThreadCount = 1
+request.handler.resource.config.maxThreadCount = 512
+request.handler.resource.config.keepAliveTime = 60
+request.handler.resource.config.queue.size = 4
 

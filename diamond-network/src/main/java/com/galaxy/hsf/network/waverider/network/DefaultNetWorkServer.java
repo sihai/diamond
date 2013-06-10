@@ -135,7 +135,7 @@ public class DefaultNetWorkServer implements NetWorkServer, Runnable {
 	
 	@Override
 	public boolean notifyWrite(SocketChannel channel) {
-		
+		logger.debug("notifyWrite");
 		if(channel == null) {
 			return false;
 		}
@@ -156,7 +156,7 @@ public class DefaultNetWorkServer implements NetWorkServer, Runnable {
 	
 	@Override
 	public boolean notifyRead(SocketChannel channel) {
-		
+		logger.debug("notifyRead");
 		if(channel == null) {
 			return false;
 		}
@@ -173,7 +173,13 @@ public class DefaultNetWorkServer implements NetWorkServer, Runnable {
 		return true;
 	}
 	
+	@Override
+	public void waitMoreData(long timeout) throws InterruptedException {
+		throw new UnsupportedOperationException();
+	}
+
 	private void dispatch() throws IOException {
+		logger.debug("try dispatch");
 		SelectionKey key = null;
 		for(SocketChannelOPSChangeRequest request : opsChangeRequstMap.values()) {
 			key = request.getChannel().keyFor(selector);
@@ -291,8 +297,10 @@ public class DefaultNetWorkServer implements NetWorkServer, Runnable {
 	 * 尝试唤醒selector, 切换感兴趣的网络事件
 	 */
 	private void weakup() {
+		logger.debug("try to weakup");
 		if(isWeakuped.compareAndSet(false, true)) {
 			this.selector.wakeup();
+			logger.debug("weakuped");
 		}
 	}
 	

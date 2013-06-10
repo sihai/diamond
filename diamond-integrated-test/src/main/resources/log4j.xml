@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	
+	<!-- rootAppender -->
+	<appender name="rootAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${user.home}/diamond/diamond.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+		</layout>
+	</appender>
+	
+	<root>
+		<level value="info" />
+		<appender-ref ref="rootAppender" />
+	</root>
+	
+</log4j:configuration>

@@ -1,2 +1,2 @@
 network.client.factory = com.galaxy.hsf.network.waverider.HSFWaveriderNetworkClientFactory
-network.max.sessionPreHost = 32
+network.max.sessionPreHost = 1

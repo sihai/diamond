@@ -315,6 +315,60 @@ public class DefaultRPCProtocolProvider extends AbstractLifeCycle implements RPC
 	public static void main(String[] args) {
 		try {
 			DefaultRPCProtocolProvider provider = new DefaultRPCProtocolProvider(new HSFNetworkServer.NetworkRequestHandler() {
+				
+				@Override
+				public void initialize() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void start() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void stop() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void restart() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void destroy() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public boolean isInitialized() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean isStarted() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean isStopped() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean isDestroyed() {
+					// TODO Auto-generated method stub
+					return false;
+				}
 
 				@Override
 				public void handle(NetworkRequest request, ResponseCallback callback) {

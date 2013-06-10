@@ -4,6 +4,7 @@
  */
 package com.galaxy.hsf.network.waverider.network;
 
+import com.galaxy.hsf.network.waverider.common.LifeCycle;
 import com.galaxy.hsf.network.waverider.session.SessionManager;
 
 /**
@@ -14,7 +15,7 @@ import com.galaxy.hsf.network.waverider.session.SessionManager;
  * @author <a href="mailto:sihai@taobao.com">sihai</a>
  *
  */
-public interface NetWorkServer extends NetWorkEndPoint {
+public interface NetWorkServer extends LifeCycle, NetWorkEndPoint {
 	
 	String NET_WORK_SERVER_THREAD_NAME = "Waverider-NetWorkServer-Thread";
 	String NET_WORK_READER = "Waverider-NetworkServer-NetworkReader";

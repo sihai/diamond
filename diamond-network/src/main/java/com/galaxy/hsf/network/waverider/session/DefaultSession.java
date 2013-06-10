@@ -49,6 +49,7 @@ public class DefaultSession implements Session {
 	private int outBufferSize;		  				// 网络数据输出缓冲大小
 	private BlockingQueue<ByteBuffer> inputBuffer;	// 网络数据输入缓冲
 	private BlockingQueue<Command> outputBuffer; 	// 网络数据输出缓冲
+	private byte[] waitMoreDataLock;				// 
 	private CommandDispatcher commandDispatcher;	// 命令分发器
 	
 	//
@@ -81,6 +82,7 @@ public class DefaultSession implements Session {
 		state = SessionStateEnum.WAVERIDER_SESSION_STATE_FREE;
 		inputBuffer = new LinkedBlockingQueue<ByteBuffer>(inBufferSize);
 		outputBuffer = new LinkedBlockingQueue<Command>(outBufferSize);
+		waitMoreDataLock = new byte[0];
 		thread = threadFactory.newThread(new SessionTask());
 		thread.start();
 		return true;
@@ -187,6 +189,7 @@ public class DefaultSession implements Session {
 	//==============================================================
 	@Override
 	public void onRead() throws IOException, InterruptedException {
+		logger.debug("onRead");
 		ByteBuffer buffer = ByteBuffer.allocate(NetWorkConstants.DEFAULT_NETWORK_BUFFER_SIZE);
 		int ret = 0;
 		do {
@@ -199,12 +202,16 @@ public class DefaultSession implements Session {
 		buffer.flip();
 		if(buffer.hasRemaining()) {
 			inputBuffer.put(buffer);
+			synchronized(waitMoreDataLock) {
+				waitMoreDataLock.notifyAll();
+			}
 		}
 		//logger.info("Session is onRead, read " + buffer.remaining() + " bytes");
 	}
 	
 	@Override
 	public void onWrite() throws IOException {
+		logger.debug("onWrite");
 		int count = 0;
 		Command command = null;
 		Packet packet = null;
@@ -226,6 +233,25 @@ public class DefaultSession implements Session {
 	@Override
 	public void onException(Exception e) {
 		// TODO
+	}
+
+	@Override
+	public boolean notifyWrite(SocketChannel channel) {
+		logger.debug("notifyWrite");
+		return this.netWorkServer.notifyWrite(this.channel);
+	}
+
+	@Override
+	public boolean notifyRead(SocketChannel channel) {
+		logger.debug("notifyRead");
+		return this.netWorkServer.notifyRead(this.channel);
+	}
+
+	@Override
+	public void waitMoreData(long timeout) throws InterruptedException {
+		synchronized(waitMoreDataLock) {
+			waitMoreDataLock.wait(timeout);
+		}
 	}
 
 	//==============================================================
@@ -259,7 +285,7 @@ public class DefaultSession implements Session {
 	 * parse network data, convert to command
 	 */
 	private Command _parse_() throws IOException, InterruptedException {
-		Command command = CommandFactory.unmarshallCommandFromPacket(Packet.parse(inputBuffer, netWorkServer, channel));
+		Command command = CommandFactory.unmarshallCommandFromPacket(Packet.parse(inputBuffer, this, channel));
 		command.setSession(this);
 		return command;
 	}

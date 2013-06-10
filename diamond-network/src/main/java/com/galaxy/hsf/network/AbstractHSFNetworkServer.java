@@ -5,7 +5,7 @@
 package com.galaxy.hsf.network;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
+import java.net.SocketException;
 
 import com.galaxy.hsf.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.hsf.util.NetworkUtil;
@@ -55,7 +55,7 @@ public abstract class AbstractHSFNetworkServer extends AbstractLifeCycle impleme
 				if(null == serverIp) {
 					try {
 						serverIp = NetworkUtil.getLocalIp();
-					} catch (UnknownHostException e) {
+					} catch (SocketException e) {
 						throw new RuntimeException("Can not get ip of this host", e);
 					}
 				}

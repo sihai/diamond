@@ -11,6 +11,7 @@ import com.galaxy.hsf.network.waverider.SlaveWorker;
 import com.galaxy.hsf.network.waverider.command.Command;
 import com.galaxy.hsf.network.waverider.command.exception.ExecuteCommandException;
 import com.galaxy.hsf.network.waverider.common.LifeCycle;
+import com.galaxy.hsf.network.waverider.network.NetWorkEndPoint;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import com.galaxy.hsf.network.waverider.common.LifeCycle;
  * @author <a href="mailto:sihai@taobao.com">sihai</a>
  *
  */
-public interface Session extends LifeCycle {
+public interface Session extends LifeCycle, NetWorkEndPoint {
 
 	String SESSION_THREAD_NAME_PREFIX = "Waverider-Session";
 	

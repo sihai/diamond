@@ -49,6 +49,8 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	private BlockingQueue<ByteBuffer> inputBuffer;					// 网络数据输入缓冲
 	private BlockingQueue<Command> outputBuffer;					// 网络数据输出缓冲
 	
+	private byte[] waitMoreDataLock;								// 
+	
 	//=============================================================
 	//				构造函数
 	//=============================================================
@@ -67,6 +69,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 		isWeakuped = new AtomicBoolean(false);
 		inputBuffer = new LinkedBlockingQueue<ByteBuffer>();
 		outputBuffer = new LinkedBlockingQueue<Command>();
+		waitMoreDataLock = new byte[0];
 	}
 
 	//=============================================================
@@ -129,6 +132,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	
 	@Override
 	public boolean notifyRead(SocketChannel channel) {
+		logger.debug("notifyRead");
 		if(state.get() == NetworkStateEnum.NETWORK_STATE_CONNECTED.value) {
 			// 添加读请求
 			opsChangeRequest.addOps(SelectionKey.OP_READ);
@@ -142,6 +146,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 
 	@Override
 	public boolean notifyWrite(SocketChannel channel) {
+		logger.debug("notifyWrite");
 		if(state.get() == NetworkStateEnum.NETWORK_STATE_CONNECTED.value) {
 			// 添加写请求
 			opsChangeRequest.addOps(SelectionKey.OP_WRITE);
@@ -153,6 +158,13 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 		return false;
 	}
 	
+	@Override
+	public void waitMoreData(long timeout) throws InterruptedException {
+		synchronized(waitMoreDataLock) {
+			waitMoreDataLock.wait(timeout);
+		}
+	}
+
 	@Override
 	public void run() {
 		
@@ -236,7 +248,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	 * @throws InterruptedException
 	 */
 	private void dispatch() throws IOException, InterruptedException {
-		
+		logger.debug("try dispatch");
 		SelectionKey key = null;
 		key = opsChangeRequest.getChannel().keyFor(selector);
 		if(key != null) {
@@ -293,6 +305,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	 * @throws InterruptedException
 	 */
 	private void onRead(SelectionKey key) throws IOException, InterruptedException {
+		logger.debug("onRead");
 		// 分配临时缓冲
 		ByteBuffer readByteBuffer = ByteBuffer.allocate(NetWorkConstants.DEFAULT_NETWORK_BUFFER_SIZE);
 		int ret = 0;
@@ -307,7 +320,11 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 		readByteBuffer.flip();
 		if(readByteBuffer.hasRemaining()) {
 			inputBuffer.put(readByteBuffer);
+			synchronized(waitMoreDataLock) {
+				waitMoreDataLock.notifyAll();
+			}
 		}
+		
 		//logger.info("Slave read " + readByteBuffer.remaining() + " bytes");
 	}
 	
@@ -318,6 +335,7 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	 * @throws IOException
 	 */
 	private void onWrite(SelectionKey key) throws IOException {
+		logger.debug("onWrite");
 		key.interestOps(key.interestOps() & ~SelectionKey.OP_WRITE);
 		Command command = null;
 		Packet packet = null;
@@ -343,8 +361,10 @@ public class DefaultNetWorkClient implements NetWorkClient, Runnable {
 	 * 尝试唤醒selector, 来转换感兴趣的事件
 	 */
 	private void weakup() {
+		logger.debug("try to weakup");
 		if(isWeakuped.compareAndSet(false, true)) {
 			this.selector.wakeup();
+			logger.debug("weakuped");
 		}
 	}
 	

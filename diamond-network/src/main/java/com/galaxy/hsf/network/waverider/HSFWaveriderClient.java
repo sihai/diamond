@@ -4,6 +4,7 @@
  */
 package com.galaxy.hsf.network.waverider;
 
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -115,7 +116,7 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 					throw new NetworkException("Interrupted", e);
 				}
 			}
-		} catch (UnknownHostException e) {
+		} catch (SocketException e) {
 			throw new NetworkException("OOPS, can not get local ip", e);
 		} finally {
 			System.out.println(String.format("syncrequest consume:%d ms", System.currentTimeMillis() - start));
@@ -131,9 +132,9 @@ public class HSFWaveriderClient extends AbstractNetworkClient implements HSFWave
 	/**
 	 * 
 	 * @return
-	 * @throws UnknownHostException
+	 * @throws SocketException
 	 */
-	private String alloceId() throws UnknownHostException {
+	private String alloceId() throws SocketException {
 		// FIXME
 		return String.format("hsf-request-%s-%d", NetworkUtil.getLocalIp(), idGenerator.incrementAndGet());
 	}
