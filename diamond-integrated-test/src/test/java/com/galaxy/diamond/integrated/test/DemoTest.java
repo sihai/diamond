@@ -1,6 +1,17 @@
 /**
- * High-Speed Service Framework (HSF)
- * 
+ * Copyright 2013 Qiangqiang RAO
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package com.galaxy.diamond.integrated.test;
 
@@ -9,16 +20,16 @@ import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
+import com.galaxy.diamond.consumer.ServiceConsumer;
+import com.galaxy.diamond.consumer.factory.ServiceConsumerFactory;
+import com.galaxy.diamond.consumer.impl.DefaultServiceConsumerFactory;
 import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.hsf.consumer.ServiceConsumer;
-import com.galaxy.hsf.consumer.factory.ServiceConsumerFactory;
-import com.galaxy.hsf.consumer.impl.DefaultServiceConsumerFactory;
-import com.galaxy.hsf.provider.ServiceProvider;
-import com.galaxy.hsf.provider.factory.ServiceProviderFactory;
-import com.galaxy.hsf.provider.impl.DefaultServiceProviderFactory;
-import com.galaxy.hsf.rpc.protocol.hsf.HSFRPCProtocol4Client;
-import com.galaxy.hsf.rpc.protocol.hsf.HSFRPCProtocol4Server;
-import com.galaxy.hsf.service.HSFServiceFactory;
+import com.galaxy.diamond.provider.ServiceProvider;
+import com.galaxy.diamond.provider.factory.ServiceProviderFactory;
+import com.galaxy.diamond.provider.impl.DefaultServiceProviderFactory;
+import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
+import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Server;
+import com.galaxy.diamond.service.HSFServiceFactory;
 
 /**
  * 
@@ -34,7 +45,7 @@ public class DemoTest {
 		metadata.setName("test");
 		metadata.setInterfaceName(DemoService.class.getName());
 		metadata.setVersion("0.0.1");
-		metadata.addExporteProtocol(HSFRPCProtocol4Server.PROTOCOL, new Properties());
+		metadata.addExporteProtocol(DefaultRPCProtocol4Server.PROTOCOL, new Properties());
 		ServiceProviderFactory factory = new DefaultServiceProviderFactory();
 		ServiceProvider provider = factory.newServiceProvider(metadata, new DemoServiceImpl());
 		HSFServiceFactory.getHSFService().register(metadata, provider.getMethodInvoker());
@@ -43,7 +54,7 @@ public class DemoTest {
 		cmetadata.setName("test");
 		cmetadata.setInterfaceName(DemoService.class.getName());
 		cmetadata.setVersion("0.0.1");
-		cmetadata.addImportPortocol(HSFRPCProtocol4Client.PROTOCOL, new Properties());
+		cmetadata.addImportPortocol(DefaultRPCProtocol4Client.PROTOCOL, new Properties());
 		ServiceConsumerFactory cfactory = new DefaultServiceConsumerFactory();
 		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, HSFServiceFactory.getHSFService(), HSFServiceFactory.getHSFService());
 		DemoService service = (DemoService)consumer.getProxy();

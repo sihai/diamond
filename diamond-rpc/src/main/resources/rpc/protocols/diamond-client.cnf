@@ -1,0 +1,2 @@
+network.client.factory = com.galaxy.diamond.network.waverider.WaveriderNetworkClientFactory
+network.max.sessionPreHost = 1

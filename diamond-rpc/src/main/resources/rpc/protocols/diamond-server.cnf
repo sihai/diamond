@@ -1,0 +1,1 @@
+network.server.factory = com.galaxy.diamond.network.waverider.WaveriderNetworkServerFactory
