@@ -33,7 +33,7 @@ import com.galaxy.diamond.common.thread.CommonThreadFactory;
 import com.galaxy.diamond.network.NetworkRequest;
 import com.galaxy.diamond.network.HSFNetworkServer.NetworkRequestHandler;
 import com.galaxy.diamond.network.HSFNetworkServer.ResponseCallback;
-import com.galaxy.diamond.service.HSFServiceFactory;
+import com.galaxy.diamond.service.DiamondServiceFactory;
 import com.galaxy.diamond.service.request.executor.HSFRequestExecutor;
 
 /**
@@ -139,7 +139,7 @@ public class HSFNetworkRequestHandler extends AbstractLifeCycle implements Netwo
 		@Override
 		public void run() {
 			// FIXME
-			Response response = executor.execute(HSFServiceFactory.getHSFService(), (Request)request.getPayload());
+			Response response = executor.execute(DiamondServiceFactory.getHSFService(), (Request)request.getPayload());
 			callback.completed(request, response);
 		}
 	

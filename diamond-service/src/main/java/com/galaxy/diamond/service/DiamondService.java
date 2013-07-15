@@ -14,25 +14,14 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.request.executor;
+package com.galaxy.diamond.service;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
 import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.service.DiamondService;
 
 /**
  * 
  * @author sihai
  *
  */
-public interface HSFRequestExecutor extends LifeCycle {
-
-	/**
-	 * 
-	 * @param service
-	 * @param request
-	 * @return
-	 */
-	Response execute(DiamondService service, Request request);
+public interface DiamondService extends LifeCycle, ServiceRegister, ServiceSubscriber, ServiceInvoker {	
 }

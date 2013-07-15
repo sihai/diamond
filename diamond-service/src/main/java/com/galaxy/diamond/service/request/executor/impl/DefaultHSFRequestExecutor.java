@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import com.galaxy.diamond.common.Request;
 import com.galaxy.diamond.common.Response;
 import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.service.HSFService;
+import com.galaxy.diamond.service.DiamondService;
 import com.galaxy.diamond.service.request.executor.HSFRequestExecutor;
 
 /**
@@ -35,7 +35,7 @@ public class DefaultHSFRequestExecutor extends AbstractLifeCycle implements HSFR
 	private Log logger = LogFactory.getLog(DefaultHSFRequestExecutor.class);
 	
 	@Override
-	public Response execute(HSFService service, Request request) {
+	public Response execute(DiamondService service, Request request) {
 		Response response = new Response();
 		try {
 			logger.debug(String.format("%s execute request:%s", this.getClass().getName(), request.toString()));

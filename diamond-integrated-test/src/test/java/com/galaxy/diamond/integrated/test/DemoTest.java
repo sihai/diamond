@@ -29,7 +29,7 @@ import com.galaxy.diamond.provider.factory.ServiceProviderFactory;
 import com.galaxy.diamond.provider.impl.DefaultServiceProviderFactory;
 import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
 import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Server;
-import com.galaxy.diamond.service.HSFServiceFactory;
+import com.galaxy.diamond.service.DiamondServiceFactory;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class DemoTest {
 		metadata.addExporteProtocol(DefaultRPCProtocol4Server.PROTOCOL, new Properties());
 		ServiceProviderFactory factory = new DefaultServiceProviderFactory();
 		ServiceProvider provider = factory.newServiceProvider(metadata, new DemoServiceImpl());
-		HSFServiceFactory.getHSFService().register(metadata, provider.getMethodInvoker());
+		DiamondServiceFactory.getHSFService().register(metadata, provider.getMethodInvoker());
 		// Consumer
 		ServiceMetadata cmetadata = new ServiceMetadata();
 		cmetadata.setName("test");
@@ -56,7 +56,7 @@ public class DemoTest {
 		cmetadata.setVersion("0.0.1");
 		cmetadata.addImportPortocol(DefaultRPCProtocol4Client.PROTOCOL, new Properties());
 		ServiceConsumerFactory cfactory = new DefaultServiceConsumerFactory();
-		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, HSFServiceFactory.getHSFService(), HSFServiceFactory.getHSFService());
+		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, DiamondServiceFactory.getHSFService(), DiamondServiceFactory.getHSFService());
 		DemoService service = (DemoService)consumer.getProxy();
 		String result = service.service("World");
 		if(!StringUtils.equals(result, "Hello World")) {

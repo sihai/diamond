@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import com.galaxy.diamond.common.exception.DiamondException;
 import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
 import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.service.HSFService;
+import com.galaxy.diamond.service.DiamondService;
 import com.galaxy.diamond.service.MethodInvoker;
 import com.galaxy.diamond.service.ServiceInvoker;
 import com.galaxy.diamond.service.ServiceRegister;
@@ -33,7 +33,7 @@ import com.galaxy.diamond.service.ServiceSubscriber;
  * @author sihai
  *
  */
-public abstract class AbstractHSFService extends AbstractLifeCycle implements HSFService {
+public abstract class AbstractHSFService extends AbstractLifeCycle implements DiamondService {
 
 	private static final Log logger = LogFactory.getLog(AbstractHSFService.class);
 	
