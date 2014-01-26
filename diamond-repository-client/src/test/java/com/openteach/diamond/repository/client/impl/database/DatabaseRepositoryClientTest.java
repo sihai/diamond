@@ -14,19 +14,19 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.database;
+package com.openteach.diamond.repository.client.impl.database;
+
+import java.util.List;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import com.galaxy.diamond.repository.client.Certificate;
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.RepositoryClient;
-import com.galaxy.diamond.repository.client.cache.Cache;
-import com.galaxy.diamond.repository.client.impl.database.DatabaseCertificate;
-import com.galaxy.diamond.repository.client.impl.database.DatabaseRepositoryClientFactory;
+import com.openteach.diamond.repository.client.Certificate;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.repository.client.cache.Cache;
 
 /**
  * 
@@ -40,19 +40,49 @@ public class DatabaseRepositoryClientTest extends TestCase {
 		Certificate certificate = makeDatabaseCertificate();
 		RepositoryClient client = new DatabaseRepositoryClientFactory().withCertificate(certificate)
 				.enableCache().withCacheType(Cache.Type.HYBRID_LRU).withMaxEntries(Cache.DEFAULT_MAX_ENTRIES)
-				.withMaxEntriesInMemory(Cache.DEFAULT_MAX_ENTRIES / 5).withCacheFileName("/tmp/hsf.repostory.client.cache").newInstace();
+				.withMaxEntriesInMemory(Cache.DEFAULT_MAX_ENTRIES / 5).withCacheFileName("/tmp/diamond.repostory.client.cache").newInstace();
 		for(int i = 0; i < 10000; i++) {
-			client.put(client.newData("key" + i, "value" + i, 0L));
+			client.put(client.newData("key_" + i, "value_" + i));
 		}
 		
 		for(int i = 0; i < 10000; i++) {
-			Key key = client.newKey("key" + i);
+			Key key = client.newKey("key_" + i);
 			Data data = client.get(key);
 			if(!data.getKey().equals(key)) {
 				throw new RuntimeException("Wrong");
 			}
 			if(!data.getValue().equals("value" + i)) {
 				throw new RuntimeException("Wrong");
+			}
+		}
+		
+		client.stop();
+		client.destroy();
+	}
+	
+	@Test
+	public void test_sub_key() throws Exception {
+		Certificate certificate = makeDatabaseCertificate();
+		RepositoryClient client = new DatabaseRepositoryClientFactory().withCertificate(certificate)
+				.enableCache().withCacheType(Cache.Type.HYBRID_LRU).withMaxEntries(Cache.DEFAULT_MAX_ENTRIES)
+				.withMaxEntriesInMemory(Cache.DEFAULT_MAX_ENTRIES / 5).withCacheFileName("/tmp/diamond.repostory.client.cache").newInstace();
+		for(int i = 0; i < 100; i++) {
+			for(int j = 0; j < 10; j++) {
+				client.put(client.newData("key_" + i, "sub_key_" + j, String.format("value_%d_%d_", i, j)));
+			}
+		}
+		
+		for(int i = 0; i < 100; i++) {
+			
+			Key key = client.newKey("key_" + i);
+			List<Data> dList = client.mget(key);
+			if(10 != dList.size()) {
+				throw new RuntimeException("Wrong");
+			}
+			for(int j = 0; j < 10; j++) {
+				if(!dList.get(j).getValue().equals(String.format("value_%d_%d_", i, j))) {
+					throw new RuntimeException("Wrong");
+				}
 			}
 		}
 		

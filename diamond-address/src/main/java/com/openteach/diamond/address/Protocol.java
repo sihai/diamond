@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address;
+package com.openteach.diamond.address;
 
 import org.apache.commons.lang.StringUtils;
 

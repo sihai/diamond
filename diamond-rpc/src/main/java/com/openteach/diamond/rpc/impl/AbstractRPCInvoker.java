@@ -13,18 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.impl;
+package com.openteach.diamond.rpc.impl;
 
 import java.lang.reflect.Method;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.rpc.RPCInvoker;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.rpc.RPCInvoker;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
 
 /**
  * 

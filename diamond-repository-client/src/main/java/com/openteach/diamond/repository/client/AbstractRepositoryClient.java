@@ -14,17 +14,19 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client;
+package com.openteach.diamond.repository.client;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.repository.client.cache.Cache;
-import com.galaxy.diamond.repository.client.exception.SequenceNotMatchException;
-import com.galaxy.diamond.repository.client.factory.DummyCacheFactory;
-import com.galaxy.diamond.repository.client.listener.Listener;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.repository.client.cache.Cache;
+import com.openteach.diamond.repository.client.exception.SequenceNotMatchException;
+import com.openteach.diamond.repository.client.factory.DummyCacheFactory;
+import com.openteach.diamond.repository.client.listener.Listener;
 
 /**
  * 
@@ -46,7 +48,7 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	/**
 	 * 
 	 */
-	private Cache<Key, Data> localCache = new DummyCacheFactory<Key, Data>().newInstance();
+	private Cache<Key, Object> localCache = new DummyCacheFactory<Key, Object>().newInstance();
 	
 	/**
 	 * 
@@ -63,7 +65,7 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	 * 
 	 * @param localCache
 	 */
-	public AbstractRepositoryClient(Certificate certificate, Cache<Key, Data> localCache) {
+	public AbstractRepositoryClient(Certificate certificate, Cache<Key, Object> localCache) {
 		try {
 			this.certificate = certificate.clone();
 		} catch (CloneNotSupportedException e) {
@@ -76,13 +78,13 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	public void initialize() {
 		super.initialize();
 		validateCertificate();
-		this.localCache.initialize();
+		//this.localCache.initialize();
 	}
 
 	@Override
 	public void start() {
 		super.start();
-		this.localCache.start();
+		//this.localCache.start();
 	}
 
 	@Override
@@ -99,17 +101,37 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	
 	@Override
 	public Key newKey(String key) {
-		return new Key(this.certificate.getNamespace(), key, -1L);
+		return newKey(key, Key.NONE_SUB_KEY);
+	}
+	
+	@Override
+	public Key newKey(String key, String subKey) {
+		return newKey(key, subKey, Key.INIT_SEQUENCE);
+	}
+	
+	@Override
+	public Key newKey(String key, String subKey, long sequence) {
+		return new Key(this.certificate.getNamespace(), key, subKey, sequence);
 	}
 
 	@Override
-	public Data newData(String key, String value, long sequence) {
-		return newData(newKey(key), value, sequence);
+	public Data newData(String key, String value) {
+		return newData(key, Key.NONE_SUB_KEY, value);
 	}
-
+	
 	@Override
-	public Data newData(Key key, String value, long sequence) {
-		return new Data(key, value, sequence);
+	public Data newData(String key, String subKey, String value) {
+		return newData(key, subKey, Key.INIT_SEQUENCE, value);
+	}
+	
+	@Override
+	public Data newData(String key, String subKey, long sequence, String value) {
+		return newData(newKey(key, subKey, sequence), value);
+	}
+	
+	@Override
+	public Data newData(Key key, String value) {
+		return new Data(key, value);
 	}
 
 	@Override
@@ -127,6 +149,36 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 		Data data = get(key);
 		register(key, listener);
 		return data;
+	}
+	
+	@Override
+	public List<Data> mget(Key key) {
+		List<Data> dList = null;
+		List<Key> keyList = (List<Key>)localCache.get(key);
+		if(null == keyList) {
+			keyList = new ArrayList<Key>();
+			dList = mgetFromServer(key);
+			for(Data d : dList) {
+				localCache.put(d.getKey(), d);
+				keyList.add(d.getKey());
+			}
+			localCache.put(key, keyList);
+		} else {
+			dList = new ArrayList<Data>();
+			for(Key k : keyList) {
+				dList.add(get(k));
+			}
+		}
+		return dList;
+	}
+
+	@Override
+	public List<Data> mget(Key key, Listener listener) {
+		List<Data> dList = mget(key);
+		for(Data d : dList) {
+			register(d.getKey(), listener);
+		}
+		return dList;
 	}
 
 	@Override
@@ -173,6 +225,13 @@ public abstract class AbstractRepositoryClient extends AbstractLifeCycle impleme
 	 * @return
 	 */
 	protected abstract Data getFromServer(Key key);
+	
+	/**
+	 * Get all data from remote server (subkey equals null)
+	 * @param key
+	 * @return
+	 */
+	protected abstract List<Data> mgetFromServer(Key key);
 	
 	/**
 	 * Put data into remote server

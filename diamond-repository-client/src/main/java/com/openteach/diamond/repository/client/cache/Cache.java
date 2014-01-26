@@ -14,10 +14,10 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.cache;
+package com.openteach.diamond.repository.client.cache;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
 
 /**
  * 

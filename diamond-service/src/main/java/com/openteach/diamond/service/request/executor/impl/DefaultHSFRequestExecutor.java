@@ -14,16 +14,16 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.request.executor.impl;
+package com.openteach.diamond.service.request.executor.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.service.DiamondService;
-import com.galaxy.diamond.service.request.executor.HSFRequestExecutor;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.service.DiamondService;
+import com.openteach.diamond.service.request.executor.HSFRequestExecutor;
 
 /**
  * 

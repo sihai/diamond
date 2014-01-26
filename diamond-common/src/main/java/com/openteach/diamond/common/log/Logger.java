@@ -2,7 +2,7 @@
  * High-Speed Service Framework (diamond)
  * 
  */
-package com.galaxy.diamond.common.log;
+package com.openteach.diamond.common.log;
 
 import java.io.File;
 import java.util.Enumeration;
@@ -14,7 +14,7 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.xml.DOMConfigurator;
 
-import com.galaxy.diamond.common.Constants;
+import com.openteach.diamond.common.Constants;
 
 /**
  * 

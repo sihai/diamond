@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.session;
+package com.openteach.diamond.network.waverider.session;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -26,15 +26,15 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.SlaveWorker;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.command.CommandDispatcher;
-import com.galaxy.diamond.network.waverider.command.CommandFactory;
-import com.galaxy.diamond.network.waverider.command.exception.ExecuteCommandException;
-import com.galaxy.diamond.network.waverider.common.WaveriderThreadFactory;
-import com.galaxy.diamond.network.waverider.network.NetWorkConstants;
-import com.galaxy.diamond.network.waverider.network.NetWorkServer;
-import com.galaxy.diamond.network.waverider.network.Packet;
+import com.openteach.diamond.network.waverider.SlaveWorker;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.command.CommandDispatcher;
+import com.openteach.diamond.network.waverider.command.CommandFactory;
+import com.openteach.diamond.network.waverider.command.exception.ExecuteCommandException;
+import com.openteach.diamond.network.waverider.common.WaveriderThreadFactory;
+import com.openteach.diamond.network.waverider.network.NetWorkConstants;
+import com.openteach.diamond.network.waverider.network.NetWorkServer;
+import com.openteach.diamond.network.waverider.network.Packet;
 
 /**
  * <p>

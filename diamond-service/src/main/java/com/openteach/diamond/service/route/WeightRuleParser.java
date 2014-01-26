@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.route;
+package com.openteach.diamond.service.route;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.galaxy.diamond.common.exception.internal.RuleParseException;
+import com.openteach.diamond.common.exception.internal.RuleParseException;
 
 /**
  * 

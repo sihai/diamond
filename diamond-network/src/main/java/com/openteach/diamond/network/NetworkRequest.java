@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network;
+package com.openteach.diamond.network;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,9 +25,9 @@ import java.nio.ByteBuffer;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-import com.galaxy.diamond.network.exception.NetworkException;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.network.Packet;
+import com.openteach.diamond.network.exception.NetworkException;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.network.Packet;
 
 /**
  * 

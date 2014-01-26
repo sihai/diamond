@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.slave.failure.slave;
+package com.openteach.diamond.network.waverider.slave.failure.slave;
 
 import java.util.List;
 
-import com.galaxy.diamond.network.waverider.master.MasterState;
+import com.openteach.diamond.network.waverider.master.MasterState;
 
 /**
  * Slave端监控Master故障，并做响应的处理

@@ -13,16 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.protocol.diamond;
+package com.openteach.diamond.rpc.protocol.diamond;
 
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.diamond.network.factory.NetworkClientFactory;
-import com.galaxy.diamond.rpc.protocol.AbstractRPCProtocolFactory;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Client;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4ClientFactory;
+import com.openteach.diamond.network.factory.NetworkClientFactory;
+import com.openteach.diamond.rpc.protocol.AbstractRPCProtocolFactory;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Client;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4ClientFactory;
 
 /**
  * 

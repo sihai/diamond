@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.container;
+package com.openteach.diamond.container;
 
-import com.galaxy.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.exception.DiamondException;
 
 /**
  * 

@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.common.configuration;
+package com.openteach.diamond.common.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.galaxy.diamond.common.Constants;
+import com.openteach.diamond.common.Constants;
 
 /**
  * 

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address;
+package com.openteach.diamond.address;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.openteach.diamond.metadata.ServiceURL;
 
 /**
  * Represent of a address for one service
@@ -38,13 +40,17 @@ public class ServiceAddress {
 	/**
 	 * All addresses of this service
 	 */
-	private Map<Protocol, List<String>> addressMap = new HashMap<Protocol, List<String>>(Protocol.values().length);
+	private Map<Protocol, List<ServiceURL>> addressMap = new HashMap<Protocol, List<ServiceURL>>(Protocol.values().length);
 
 	/**
 	 * 
 	 * @param serviceName
 	 */
 	public ServiceAddress(String serviceName) {
+		this.serviceName = serviceName;
+	}
+	
+	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
 	
@@ -58,17 +64,17 @@ public class ServiceAddress {
 	
 	/**
 	 * 
-	 * @param protocol
-	 * @param address
+	 * @param url
 	 * @return
 	 */
-	public ServiceAddress addAddress(Protocol protocol, String address) {
-		List<String> addressList = addressMap.get(protocol);
+	public ServiceAddress addAddress(ServiceURL url) {
+		Protocol p = Protocol.toEnum(url.getProtocol());
+		List<ServiceURL> addressList = addressMap.get(p);
 		if(null == addressList) {
-			addressList = new ArrayList<String>(1);
-			addressMap.put(protocol, addressList);
+			addressList = new ArrayList<ServiceURL>(8);
+			addressMap.put(p, addressList);
 		}
-		addressList.add(address);
+		addressList.add(url);
 		return this;
 	}
 	
@@ -78,10 +84,10 @@ public class ServiceAddress {
 	 * @param addressList
 	 * @return
 	 */
-	public ServiceAddress addAddress(Protocol protocol, List<String> addressList) {
-		List<String> list = addressMap.get(protocol);
+	public ServiceAddress addAddress(Protocol protocol, List<ServiceURL> addressList) {
+		List<ServiceURL> list = addressMap.get(protocol);
 		if(null == list) {
-			list = new ArrayList<String>(1);
+			list = new ArrayList<ServiceURL>(8);
 			addressMap.put(protocol, list);
 		}
 		list.addAll(addressList);
@@ -93,8 +99,8 @@ public class ServiceAddress {
 	 * @param protocol
 	 * @return
 	 */
-	public List<String> getAddresses(Protocol protocol) {
-		List<String> addressList = addressMap.get(protocol);
+	public List<ServiceURL> getAddresses(Protocol protocol) {
+		List<ServiceURL> addressList = addressMap.get(protocol);
 		return null == addressList ? Collections.EMPTY_LIST : Collections.unmodifiableList(addressList);
 	}
 	
@@ -102,7 +108,7 @@ public class ServiceAddress {
 	 * 
 	 * @return
 	 */
-	public Map<Protocol, List<String>> getAllAddresses() {
+	public Map<Protocol, List<ServiceURL>> getAllAddresses() {
 		return Collections.unmodifiableMap(addressMap);
 	}
 	
@@ -127,10 +133,10 @@ public class ServiceAddress {
 		StringBuilder sb = new StringBuilder();
 		sb.append("===============================================================================").append("\n");
 		sb.append("	ServiceName:").append(serviceName).append("\n");
-		for(Map.Entry<Protocol, List<String>> e : addressMap.entrySet()) {
+		for(Map.Entry<Protocol, List<ServiceURL>> e : addressMap.entrySet()) {
 			sb.append("		Protocol:").append(e.getKey().getName()).append("\n");
 			sb.append("			Addresses:").append("\n");
-			for(String address : e.getValue()) {
+			for(ServiceURL address : e.getValue()) {
 				sb.append("				").append(address).append("\n");
 			}
 		}

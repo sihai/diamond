@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.plugin;
+package com.openteach.diamond.router.plugin;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
 
 
 /**

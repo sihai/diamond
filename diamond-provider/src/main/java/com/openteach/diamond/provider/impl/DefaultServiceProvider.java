@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.provider.impl;
+package com.openteach.diamond.provider.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -23,10 +23,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.provider.AbstractServiceProvider;
-import com.galaxy.diamond.service.MethodInvoker;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.provider.AbstractServiceProvider;
+import com.openteach.diamond.service.MethodInvoker;
 
 /**
  * 

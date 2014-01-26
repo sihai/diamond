@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client;
+package com.openteach.diamond.repository.client;
 
 import java.io.Serializable;
 
@@ -40,7 +40,7 @@ public class Data implements Serializable {
 	 */
 	private Serializable value;
 
-	public Data(Key key, Serializable value, long sequence) {
+	public Data(Key key, Serializable value) {
 		this.key = key;
 		this.value = value;
 	}

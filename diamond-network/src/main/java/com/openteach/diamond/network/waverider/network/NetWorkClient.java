@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.network;
+package com.openteach.diamond.network.waverider.network;
 
 import java.io.IOException;
 
-import com.galaxy.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.command.Command;
 
 /**
  * <p>

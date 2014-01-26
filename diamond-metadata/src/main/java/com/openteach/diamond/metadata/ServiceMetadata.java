@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata;
+package com.openteach.diamond.metadata;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -103,17 +103,14 @@ public final class ServiceMetadata implements Serializable {
     static public final String CONSUMER_MAX_POOL_SIZE = "ConsumerMaxPoolSize";
     
     /**
-     * 发布的方式，用来支持多种rpc协议
-     * 
-     * key为发布的RPC协议的关键字，统一为大写，例如HSF、HTTP和XFIRE
-     * value为Properties，用于进行RPC协议的一些特殊配置
+     * rpc protocol -> properties
      */
-    private Map<String, Properties> exportProtocols = new HashMap<String, Properties>();
+    private Map<String, Map<String, String>> exportProtocols;
     
     /**
      * 协议地址
      */
-    private Map<String, List<String>> addressMap = new HashMap<String, List<String>>();
+    private Map<String, List<ServiceURL>> addressMap = new HashMap<String, List<ServiceURL>>();
     
 	/**
      * 调用的方式，用来支持多种rpc协议
@@ -202,38 +199,40 @@ public final class ServiceMetadata implements Serializable {
     	serviceProperties.put(key, value);
     }
     
-    /**
-     * 获取服务的发布方式
-     */
-    public Map<String, Properties> getExportProtocols() {
-        return exportProtocols;
-    }
-    public void setExportProtocols(Map<String, Properties> exportProtocols) {
-        this.exportProtocols.putAll(exportProtocols);
-    }
-    public void addExporteProtocol(String protocol, Properties properties) {
-        exportProtocols.put(protocol, properties);
-    }
-    
-    public Map<String, List<String>> getAddressMap() {
+    public Map<String, Map<String, String>> getExportProtocols() {
+		return exportProtocols;
+	}
+
+	public void setExportProtocols(Map<String, Map<String, String>> exportProtocols) {
+		this.exportProtocols = exportProtocols;
+	}
+	
+	public void exportProtocol(String protocol, Map<String, String> properties) {
+		if(null == exportProtocols) {
+			exportProtocols = new HashMap<String, Map<String, String>>();
+		}
+		exportProtocols.put(protocol, properties);
+	}
+	
+    public Map<String, List<ServiceURL>> getAddressMap() {
 		return addressMap;
 	}
 
-	public void setAddressMap(Map<String, List<String>> addressMap) {
+	public void setAddressMap(Map<String, List<ServiceURL>> addressMap) {
 		this.addressMap = addressMap;
 	}
 	
-	public void addAddress(String protocol, String address) {
-		List<String> addressList = addressMap.get(protocol);
+	public void addAddress(String protocol, ServiceURL address) {
+		List<ServiceURL> addressList = addressMap.get(protocol);
 		if(null == addressList) {
-			addressList = new ArrayList<String>(8);
+			addressList = new ArrayList<ServiceURL>(8);
 			addressMap.put(protocol, addressList);
 		}
 		addressList.add(address);
 	}
 	
-	public void removeddress(String protocol, String address) {
-		List<String> addressList = addressMap.get(protocol);
+	public void removeddress(String protocol, ServiceURL address) {
+		List<ServiceURL> addressList = addressMap.get(protocol);
 		if(null != addressList) {
 			addressList.remove(address);
 			if(addressList.isEmpty()) {
@@ -242,21 +241,21 @@ public final class ServiceMetadata implements Serializable {
 		}
 	}
 	
-	public void addAddresses(String protocol, List<String> addresses) {
-		List<String> addressList = addressMap.get(protocol);
+	public void addAddresses(String protocol, List<ServiceURL> addresses) {
+		List<ServiceURL> addressList = addressMap.get(protocol);
 		if(null == addressList) {
-			addressList = new ArrayList<String>(8);
+			addressList = new ArrayList<ServiceURL>(8);
 			addressMap.put(protocol, addressList);
 		}
-		for(String address : addresses) {
+		for(ServiceURL address : addresses) {
 			if(!addressList.contains(address)) {
 				addressList.add(address);
 			}
 		}
 	}
 	
-	public void removeAddresses(String protocol, List<String> addresses) {
-		List<String> addressList = addressMap.get(protocol);
+	public void removeAddresses(String protocol, List<ServiceURL> addresses) {
+		List<ServiceURL> addressList = addressMap.get(protocol);
 		if(null != addressList) {
 			addressList.removeAll(addresses);
 			if(addressList.isEmpty()) {

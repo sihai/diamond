@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.session;
+package com.openteach.diamond.network.waverider.session;
 
 import java.nio.channels.SocketChannel;
 
-import com.galaxy.diamond.network.waverider.SlaveWorker;
-import com.galaxy.diamond.network.waverider.command.CommandDispatcher;
+import com.openteach.diamond.network.waverider.SlaveWorker;
+import com.openteach.diamond.network.waverider.command.CommandDispatcher;
 
 /**
  * 

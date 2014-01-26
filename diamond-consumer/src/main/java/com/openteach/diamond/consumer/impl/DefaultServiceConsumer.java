@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.consumer.impl;
+package com.openteach.diamond.consumer.impl;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -25,12 +25,12 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.consumer.AbstractServiceConsumer;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
-import com.galaxy.diamond.service.ServiceInvoker;
-import com.galaxy.diamond.service.ServiceSubscriber;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.consumer.AbstractServiceConsumer;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
+import com.openteach.diamond.service.ServiceInvoker;
+import com.openteach.diamond.service.ServiceSubscriber;
 
 /**
  * 

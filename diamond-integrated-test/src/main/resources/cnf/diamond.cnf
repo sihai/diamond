@@ -29,9 +29,5 @@ rpc.provider.factory = com.openteach.diamond.rpc.impl.DefaultRPCProtocolProvider
 
 router.factory = com.openteach.diamond.router.impl.DefaultServiceRouterFactory
 
-# request handler
-request.handler.resource.config.minThreadCount = 1
-request.handler.resource.config.maxThreadCount = 512
-request.handler.resource.config.keepAliveTime = 60
-request.handler.resource.config.queue.size = 4
+# 
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.event;
+package com.openteach.diamond.event;
 
 /**
  * 

@@ -13,13 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.plugin;
+package com.openteach.diamond.router.plugin;
 
 import java.util.List;
 
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.address.Protocol;
+import com.openteach.diamond.address.ServiceAddress;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
 
 /**
  * 
@@ -40,5 +41,5 @@ public interface RouterPlugin extends LifeCycle {
 	 * @param protocol
 	 * @return
 	 */
-	List<String> route(String serviceName, Protocol protocol);
+	List<ServiceURL> route(String serviceName, Protocol protocol);
 }

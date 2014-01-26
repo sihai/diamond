@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.route;
+package com.openteach.diamond.service.route;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,9 +24,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.log.Logger;
-import com.galaxy.diamond.common.matcher.StringMatcher;
-import com.galaxy.diamond.util.NumberUtil;
+import com.openteach.diamond.common.log.Logger;
+import com.openteach.diamond.common.matcher.StringMatcher;
+import com.openteach.diamond.util.NumberUtil;
 
 /**
  * 

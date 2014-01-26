@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.cache;
+package com.openteach.diamond.repository.client.cache;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -90,6 +90,8 @@ public class HyBridLRUCache<K, V> extends AbstractCache<K, V> {
 	@Override
 	public void start() {
 		super.start();
+		((AbstractCache)memoryCache).start();
+		((AbstractCache)fileCache).start();
 	}
 
 	@Override

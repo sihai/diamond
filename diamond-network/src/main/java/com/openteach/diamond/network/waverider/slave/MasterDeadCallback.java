@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.slave;
+package com.openteach.diamond.network.waverider.slave;
 
-import com.galaxy.diamond.network.waverider.SlaveWorker;
+import com.openteach.diamond.network.waverider.SlaveWorker;
 
 /**
  * <p>

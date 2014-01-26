@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider;
+package com.openteach.diamond.network.waverider;
 
-import com.galaxy.diamond.network.NetworkClient;
-import com.galaxy.diamond.network.factory.NetworkClientFactory;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.NetworkClient;
+import com.openteach.diamond.network.factory.NetworkClientFactory;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
 
 /**
  * 

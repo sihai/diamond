@@ -5,4 +5,4 @@
  * @author sihai
  *
  */
-package com.galaxy.diamond.router.plugin;
+package com.openteach.diamond.router.plugin;

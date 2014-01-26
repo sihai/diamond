@@ -14,13 +14,13 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.route;
+package com.openteach.diamond.service.route;
 
 import org.junit.Test;
 
-import com.galaxy.diamond.common.exception.internal.RuleParseException;
-import com.galaxy.diamond.service.route.WeightRule;
-import com.galaxy.diamond.service.route.WeightRuleParser;
+import com.openteach.diamond.common.exception.internal.RuleParseException;
+import com.openteach.diamond.service.route.WeightRule;
+import com.openteach.diamond.service.route.WeightRuleParser;
 
 /**
  * 

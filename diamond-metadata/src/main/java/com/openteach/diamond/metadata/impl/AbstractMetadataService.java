@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata.impl;
+package com.openteach.diamond.metadata.impl;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.repository.client.RepositoryClient;
 
 /**
  * 

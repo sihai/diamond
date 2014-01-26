@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.common.matcher;
+package com.openteach.diamond.common.matcher;
 
 import java.util.Vector;
 

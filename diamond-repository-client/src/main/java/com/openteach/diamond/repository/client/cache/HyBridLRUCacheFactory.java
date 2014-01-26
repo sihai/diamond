@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.cache;
+package com.openteach.diamond.repository.client.cache;
 
-import com.galaxy.diamond.repository.client.factory.AbstractCacheFactory;
+import com.openteach.diamond.repository.client.factory.AbstractCacheFactory;
 
 /**
  * 

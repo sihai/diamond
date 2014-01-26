@@ -14,25 +14,25 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
-import java.net.SocketException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.router.RouteParameter;
-import com.galaxy.diamond.router.ServiceRouter;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.service.MethodInvoker;
-import com.galaxy.diamond.service.ServiceInvoker;
-import com.galaxy.diamond.util.NetworkUtil;
+import com.openteach.diamond.address.Protocol;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.router.RouteParameter;
+import com.openteach.diamond.router.ServiceRouter;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.service.MethodInvoker;
+import com.openteach.diamond.service.ServiceInvoker;
+import com.openteach.diamond.util.NetworkUtil;
 
 /**
  * 
@@ -106,7 +106,7 @@ public abstract class AbstractServiceInvoker extends AbstractLifeCycle implement
 		parameter.setParameterTypes(parameterTypes);
 		parameter.setArgs(args);
 		parameter.setProtocol(Protocol.toEnum(protocol));
-		List<String> addresses = serviceRouter.route(parameter);
+		List<ServiceURL> addresses = serviceRouter.route(parameter);
 		if(addresses.isEmpty()) {
 			throw new DiamondException(String.format("Not route for servieName:%s, protocol:%s", serviceName, protocol));
 		}
@@ -120,7 +120,7 @@ public abstract class AbstractServiceInvoker extends AbstractLifeCycle implement
 	 * @return
 	 * @throws DiamondException
 	 */
-	protected abstract Object invoke0(Request request, List<String> addresses) throws DiamondException;
+	protected abstract Object invoke0(Request request, List<ServiceURL> addresses) throws DiamondException;
 
 	/**
 	 * 
@@ -132,17 +132,13 @@ public abstract class AbstractServiceInvoker extends AbstractLifeCycle implement
 	 * @return
 	 */
 	protected Request constructRequest(String serviceName, String method, String[] parameterTypes, Object[] args, String protocol) throws DiamondException {
-		try {
-			Request request = new Request();
-			request.setServiceName(serviceName);
-			request.setMethod(method);
-			request.setParameterTypes(parameterTypes);
-			request.setLocalAddress(NetworkUtil.getLocalIp());
-			request.setArgs(args);
-			request.setProtocol(protocol);
-			return request;
-		} catch (SocketException e) {
-			throw new DiamondException("Can not got ip of local host", e);
-		}
+		Request request = new Request();
+		request.setServiceName(serviceName);
+		request.setMethod(method);
+		request.setParameterTypes(parameterTypes);
+		request.setLocalAddress(NetworkUtil.getLocalIp());
+		request.setArgs(args);
+		request.setProtocol(protocol);
+		return request;
 	}
 }

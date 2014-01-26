@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.consumer;
+package com.openteach.diamond.consumer;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.metadata.ServiceMetadata;
 
 
 /**

@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.impl;
+package com.openteach.diamond.rpc.impl;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Client;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Client;
 
 /**
  * 

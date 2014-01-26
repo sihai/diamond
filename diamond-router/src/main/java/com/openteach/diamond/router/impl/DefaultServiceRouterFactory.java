@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.impl;
+package com.openteach.diamond.router.impl;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.router.ServiceRouter;
-import com.galaxy.diamond.router.ServiceRouterFactory;
-import com.galaxy.diamond.router.plugin.RouterPlugin;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.router.ServiceRouter;
+import com.openteach.diamond.router.ServiceRouterFactory;
+import com.openteach.diamond.router.plugin.RouterPlugin;
 
 /**
  * 

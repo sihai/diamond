@@ -13,15 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.slave.failure.slave;
+package com.openteach.diamond.network.waverider.slave.failure.slave;
 
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.SlaveNode;
-import com.galaxy.diamond.network.waverider.master.MasterState;
+import com.openteach.diamond.network.waverider.SlaveNode;
+import com.openteach.diamond.network.waverider.master.MasterState;
 
 /**
  * 

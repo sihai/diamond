@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-package com.galaxy.diamond.network.waverider;
+package com.openteach.diamond.network.waverider;
 
-import com.galaxy.diamond.network.exception.NetworkException;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.slave.MasterDeadCallback;
+import com.openteach.diamond.network.exception.NetworkException;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.slave.MasterDeadCallback;
 
 /**
  * <p>

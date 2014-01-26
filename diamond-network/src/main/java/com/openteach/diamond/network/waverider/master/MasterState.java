@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.master;
+package com.openteach.diamond.network.waverider.master;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,10 +26,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.State;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.network.Packet;
-import com.galaxy.diamond.network.waverider.session.SessionState;
+import com.openteach.diamond.network.waverider.State;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.network.Packet;
+import com.openteach.diamond.network.waverider.session.SessionState;
 
 /**
  * 

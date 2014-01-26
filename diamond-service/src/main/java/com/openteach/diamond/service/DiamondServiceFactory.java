@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service;
+package com.openteach.diamond.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,32 +22,32 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.address.factory.AddressingServiceFactory;
-import com.galaxy.diamond.common.resource.ResourceConfig;
-import com.galaxy.diamond.metadata.MetadataReadService;
-import com.galaxy.diamond.metadata.MetadataWriteService;
-import com.galaxy.diamond.metadata.factory.MetadataReadServiceFactory;
-import com.galaxy.diamond.metadata.factory.MetadataWriteServiceFactory;
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.repository.client.Certificate;
-import com.galaxy.diamond.repository.client.RepositoryClient;
-import com.galaxy.diamond.repository.client.cache.Cache;
-import com.galaxy.diamond.repository.client.factory.AbstractRepositoryClientFactory;
-import com.galaxy.diamond.repository.client.impl.database.DatabaseCertificate;
-import com.galaxy.diamond.router.ServiceRouter;
-import com.galaxy.diamond.router.ServiceRouterFactory;
-import com.galaxy.diamond.router.plugin.RouterPlugin;
-import com.galaxy.diamond.router.plugin.random.RandomRouterPlugin;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.rpc.RPCProtocolProviderFactory;
-import com.galaxy.diamond.service.impl.DefaultHSFService;
-import com.galaxy.diamond.service.impl.DefaultServiceInvoker;
-import com.galaxy.diamond.service.impl.DefaultServiceRegister;
-import com.galaxy.diamond.service.impl.DefaultServiceSubscriber;
-import com.galaxy.diamond.service.request.HSFNetworkRequestHandler;
-import com.galaxy.diamond.service.request.executor.HSFRequestExecutor;
-import com.galaxy.diamond.service.request.executor.impl.DefaultHSFRequestExecutor;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.address.factory.AddressingServiceFactory;
+import com.openteach.diamond.common.resource.ResourceConfig;
+import com.openteach.diamond.metadata.MetadataReadService;
+import com.openteach.diamond.metadata.MetadataWriteService;
+import com.openteach.diamond.metadata.factory.MetadataReadServiceFactory;
+import com.openteach.diamond.metadata.factory.MetadataWriteServiceFactory;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.repository.client.Certificate;
+import com.openteach.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.repository.client.cache.Cache;
+import com.openteach.diamond.repository.client.factory.AbstractRepositoryClientFactory;
+import com.openteach.diamond.repository.client.impl.database.DatabaseCertificate;
+import com.openteach.diamond.router.ServiceRouter;
+import com.openteach.diamond.router.ServiceRouterFactory;
+import com.openteach.diamond.router.plugin.RouterPlugin;
+import com.openteach.diamond.router.plugin.random.RandomRouterPlugin;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.rpc.RPCProtocolProviderFactory;
+import com.openteach.diamond.service.impl.DefaultHSFService;
+import com.openteach.diamond.service.impl.DefaultServiceInvoker;
+import com.openteach.diamond.service.impl.DefaultServiceRegister;
+import com.openteach.diamond.service.impl.DefaultServiceSubscriber;
+import com.openteach.diamond.service.request.HSFNetworkRequestHandler;
+import com.openteach.diamond.service.request.executor.HSFRequestExecutor;
+import com.openteach.diamond.service.request.executor.impl.DefaultHSFRequestExecutor;
 
 
 /**
@@ -57,7 +57,7 @@ import com.galaxy.diamond.service.request.executor.impl.DefaultHSFRequestExecuto
  */
 public class DiamondServiceFactory {
 
-	public static final String HSF_CONFIG_FILE_NAME = "hsf.cnf";
+	public static final String HSF_CONFIG_FILE_NAME = "diamond.cnf";
 	
 	// 
 	
@@ -143,20 +143,20 @@ public class DiamondServiceFactory {
 	private static DefaultServiceInvoker invoker;
 	
 	
-	private static final DiamondService hsfService;
+	private static final DiamondService diamondService;
 	
 	static {
-		hsfService = newHSFService();
+		diamondService = newDiamondService();
 	}
 	
-	public static DiamondService getHSFService() {
-		return hsfService;
+	public static DiamondService getDiamondService() {
+		return diamondService;
 	}
 	
 	public static void destroy() {
-		if(null != hsfService) {
-			hsfService.stop();
-			hsfService.destroy();
+		if(null != diamondService) {
+			diamondService.stop();
+			diamondService.destroy();
 		}
 		// 
 		if(null != invoker) {
@@ -213,7 +213,7 @@ public class DiamondServiceFactory {
 	 * 
 	 * @return
 	 */
-	private static DiamondService newHSFService() {
+	private static DiamondService newDiamondService() {
 		try {
 			// load default first
 			Properties properties = new Properties();
@@ -294,7 +294,7 @@ public class DiamondServiceFactory {
 		Cache.Type type = Cache.Type.MEMORY_LRU;
 		int maxEntries = Cache.DEFAULT_MAX_ENTRIES;
 		int maxEntriesInMemory = maxEntries / 5;
-		String cacheFileName = "/tmp/hsf-repository-local-cache.cache";
+		String cacheFileName = "/tmp/diamond-repository-local-cache.cache";
 		if(eableLocalCache) {
 			value = StringUtils.trim(properties.getProperty(REPOSITORY_CLIENT_LOCAL_CACHE_TYPE));
 			if(StringUtils.isNotBlank(value)) {
@@ -613,6 +613,6 @@ public class DiamondServiceFactory {
 	
 	
 	public static void main(String[] args) {
-		DiamondService hsfService = DiamondServiceFactory.getHSFService();
+		DiamondService diamondService = DiamondServiceFactory.getDiamondService();
 	}
 }

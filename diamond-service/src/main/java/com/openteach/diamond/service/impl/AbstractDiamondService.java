@@ -14,28 +14,28 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.service.DiamondService;
-import com.galaxy.diamond.service.MethodInvoker;
-import com.galaxy.diamond.service.ServiceInvoker;
-import com.galaxy.diamond.service.ServiceRegister;
-import com.galaxy.diamond.service.ServiceSubscriber;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.service.DiamondService;
+import com.openteach.diamond.service.MethodInvoker;
+import com.openteach.diamond.service.ServiceInvoker;
+import com.openteach.diamond.service.ServiceRegister;
+import com.openteach.diamond.service.ServiceSubscriber;
 
 /**
  * 
  * @author sihai
  *
  */
-public abstract class AbstractHSFService extends AbstractLifeCycle implements DiamondService {
+public abstract class AbstractDiamondService extends AbstractLifeCycle implements DiamondService {
 
-	private static final Log logger = LogFactory.getLog(AbstractHSFService.class);
+	private static final Log logger = LogFactory.getLog(AbstractDiamondService.class);
 	
 	/**
 	 * 
@@ -58,7 +58,7 @@ public abstract class AbstractHSFService extends AbstractLifeCycle implements Di
 	 * @param serviceSubscriber
 	 * @param serviceInvoker
 	 */
-	public AbstractHSFService(ServiceRegister serviceRegister, ServiceSubscriber serviceSubscriber, ServiceInvoker serviceInvoker) {
+	public AbstractDiamondService(ServiceRegister serviceRegister, ServiceSubscriber serviceSubscriber, ServiceInvoker serviceInvoker) {
 		this.serviceRegister = serviceRegister;
 		this.serviceSubscriber = serviceSubscriber;
 		this.serviceInvoker = serviceInvoker;

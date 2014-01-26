@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.route;
+package com.openteach.diamond.service.route;
 
-import com.galaxy.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.exception.DiamondException;
 
 /**
  * 

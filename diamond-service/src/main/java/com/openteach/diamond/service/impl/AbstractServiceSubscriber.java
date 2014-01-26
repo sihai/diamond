@@ -14,17 +14,17 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.service.ServiceSubscriber;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.service.ServiceSubscriber;
 
 /**
  * 

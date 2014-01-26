@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.route;
+package com.openteach.diamond.service.route;
 
 import java.util.ArrayList;
 import java.util.HashMap;

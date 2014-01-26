@@ -14,18 +14,18 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
-import com.galaxy.diamond.service.ServiceInvoker;
-import com.galaxy.diamond.service.ServiceRegister;
-import com.galaxy.diamond.service.ServiceSubscriber;
+import com.openteach.diamond.service.ServiceInvoker;
+import com.openteach.diamond.service.ServiceRegister;
+import com.openteach.diamond.service.ServiceSubscriber;
 
 /**
  * 
  * @author sihai
  *
  */
-public class DefaultHSFService extends AbstractHSFService {
+public class DefaultHSFService extends AbstractDiamondService {
 
 	/**
 	 * 

@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router;
+package com.openteach.diamond.router;
 
-import com.galaxy.diamond.address.Protocol;
+import com.openteach.diamond.address.Protocol;
 
 /**
  * 

@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address.listener;
+package com.openteach.diamond.address.listener;
 
-import com.galaxy.diamond.address.ServiceAddress;
+import com.openteach.diamond.address.ServiceAddress;
 
 /**
  * 

@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata.factory;
+package com.openteach.diamond.metadata.factory;
 
-import com.galaxy.diamond.metadata.MetadataReadService;
-import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.metadata.MetadataReadService;
+import com.openteach.diamond.repository.client.RepositoryClient;
 
 /**
  * 

@@ -13,9 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata;
+package com.openteach.diamond.metadata;
 
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import java.util.List;
+
+import com.openteach.diamond.common.lifecycle.LifeCycle;
 
 
 /**
@@ -29,8 +31,9 @@ public interface MetadataWriteService extends LifeCycle {
 	/**
 	 * 
 	 * @param metadata
+	 * @param exportedProtocols
 	 */
-	void register(ServiceMetadata metadata);
+	void register(ServiceMetadata metadata, List<ServiceURL> exportedProtocols);
 	
 	/**
 	 * 

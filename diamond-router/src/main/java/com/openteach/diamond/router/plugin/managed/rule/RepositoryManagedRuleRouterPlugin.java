@@ -13,13 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.plugin.managed.rule;
+package com.openteach.diamond.router.plugin.managed.rule;
 
 import java.util.List;
 
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.router.plugin.AbstractRouterPlugin;
+import com.openteach.diamond.address.Protocol;
+import com.openteach.diamond.address.ServiceAddress;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.router.plugin.AbstractRouterPlugin;
 
 /**
  * 
@@ -35,7 +36,7 @@ public class RepositoryManagedRuleRouterPlugin extends AbstractRouterPlugin {
 	}
 
 	@Override
-	public List<String> route(String serviceName, Protocol protocol) {
+	public List<ServiceURL> route(String serviceName, Protocol protocol) {
 		// TODO Auto-generated method stub
 		return null;
 	}

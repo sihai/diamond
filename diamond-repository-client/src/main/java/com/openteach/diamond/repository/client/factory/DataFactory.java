@@ -14,10 +14,10 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.factory;
+package com.openteach.diamond.repository.client.factory;
 
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.Key;
 
 /**
  * 
@@ -36,18 +36,52 @@ public interface DataFactory {
 	/**
 	 * 
 	 * @param key
-	 * @param value
-	 * @param sequence -1 for new
+	 * @param subKey
 	 * @return
 	 */
-	Data newData(String key, String value, long sequence);
+	Key newKey(String key, String subKey);
+	
+	/**
+	 * 
+	 * @param key
+	 * @param subKey
+	 * @param sequence Key.INIT_SEQUENCE for new
+	 * @return
+	 */
+	Key newKey(String key, String subKey, long sequence);
 	
 	/**
 	 * 
 	 * @param key
 	 * @param value
-	 * @param sequence -1 for new
 	 * @return
 	 */
-	Data newData(Key key, String value,  long sequence);
+	Data newData(String key, String value);
+	
+	/**
+	 * 
+	 * @param key
+	 * @param subKey
+	 * @param value
+	 * @return
+	 */
+	Data newData(String key, String subKey, String value);
+	
+	/**
+	 * 
+	 * @param key
+	 * @param subKey
+	 * @param sequence Key.INIT_SEQUENCE for new
+	 * @param value
+	 * @return
+	 */
+	Data newData(String key, String subKey, long sequence, String value);
+	
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	Data newData(Key key, String value);
 }

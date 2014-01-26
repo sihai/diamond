@@ -5,4 +5,4 @@
  * @author sihai
  *
  */
-package com.galaxy.diamond.router.plugin.managed.rule;
+package com.openteach.diamond.router.plugin.managed.rule;

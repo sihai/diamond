@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.factory;
+package com.openteach.diamond.network.factory;
 
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.network.HSFNetworkServer.NetworkRequestHandler;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.network.HSFNetworkServer.NetworkRequestHandler;
 
 /**
  * 

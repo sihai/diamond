@@ -13,23 +13,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.integrated.test;
+package com.openteach.diamond.integrated.test;
 
+import java.util.Collections;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import com.galaxy.diamond.consumer.ServiceConsumer;
-import com.galaxy.diamond.consumer.factory.ServiceConsumerFactory;
-import com.galaxy.diamond.consumer.impl.DefaultServiceConsumerFactory;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.provider.ServiceProvider;
-import com.galaxy.diamond.provider.factory.ServiceProviderFactory;
-import com.galaxy.diamond.provider.impl.DefaultServiceProviderFactory;
-import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
-import com.galaxy.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Server;
-import com.galaxy.diamond.service.DiamondServiceFactory;
+import com.openteach.diamond.consumer.ServiceConsumer;
+import com.openteach.diamond.consumer.factory.ServiceConsumerFactory;
+import com.openteach.diamond.consumer.impl.DefaultServiceConsumerFactory;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.provider.ServiceProvider;
+import com.openteach.diamond.provider.factory.ServiceProviderFactory;
+import com.openteach.diamond.provider.impl.DefaultServiceProviderFactory;
+import com.openteach.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Client;
+import com.openteach.diamond.rpc.protocol.diamond.DefaultRPCProtocol4Server;
+import com.openteach.diamond.service.DiamondServiceFactory;
 
 /**
  * 
@@ -45,10 +46,10 @@ public class DemoTest {
 		metadata.setName("test");
 		metadata.setInterfaceName(DemoService.class.getName());
 		metadata.setVersion("0.0.1");
-		metadata.addExporteProtocol(DefaultRPCProtocol4Server.PROTOCOL, new Properties());
+		metadata.exportProtocol(DefaultRPCProtocol4Server.PROTOCOL, Collections.EMPTY_MAP);
 		ServiceProviderFactory factory = new DefaultServiceProviderFactory();
 		ServiceProvider provider = factory.newServiceProvider(metadata, new DemoServiceImpl());
-		DiamondServiceFactory.getHSFService().register(metadata, provider.getMethodInvoker());
+		DiamondServiceFactory.getDiamondService().register(metadata, provider.getMethodInvoker());
 		// Consumer
 		ServiceMetadata cmetadata = new ServiceMetadata();
 		cmetadata.setName("test");
@@ -56,7 +57,7 @@ public class DemoTest {
 		cmetadata.setVersion("0.0.1");
 		cmetadata.addImportPortocol(DefaultRPCProtocol4Client.PROTOCOL, new Properties());
 		ServiceConsumerFactory cfactory = new DefaultServiceConsumerFactory();
-		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, DiamondServiceFactory.getHSFService(), DiamondServiceFactory.getHSFService());
+		ServiceConsumer consumer = cfactory.newServiceConsumer(cmetadata, DiamondServiceFactory.getDiamondService(), DiamondServiceFactory.getDiamondService());
 		DemoService service = (DemoService)consumer.getProxy();
 		String result = service.service("World");
 		if(!StringUtils.equals(result, "Hello World")) {

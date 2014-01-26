@@ -14,12 +14,12 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.request.executor;
+package com.openteach.diamond.service.request.executor;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.service.DiamondService;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.service.DiamondService;
 
 /**
  * 

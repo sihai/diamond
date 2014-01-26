@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.util;
+package com.openteach.diamond.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

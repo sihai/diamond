@@ -14,12 +14,12 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.cache;
+package com.openteach.diamond.repository.client.cache;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
 
 /**
  * 

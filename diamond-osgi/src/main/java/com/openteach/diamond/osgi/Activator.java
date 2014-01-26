@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.osgi;
+package com.openteach.diamond.osgi;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -27,8 +27,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Version;
 
-import com.galaxy.diamond.common.Constants;
-import com.galaxy.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.Constants;
+import com.openteach.diamond.common.exception.DiamondException;
 
 /**
  * 

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router;
+package com.openteach.diamond.router;
 
 /**
  * 一个表示路由规则的Bean<p>

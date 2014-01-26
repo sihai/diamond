@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -24,14 +24,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.router.ServiceRouter;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.rpc.ServiceURL;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Client;
-import com.galaxy.diamond.util.ExceptionUtil;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.router.ServiceRouter;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Client;
+import com.openteach.diamond.util.ExceptionUtil;
 
 /**
  * 
@@ -67,19 +67,16 @@ public class DefaultServiceInvoker extends AbstractServiceInvoker {
 	}
 	
 	@Override
-	protected Object invoke0(Request request, List<String> addresses) throws DiamondException {
+	protected Object invoke0(Request request, List<ServiceURL> addresses) throws DiamondException {
 		int i = 0;
 		List<Throwable> exceptions = new ArrayList<Throwable>(retryTimes);
 		for(; i < retryTimes && i < addresses.size(); i++) {
 			try {
-				ServiceURL serviceURL = new ServiceURL(addresses.get(i));
+				ServiceURL serviceURL = addresses.get(i);
 				RPCProtocol4Client rpcProtocol = rpcProtocolProvider.newRPCProtocol4Client(serviceURL);
 				request.setServiceURL(serviceURL.toString());
 				Response response = rpcProtocol.invoke(request);
 				return response.getAppResponse();
-			} catch (MalformedURLException e) {
-				logger.error(String.format("Wrong address:%s, then try others", addresses.get(i)));
-				exceptions.add(e);
 			} catch (Throwable t) {
 				t.printStackTrace();
 				logger.error(String.format("Invoke address:%s, then try others", addresses.get(i)));

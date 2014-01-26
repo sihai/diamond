@@ -13,14 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc;
+package com.openteach.diamond.rpc;
 
 import java.lang.reflect.Method;
 
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.metadata.ServiceMetadata;
 
 /**
  * 

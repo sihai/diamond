@@ -14,10 +14,10 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service;
+package com.openteach.diamond.service;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
 
 /**
  * 

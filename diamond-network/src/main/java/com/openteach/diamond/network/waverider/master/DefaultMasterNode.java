@@ -13,26 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.master;
+package com.openteach.diamond.network.waverider.master;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.MasterNode;
-import com.galaxy.diamond.network.waverider.State;
-import com.galaxy.diamond.network.waverider.command.CommandDispatcher;
-import com.galaxy.diamond.network.waverider.command.CommandHandler;
-import com.galaxy.diamond.network.waverider.command.MasterHeartbeatCommandHandler;
-import com.galaxy.diamond.network.waverider.command.SampleCommandDispatcher;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
-import com.galaxy.diamond.network.waverider.network.DefaultNetWorkServer;
-import com.galaxy.diamond.network.waverider.network.NetWorkServer;
-import com.galaxy.diamond.network.waverider.session.DefaultSessionManager;
-import com.galaxy.diamond.network.waverider.session.Session;
-import com.galaxy.diamond.network.waverider.session.SessionListener;
-import com.galaxy.diamond.network.waverider.session.SessionManager;
+import com.openteach.diamond.network.waverider.MasterNode;
+import com.openteach.diamond.network.waverider.State;
+import com.openteach.diamond.network.waverider.command.CommandDispatcher;
+import com.openteach.diamond.network.waverider.command.CommandHandler;
+import com.openteach.diamond.network.waverider.command.MasterHeartbeatCommandHandler;
+import com.openteach.diamond.network.waverider.command.SampleCommandDispatcher;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.waverider.network.DefaultNetWorkServer;
+import com.openteach.diamond.network.waverider.network.NetWorkServer;
+import com.openteach.diamond.network.waverider.session.DefaultSessionManager;
+import com.openteach.diamond.network.waverider.session.Session;
+import com.openteach.diamond.network.waverider.session.SessionListener;
+import com.openteach.diamond.network.waverider.session.SessionManager;
 
 /**
  * <p>

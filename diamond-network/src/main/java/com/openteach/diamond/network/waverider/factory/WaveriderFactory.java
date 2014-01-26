@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.factory;
+package com.openteach.diamond.network.waverider.factory;
 
-import com.galaxy.diamond.network.waverider.MasterNode;
-import com.galaxy.diamond.network.waverider.SlaveNode;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
-import com.galaxy.diamond.network.waverider.master.DefaultMasterNode;
-import com.galaxy.diamond.network.waverider.slave.DefaultSlaveNode;
+import com.openteach.diamond.network.waverider.MasterNode;
+import com.openteach.diamond.network.waverider.SlaveNode;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.waverider.master.DefaultMasterNode;
+import com.openteach.diamond.network.waverider.slave.DefaultSlaveNode;
 
 /**
  * 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client;
+package com.openteach.diamond.repository.client;
 
 /**
  * 

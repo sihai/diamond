@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address.factory;
+package com.openteach.diamond.address.factory;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.metadata.MetadataReadService;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.metadata.MetadataReadService;
 
 /**
  * 

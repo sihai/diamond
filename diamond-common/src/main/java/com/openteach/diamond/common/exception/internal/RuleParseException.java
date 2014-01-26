@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.common.exception.internal;
+package com.openteach.diamond.common.exception.internal;
 
-import com.galaxy.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.exception.DiamondException;
 
 /**
  * 

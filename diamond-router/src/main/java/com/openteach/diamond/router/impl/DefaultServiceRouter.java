@@ -13,20 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.impl;
+package com.openteach.diamond.router.impl;
 
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.address.listener.Listener;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.router.RouteParameter;
-import com.galaxy.diamond.router.ServiceRouter;
-import com.galaxy.diamond.router.plugin.RouterPlugin;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.address.ServiceAddress;
+import com.openteach.diamond.address.listener.Listener;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.router.RouteParameter;
+import com.openteach.diamond.router.ServiceRouter;
+import com.openteach.diamond.router.plugin.RouterPlugin;
 
 /**
  * 
@@ -77,7 +78,7 @@ public class DefaultServiceRouter extends AbstractLifeCycle implements ServiceRo
 	}
 
 	@Override
-	public List<String> route(RouteParameter parameter) {
+	public List<ServiceURL> route(RouteParameter parameter) {
 		return plugin.route(parameter.getServiceName(), parameter.getProtocol());
 	}
 }

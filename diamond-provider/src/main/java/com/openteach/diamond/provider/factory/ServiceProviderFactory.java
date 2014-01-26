@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.provider.factory;
+package com.openteach.diamond.provider.factory;
 
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.provider.ServiceProvider;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.provider.ServiceProvider;
 
 /**
  * 

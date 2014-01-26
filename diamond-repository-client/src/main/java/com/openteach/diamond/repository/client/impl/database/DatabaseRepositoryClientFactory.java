@@ -14,19 +14,18 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.database;
+package com.openteach.diamond.repository.client.impl.database;
 
 import javax.sql.DataSource;
 
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.RepositoryClient;
-import com.galaxy.diamond.repository.client.cache.Cache;
-import com.galaxy.diamond.repository.client.cache.FileLRUCacheFactory;
-import com.galaxy.diamond.repository.client.cache.HyBridLRUCacheFactory;
-import com.galaxy.diamond.repository.client.cache.MemoryLRUCacheFactory;
-import com.galaxy.diamond.repository.client.factory.AbstractRepositoryClientFactory;
-import com.galaxy.diamond.repository.client.factory.DummyCacheFactory;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.repository.client.cache.Cache;
+import com.openteach.diamond.repository.client.cache.FileLRUCacheFactory;
+import com.openteach.diamond.repository.client.cache.HyBridLRUCacheFactory;
+import com.openteach.diamond.repository.client.cache.MemoryLRUCacheFactory;
+import com.openteach.diamond.repository.client.factory.AbstractRepositoryClientFactory;
+import com.openteach.diamond.repository.client.factory.DummyCacheFactory;
 
 /**
  * 
@@ -57,16 +56,16 @@ public class DatabaseRepositoryClientFactory extends AbstractRepositoryClientFac
 	 * 
 	 * @return
 	 */
-	private Cache<Key, Data> newCache() {
-		Cache<Key, Data> cache = null;
+	private Cache<Key, Object> newCache() {
+		Cache<Key, Object> cache = null;
 		if(cacheType == Cache.Type.DUMMY) {
-			cache = new DummyCacheFactory<Key, Data>().newInstance();
+			cache = new DummyCacheFactory<Key, Object>().newInstance();
 		} else if(cacheType == Cache.Type.MEMORY_LRU) {
-			cache = new MemoryLRUCacheFactory<Key, Data>().withMaxEntries(maxEntries).withValueConverter(converter).newInstance();
+			cache = new MemoryLRUCacheFactory<Key, Object>().withMaxEntries(maxEntries).withValueConverter(converter).newInstance();
 		} else if(cacheType == Cache.Type.FILE_LRU) {
-			cache = new FileLRUCacheFactory<Key, Data>().withMaxEntries(maxEntries).withFileName(cacheFileName).withValueConverter(converter).newInstance();
+			cache = new FileLRUCacheFactory<Key, Object>().withMaxEntries(maxEntries).withFileName(cacheFileName).withValueConverter(converter).newInstance();
 		} else if(cacheType == Cache.Type.HYBRID_LRU) {
-			cache = new HyBridLRUCacheFactory<Key, Data>().withMaxEntries(maxEntries).withMaxEntriesInMemory(maxEntriesInMemory).withFileName(cacheFileName).withValueConverter(converter).newInstance();
+			cache = new HyBridLRUCacheFactory<Key, Object>().withMaxEntries(maxEntries).withMaxEntriesInMemory(maxEntriesInMemory).withFileName(cacheFileName).withValueConverter(converter).newInstance();
 		} else {
 			throw new IllegalArgumentException(String.format("Not supported cache type:%s at now", cacheType));
 		}

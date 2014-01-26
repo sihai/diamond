@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.protocol;
+package com.openteach.diamond.rpc.protocol;
 
-import java.util.Properties;
+import java.util.Map;
 
-import com.galaxy.diamond.rpc.ServiceURL;
+import com.openteach.diamond.metadata.ServiceURL;
 
 /**
  * 
@@ -44,5 +44,5 @@ public interface RPCProtocol4Server extends RPCProtocol {
 	 * @param properties
 	 * @return
 	 */
-	ServiceURL constructURL(String serviceName, Properties properties);
+	ServiceURL constructURL(String serviceName, Map<String, String> properties);
 }

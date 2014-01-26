@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address;
+package com.openteach.diamond.address;
 
-import com.galaxy.diamond.address.listener.Listener;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.address.listener.Listener;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
 
 /**
  * 

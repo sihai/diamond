@@ -24,6 +24,7 @@
 		<module>diamond-service</module>
 		<module>diamond-provider</module>
 		<module>diamond-consumer</module>
+		<module>diamond-consumer</module>
 		<module>diamond-spring</module>
 		<module>diamond-integrated-test</module>
 	</modules>

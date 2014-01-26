@@ -14,13 +14,15 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.zookeeper;
+package com.openteach.diamond.repository.client.impl.zookeeper;
 
-import com.galaxy.diamond.repository.client.AbstractRepositoryClient;
-import com.galaxy.diamond.repository.client.Certificate;
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.cache.Cache;
+import java.util.List;
+
+import com.openteach.diamond.repository.client.AbstractRepositoryClient;
+import com.openteach.diamond.repository.client.Certificate;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.cache.Cache;
 
 /**
  * 
@@ -70,6 +72,12 @@ public class ZookeeperRepositoryClient extends AbstractRepositoryClient {
 
 	@Override
 	protected Data getFromServer(Key key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	protected List<Data> mgetFromServer(Key key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

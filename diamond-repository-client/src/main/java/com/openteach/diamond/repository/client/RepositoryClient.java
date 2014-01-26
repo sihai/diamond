@@ -14,12 +14,14 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client;
+package com.openteach.diamond.repository.client;
 
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.repository.client.exception.SequenceNotMatchException;
-import com.galaxy.diamond.repository.client.factory.DataFactory;
-import com.galaxy.diamond.repository.client.listener.Listener;
+import java.util.List;
+
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.repository.client.exception.SequenceNotMatchException;
+import com.openteach.diamond.repository.client.factory.DataFactory;
+import com.openteach.diamond.repository.client.listener.Listener;
 
 /**
  * 
@@ -45,6 +47,21 @@ public interface RepositoryClient extends DataFactory, LifeCycle {
 	 * @return
 	 */
 	Data get(Key key, Listener listener);
+	
+	/**
+	 * Get all data of this key (sub key is null)
+	 * @param key
+	 * @return
+	 */
+	List<Data> mget(Key key);
+	
+	/**
+	 * Get all data of this key (sub key is null) and register listener on this key
+	 * @param key
+	 * @param listener
+	 * @return
+	 */
+	List<Data> mget(Key key, Listener listener);
 	
 	/**
 	 * Put one data into repository

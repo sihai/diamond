@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router.plugin.random;
+package com.openteach.diamond.router.plugin.random;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,9 +22,10 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.router.plugin.AbstractRouterPlugin;
+import com.openteach.diamond.address.Protocol;
+import com.openteach.diamond.address.ServiceAddress;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.router.plugin.AbstractRouterPlugin;
 
 /**
  * 
@@ -36,7 +37,7 @@ public class RandomRouterPlugin extends AbstractRouterPlugin {
 	/**
 	 * 
 	 */
-	private Map<String, Map<Protocol, List<String>>> table = new HashMap<String, Map<Protocol, List<String>>>();
+	private Map<String, Map<Protocol, List<ServiceURL>>> table = new HashMap<String, Map<Protocol, List<ServiceURL>>>();
 	
 	/**
 	 * 
@@ -47,9 +48,9 @@ public class RandomRouterPlugin extends AbstractRouterPlugin {
 	public void changed(ServiceAddress serviceAddress) {
 		try {
 			_rw_lock_.writeLock().lock();
-			Map<Protocol, List<String>> addressMap = table.get(serviceAddress.getServiceName());
+			Map<Protocol, List<ServiceURL>> addressMap = table.get(serviceAddress.getServiceName());
 			if(null == addressMap) {
-				addressMap = new HashMap<Protocol, List<String>>();
+				addressMap = new HashMap<Protocol, List<ServiceURL>>();
 				table.put(serviceAddress.getServiceName(), addressMap);
 			}
 			addressMap.putAll(serviceAddress.getAllAddresses());
@@ -60,14 +61,14 @@ public class RandomRouterPlugin extends AbstractRouterPlugin {
 	}
 
 	@Override
-	public List<String> route(String serviceName, Protocol protocol) {
+	public List<ServiceURL> route(String serviceName, Protocol protocol) {
 		try {
 			_rw_lock_.readLock().lock();
-			Map<Protocol, List<String>> addressMap = table.get(serviceName);
+			Map<Protocol, List<ServiceURL>> addressMap = table.get(serviceName);
 			if(null == addressMap) {
 				return Collections.EMPTY_LIST;
 			}
-			List<String> addresses = addressMap.get(protocol);
+			List<ServiceURL> addresses = addressMap.get(protocol);
 			if(null == addresses) {
 				return Collections.EMPTY_LIST;
 			}

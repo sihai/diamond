@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.common.resource;
+package com.openteach.diamond.common.resource;
 
 /**
  * 

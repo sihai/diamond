@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client;
+package com.openteach.diamond.repository.client;
 
 import java.io.Serializable;
 
@@ -32,8 +32,8 @@ public class Key implements Serializable {
 	 */
 	private static final long serialVersionUID = -1171314496745268310L;
 	
-	public static final String NAMESPACE_KEY_SEPARATOR = ":";
-	public static final String ERROR_MSG = String.format("namespace or key must not contains separator of namespace and key:\"%s\"", NAMESPACE_KEY_SEPARATOR);
+	public static final String NONE_SUB_KEY = "_#none_sub_key_#_";
+	public static final long INIT_SEQUENCE = -1L;
 	
 	/**
 	 * 
@@ -48,17 +48,32 @@ public class Key implements Serializable {
 	/**
 	 * 
 	 */
+	private String subKey = NONE_SUB_KEY;
+	
+	/**
+	 * 
+	 */
 	private long sequence = 0;
 	
 	
 	public Key() {}
 	
+	public Key(String namespace, String key) {
+		this(namespace, key, NONE_SUB_KEY);
+	}
+	
+	public Key(String namespace, String key, String subKey) {
+		this(namespace, key, NONE_SUB_KEY, INIT_SEQUENCE);
+	}
+	
 	public Key(String namespace, String key, long sequence) {
-		if(namespace.contains(NAMESPACE_KEY_SEPARATOR) || key.contains(NAMESPACE_KEY_SEPARATOR)) {
-			throw new IllegalArgumentException(ERROR_MSG);
-		}
+		this(namespace, key, NONE_SUB_KEY, sequence);
+	}
+	
+	public Key(String namespace, String key, String subKey, long sequence) {
 		this.namespace = namespace;
 		this.key = key;
+		this.subKey = subKey;
 		this.sequence = sequence;
 	}
 
@@ -67,9 +82,6 @@ public class Key implements Serializable {
 	}
 
 	public void setNamespace(String namespace) {
-		if(namespace.contains(NAMESPACE_KEY_SEPARATOR)) {
-			throw new IllegalArgumentException(ERROR_MSG);
-		}
 		this.namespace = namespace;
 	}
 
@@ -78,10 +90,15 @@ public class Key implements Serializable {
 	}
 
 	public void setKey(String key) {
-		if(key.contains(NAMESPACE_KEY_SEPARATOR)) {
-			throw new IllegalArgumentException(ERROR_MSG);
-		}
 		this.key = key;
+	}
+	
+	public String getSubKey() {
+		return subKey;
+	}
+
+	public void setSubKey(String subKey) {
+		this.subKey = subKey;
 	}
 	
 	public long getSequence() {
@@ -96,20 +113,13 @@ public class Key implements Serializable {
 		this.sequence += 1;
 	}
 	
-	public String getFullKey() {
-		return String.format("%s:%s", namespace, key);
-	}
-	
-	public void setFullKey(String fullKey) {
-		String[] tmp = fullKey.split(NAMESPACE_KEY_SEPARATOR);
-		this.namespace = tmp[0];
-		this.key = tmp[1];
-	}
-	
 	@Override
 	public int hashCode() {
 		int code = 32 * namespace.hashCode() + 1;
 		code += 32 * key.hashCode();
+		if(null != subKey) {
+			code += 32 * subKey.hashCode();
+		}
 		code += sequence;
 		return code;
 	}
@@ -125,6 +135,11 @@ public class Key implements Serializable {
 			return false;
 		}
 		
-		return StringUtils.equals(namespace, ((Key)obj).namespace) && StringUtils.equals(key, ((Key)obj).key) && sequence == ((Key)obj).sequence;
+		return StringUtils.equals(namespace, ((Key)obj).namespace) && StringUtils.equals(key, ((Key)obj).key) && StringUtils.equals(subKey, ((Key)obj).subKey) && sequence == ((Key)obj).sequence;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s:%s:%s:%d", namespace, key, subKey, sequence);
 	}
 }

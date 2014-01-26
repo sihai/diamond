@@ -13,22 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider;
+package com.openteach.diamond.network.waverider;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.AbstractNetworkServer;
-import com.galaxy.diamond.network.NetworkRequest;
-import com.galaxy.diamond.network.NetworkResponse;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.command.CommandFactory;
-import com.galaxy.diamond.network.waverider.command.CommandHandler;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
-import com.galaxy.diamond.network.waverider.factory.WaveriderFactory;
-import com.galaxy.diamond.network.waverider.session.Session;
+import com.openteach.diamond.network.AbstractNetworkServer;
+import com.openteach.diamond.network.NetworkRequest;
+import com.openteach.diamond.network.NetworkResponse;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.command.CommandFactory;
+import com.openteach.diamond.network.waverider.command.CommandHandler;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.waverider.factory.WaveriderFactory;
+import com.openteach.diamond.network.waverider.session.Session;
 
 /**
  * 

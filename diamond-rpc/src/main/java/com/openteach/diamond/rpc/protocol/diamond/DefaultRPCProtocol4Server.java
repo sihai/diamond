@@ -13,17 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.protocol.diamond;
+package com.openteach.diamond.rpc.protocol.diamond;
 
 import java.net.MalformedURLException;
-import java.util.Properties;
+import java.util.Map;
 
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.network.HSFNetworkServer.NetworkRequestHandler;
-import com.galaxy.diamond.network.factory.NetworkServerFactory;
-import com.galaxy.diamond.rpc.ServiceURL;
-import com.galaxy.diamond.rpc.protocol.AbstractRPCProtocol4Server;
-import com.galaxy.diamond.rpc.protocol.RPCProtocolConfiguration;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.network.HSFNetworkServer.NetworkRequestHandler;
+import com.openteach.diamond.network.factory.NetworkServerFactory;
+import com.openteach.diamond.rpc.protocol.AbstractRPCProtocol4Server;
+import com.openteach.diamond.rpc.protocol.RPCProtocolConfiguration;
 
 /**
  * 
@@ -89,7 +89,7 @@ public class DefaultRPCProtocol4Server extends AbstractRPCProtocol4Server {
 	}
 
 	@Override
-	public ServiceURL constructURL(String serviceName, Properties properties) {
+	public ServiceURL constructURL(String serviceName, Map<String, String> properties) {
 		try {
 			return new ServiceURL(String.format("%s://%s:%d/%s", getProtocol(), networkServer.getServerIp(), networkServer.getServerPort(), serviceName));
 		} catch (MalformedURLException e) {

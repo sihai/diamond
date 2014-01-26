@@ -13,13 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network;
+package com.openteach.diamond.network;
 
 import java.io.IOException;
-import java.net.SocketException;
 
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.util.NetworkUtil;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.util.NetworkUtil;
 
 /**
  * 
@@ -64,11 +63,7 @@ public abstract class AbstractNetworkServer extends AbstractLifeCycle implements
 		if(null == serverIp) {
 			synchronized(this) {
 				if(null == serverIp) {
-					try {
-						serverIp = NetworkUtil.getLocalIp();
-					} catch (SocketException e) {
-						throw new RuntimeException("Can not get ip of this host", e);
-					}
+					serverIp = NetworkUtil.getLocalIp();
 				}
 			}
 		}

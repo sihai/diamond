@@ -13,21 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata.impl;
+package com.openteach.diamond.metadata.impl;
+
+import java.net.MalformedURLException;
+import java.util.List;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.metadata.Listener;
-import com.galaxy.diamond.metadata.MetadataReadService;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.DataEvent;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.metadata.Listener;
+import com.openteach.diamond.metadata.MetadataReadService;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.DataEvent;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.RepositoryClient;
 
 /**
  * 
@@ -54,7 +58,7 @@ public class DefaultMetadataReadService extends AbstractMetadataService implemen
 	@Override
 	public ServiceMetadata subscribe(String serviceName) throws DiamondException {
 		Key key = repositoryClient.newKey(serviceName);
-		Data data = repositoryClient.get(key, new com.galaxy.diamond.repository.client.listener.AbstractListener(key) {
+		List<Data> dList = repositoryClient.mget(key, new com.openteach.diamond.repository.client.listener.AbstractListener(key) {
 
 			@Override
 			public void changed(DataEvent event) {
@@ -68,11 +72,21 @@ public class DefaultMetadataReadService extends AbstractMetadataService implemen
 			
 		});
 		
-		if(null == data) {
+		if(null == dList || dList.isEmpty()) {
 			throw new DiamondException(String.format("Can not found service:%s", serviceName));
 		}
 		
-		return (ServiceMetadata)JSONObject.toBean(JSONObject.fromObject((String)data.getValue()), ServiceMetadata.class);
+		ServiceURL url = null;
+		ServiceMetadata sm = new ServiceMetadata();
+		for(Data d : dList) {
+			try {
+				url = new ServiceURL((String)d.getValue());
+				sm.addAddress(url.getProtocol(), url);
+			} catch (MalformedURLException e) {
+				logger.error(String.format("Received one wrong service url:%s", d.getValue()));
+			}
+		}
+		return sm;
 	}
 
 	@Override

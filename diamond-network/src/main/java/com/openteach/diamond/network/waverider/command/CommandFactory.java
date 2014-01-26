@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.command;
+package com.openteach.diamond.network.waverider.command;
 
 import java.nio.ByteBuffer;
 
-import com.galaxy.diamond.network.waverider.network.NetWorkConstants;
-import com.galaxy.diamond.network.waverider.network.Packet;
-import com.galaxy.diamond.network.waverider.session.Session;
+import com.openteach.diamond.network.waverider.network.NetWorkConstants;
+import com.openteach.diamond.network.waverider.network.Packet;
+import com.openteach.diamond.network.waverider.session.Session;
 
 /**
  * Command工厂，负责创建Command

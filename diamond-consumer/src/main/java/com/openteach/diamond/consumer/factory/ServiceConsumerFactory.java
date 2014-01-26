@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.consumer.factory;
+package com.openteach.diamond.consumer.factory;
 
-import com.galaxy.diamond.consumer.ServiceConsumer;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.service.ServiceInvoker;
-import com.galaxy.diamond.service.ServiceSubscriber;
+import com.openteach.diamond.consumer.ServiceConsumer;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.service.ServiceInvoker;
+import com.openteach.diamond.service.ServiceSubscriber;
 
 /**
  * 

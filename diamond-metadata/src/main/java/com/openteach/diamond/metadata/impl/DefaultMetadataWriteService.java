@@ -13,23 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.metadata.impl;
+package com.openteach.diamond.metadata.impl;
 
 import java.util.List;
-import java.util.Map;
-
-import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.metadata.MetadataWriteService;
-import com.galaxy.diamond.metadata.PublishHook;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.RepositoryClient;
-import com.galaxy.diamond.repository.client.exception.SequenceNotMatchException;
+import com.openteach.diamond.metadata.MetadataWriteService;
+import com.openteach.diamond.metadata.PublishHook;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.repository.client.exception.SequenceNotMatchException;
 
 /**
  * 
@@ -49,10 +47,10 @@ public class DefaultMetadataWriteService extends AbstractMetadataService impleme
 	}
 
 	@Override
-	public void register(ServiceMetadata metadata) {
+	public void register(ServiceMetadata metadata, List<ServiceURL> exportedProtocols) {
 		for(int i = 0;; i++) {
 			try {
-				_put_(metadata);
+				_put_(metadata, exportedProtocols);
 				break;
 			} catch (SequenceNotMatchException e) {
 				logger.warn(String.format("Put metadata failed, sequence not match, so try do it again, tryed %d times", i), e);
@@ -81,24 +79,16 @@ public class DefaultMetadataWriteService extends AbstractMetadataService impleme
 	/**
 	 * 
 	 * @param metadata
-	 * @throws SequenceNotMatchException 
+	 * @param exportedProtocols
+	 * @throws SequenceNotMatchException
 	 */
-	private void _put_(ServiceMetadata metadata) throws SequenceNotMatchException {
+	private void _put_(ServiceMetadata metadata, List<ServiceURL> exportedProtocols) throws SequenceNotMatchException {
 		String name = metadata.getUniqueName();
-		Key key = repositoryClient.newKey(name);
-		Data data = repositoryClient.get(key);
-		if(null != data) {
-			String str = (String)data.getValue();
-			JSONObject json = JSONObject.fromObject(str);
-			ServiceMetadata old = (ServiceMetadata)JSONObject.toBean(json, ServiceMetadata.class);
-			for(Map.Entry<String, List<String>> e : old.getAddressMap().entrySet()) {
-				metadata.addAddresses(e.getKey(), e.getValue());
-			}
-			data.setValue(JSONObject.fromObject(metadata).toString());
-		} else {
-			data = repositoryClient.newData(key, JSONObject.fromObject(metadata).toString(), -1);
+		for(ServiceURL url : exportedProtocols) {
+			Key key = repositoryClient.newKey(name, url.getProtocol());
+			Data data = repositoryClient.newData(key, url.toString());
+			repositoryClient.put(data);
 		}
-		repositoryClient.put(data);
 	}
 	
 	/**
@@ -108,20 +98,8 @@ public class DefaultMetadataWriteService extends AbstractMetadataService impleme
 	 */
 	private void _delete_(ServiceMetadata metadata) throws SequenceNotMatchException {
 		String name = metadata.getUniqueName();
-		Key key = repositoryClient.newKey(name);
-		Data data = repositoryClient.get(key);
-		if(null != data) {
-			String str = (String)data.getValue();
-			JSONObject json = JSONObject.fromObject(str);
-			ServiceMetadata old = (ServiceMetadata)JSONObject.toBean(json, ServiceMetadata.class);
-			for(Map.Entry<String, List<String>> e : old.getAddressMap().entrySet()) {
-				metadata.removeAddresses(e.getKey(), e.getValue());
-			}
-			if(old.isUnregisterable()) {
-				repositoryClient.delete(key);
-			} else {
-				repositoryClient.put(data);
-			}
+		for(String protocol : metadata.getExportProtocols().keySet()) {
+			repositoryClient.delete(repositoryClient.newKey(name, protocol));
 		}
 	}
 }

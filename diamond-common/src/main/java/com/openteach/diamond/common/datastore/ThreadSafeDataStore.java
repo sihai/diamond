@@ -13,11 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.common.datastore;
+package com.openteach.diamond.common.datastore;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.galaxy.diamond.common.ThreadSafe;
+import com.openteach.diamond.common.ThreadSafe;
 
 /**
  * 

@@ -13,9 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc;
+package com.openteach.diamond.rpc;
 
-import com.galaxy.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.network.HSFNetworkServer;
 
 /**
  * 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.database;
+package com.openteach.diamond.repository.client.impl.database;
 
 import javax.sql.DataSource;
 

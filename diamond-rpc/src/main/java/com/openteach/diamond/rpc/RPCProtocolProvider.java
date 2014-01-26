@@ -13,12 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc;
+package com.openteach.diamond.rpc;
 
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Client;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Server;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Client;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Server;
 
 /**
  * 

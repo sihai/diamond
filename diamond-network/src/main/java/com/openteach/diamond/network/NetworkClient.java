@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network;
+package com.openteach.diamond.network;
 
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
-import com.galaxy.diamond.network.exception.NetworkException;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.network.exception.NetworkException;
 
 
 /**

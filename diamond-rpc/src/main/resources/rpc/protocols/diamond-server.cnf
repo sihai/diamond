@@ -1,1 +1,1 @@
-network.server.factory = com.galaxy.diamond.network.waverider.WaveriderNetworkServerFactory
+network.server.factory = com.openteach.diamond.network.waverider.WaveriderNetworkServerFactory

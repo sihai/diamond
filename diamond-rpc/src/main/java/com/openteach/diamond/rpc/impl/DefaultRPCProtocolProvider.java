@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.impl;
+package com.openteach.diamond.rpc.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,19 +26,19 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.network.HSFNetworkServer;
-import com.galaxy.diamond.network.NetworkRequest;
-import com.galaxy.diamond.network.HSFNetworkServer.ResponseCallback;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.rpc.ServiceURL;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Client;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4ClientFactory;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4Server;
-import com.galaxy.diamond.rpc.protocol.RPCProtocol4ServerFactory;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.network.HSFNetworkServer;
+import com.openteach.diamond.network.NetworkRequest;
+import com.openteach.diamond.network.HSFNetworkServer.ResponseCallback;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.rpc.protocol.RPCProtocol;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Client;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4ClientFactory;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4Server;
+import com.openteach.diamond.rpc.protocol.RPCProtocol4ServerFactory;
 
 /**
  * 

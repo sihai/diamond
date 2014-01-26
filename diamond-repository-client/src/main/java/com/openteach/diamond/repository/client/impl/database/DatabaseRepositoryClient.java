@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.database;
+package com.openteach.diamond.repository.client.impl.database;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +24,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sql.DataSource;
 
-import com.galaxy.diamond.common.thread.CommonThreadFactory;
-import com.galaxy.diamond.repository.client.AbstractRepositoryClient;
-import com.galaxy.diamond.repository.client.Certificate;
-import com.galaxy.diamond.repository.client.Data;
-import com.galaxy.diamond.repository.client.DataEvent;
-import com.galaxy.diamond.repository.client.Key;
-import com.galaxy.diamond.repository.client.cache.Cache;
-import com.galaxy.diamond.repository.client.exception.SequenceNotMatchException;
+import com.openteach.diamond.common.thread.CommonThreadFactory;
+import com.openteach.diamond.repository.client.AbstractRepositoryClient;
+import com.openteach.diamond.repository.client.Certificate;
+import com.openteach.diamond.repository.client.Data;
+import com.openteach.diamond.repository.client.DataEvent;
+import com.openteach.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.cache.Cache;
+import com.openteach.diamond.repository.client.exception.SequenceNotMatchException;
 
 /**
  * 
@@ -63,7 +63,7 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 	/**
 	 * Monitored data
 	 */
-	private List<Data> monitoredDataList = new ArrayList<Data>(8);			// Ĭ��8��
+	private List<Data> monitoredDataList = new ArrayList<Data>(8);
 	
 	/**
 	 * Monitor thread
@@ -79,7 +79,7 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 		this.dataSource = dataSource;
 	}
 	
-	public DatabaseRepositoryClient(Certificate certificate, Cache<Key, Data> cache, DataSource dataSource) {
+	public DatabaseRepositoryClient(Certificate certificate, Cache<Key, Object> cache, DataSource dataSource) {
 		super(certificate, cache);
 		this.dataSource = dataSource;
 	}
@@ -112,8 +112,14 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 	
 	@Override
 	protected Data getFromServer(Key key) {
-		return dataDAO.query(key.getFullKey());
+		return dataDAO.query(key);
 	}
+	
+	@Override
+	protected List<Data> mgetFromServer(Key key) {
+		return dataDAO.queryList(key);
+	}
+
 
 	@Override
 	protected void put2Server(Data data) throws SequenceNotMatchException {
@@ -160,7 +166,7 @@ public class DatabaseRepositoryClient extends AbstractRepositoryClient {
 	private void scan() {
 		synchronized(_monitor_lock_) {
 			for(Data oldData : monitoredDataList) {
-				Data newData = dataDAO.query(oldData.getKey().getFullKey());
+				Data newData = dataDAO.query(oldData.getKey());
 				if(null == newData) {
 					// Deleted
 					fire(new DataEvent.DeletedDataEventBuilder().withOldData(oldData).build());

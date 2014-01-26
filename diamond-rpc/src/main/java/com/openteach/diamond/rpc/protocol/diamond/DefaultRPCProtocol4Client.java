@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.rpc.protocol.diamond;
+package com.openteach.diamond.rpc.protocol.diamond;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -28,15 +28,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.network.NetworkClient;
-import com.galaxy.diamond.network.exception.NetworkException;
-import com.galaxy.diamond.network.factory.NetworkClientFactory;
-import com.galaxy.diamond.rpc.ServiceURL;
-import com.galaxy.diamond.rpc.protocol.AbstractRPCProtocol4Client;
-import com.galaxy.diamond.rpc.protocol.RPCProtocolConfiguration;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.network.NetworkClient;
+import com.openteach.diamond.network.exception.NetworkException;
+import com.openteach.diamond.network.factory.NetworkClientFactory;
+import com.openteach.diamond.rpc.protocol.AbstractRPCProtocol4Client;
+import com.openteach.diamond.rpc.protocol.RPCProtocolConfiguration;
 
 /**
  * 

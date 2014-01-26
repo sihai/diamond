@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.util;
+package com.openteachdiamond.service.util;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.galaxy.diamond.metadata.MethodSpecial;
+import com.openteach.diamond.metadata.MethodSpecial;
 
 /**
  * 

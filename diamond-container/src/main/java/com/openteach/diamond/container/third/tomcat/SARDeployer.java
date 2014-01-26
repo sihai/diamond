@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.container.third.tomcat;
+package com.openteach.diamond.container.third.tomcat;
 
 import java.io.File;
 import java.io.FileFilter;

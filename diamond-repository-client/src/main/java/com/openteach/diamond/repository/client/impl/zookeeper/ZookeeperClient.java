@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.impl.zookeeper;
+package com.openteach.diamond.repository.client.impl.zookeeper;
 
 /**
  * 

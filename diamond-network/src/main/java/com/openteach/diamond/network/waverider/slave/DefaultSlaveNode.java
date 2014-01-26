@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.slave;
+package com.openteach.diamond.network.waverider.slave;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -25,23 +25,23 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.exception.NetworkException;
-import com.galaxy.diamond.network.waverider.SlaveNode;
-import com.galaxy.diamond.network.waverider.State;
-import com.galaxy.diamond.network.waverider.command.Command;
-import com.galaxy.diamond.network.waverider.command.CommandDispatcher;
-import com.galaxy.diamond.network.waverider.command.CommandFactory;
-import com.galaxy.diamond.network.waverider.command.CommandHandler;
-import com.galaxy.diamond.network.waverider.command.SampleCommandDispatcher;
-import com.galaxy.diamond.network.waverider.command.SlaveHeartbeatCommandHandler;
-import com.galaxy.diamond.network.waverider.common.WaveriderThreadFactory;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
-import com.galaxy.diamond.network.waverider.master.MasterState;
-import com.galaxy.diamond.network.waverider.network.DefaultNetWorkClient;
-import com.galaxy.diamond.network.waverider.network.NetWorkClient;
-import com.galaxy.diamond.network.waverider.slave.failure.slave.DefaultMasterFailureHandler;
-import com.galaxy.diamond.network.waverider.slave.failure.slave.DefaultMasterFailureMonitor;
-import com.galaxy.diamond.network.waverider.slave.failure.slave.MasterFailureMonitor;
+import com.openteach.diamond.network.exception.NetworkException;
+import com.openteach.diamond.network.waverider.SlaveNode;
+import com.openteach.diamond.network.waverider.State;
+import com.openteach.diamond.network.waverider.command.Command;
+import com.openteach.diamond.network.waverider.command.CommandDispatcher;
+import com.openteach.diamond.network.waverider.command.CommandFactory;
+import com.openteach.diamond.network.waverider.command.CommandHandler;
+import com.openteach.diamond.network.waverider.command.SampleCommandDispatcher;
+import com.openteach.diamond.network.waverider.command.SlaveHeartbeatCommandHandler;
+import com.openteach.diamond.network.waverider.common.WaveriderThreadFactory;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.waverider.master.MasterState;
+import com.openteach.diamond.network.waverider.network.DefaultNetWorkClient;
+import com.openteach.diamond.network.waverider.network.NetWorkClient;
+import com.openteach.diamond.network.waverider.slave.failure.slave.DefaultMasterFailureHandler;
+import com.openteach.diamond.network.waverider.slave.failure.slave.DefaultMasterFailureMonitor;
+import com.openteach.diamond.network.waverider.slave.failure.slave.MasterFailureMonitor;
 
 /**
  * <p>

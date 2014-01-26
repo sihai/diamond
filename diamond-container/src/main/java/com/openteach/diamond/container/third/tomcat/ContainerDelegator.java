@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.container.third.tomcat;
+package com.openteach.diamond.container.third.tomcat;
 
-import com.galaxy.diamond.container.Container;
+import com.openteach.diamond.container.Container;
 
 /**
  * 描述：在tomcat中启动HSF容器

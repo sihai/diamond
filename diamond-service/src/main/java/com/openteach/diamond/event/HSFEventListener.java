@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.event;
+package com.openteach.diamond.event;
 
-import com.galaxy.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.exception.DiamondException;
 
 /**
  * HSF 贯彻其运行期 发布期事件管理

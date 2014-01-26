@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.listener;
+package com.openteach.diamond.repository.client.listener;
 
-import com.galaxy.diamond.repository.client.Key;
+import com.openteach.diamond.repository.client.Key;
 
 /**
  * 

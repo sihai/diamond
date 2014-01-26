@@ -14,23 +14,23 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.metadata.MetadataWriteService;
-import com.galaxy.diamond.metadata.ServiceMetadata;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
-import com.galaxy.diamond.service.MethodInvoker;
-import com.galaxy.diamond.service.ServiceRegister;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.MetadataWriteService;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.metadata.ServiceURL;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.service.MethodInvoker;
+import com.openteach.diamond.service.ServiceRegister;
 
 /**
  * 
@@ -63,29 +63,15 @@ public abstract class AbstractServiceRegister extends AbstractLifeCycle implemen
 	
 	@Override
 	public void register(ServiceMetadata metadata, MethodInvoker invoker) throws DiamondException {
-		for(Map.Entry<String, Properties> e : metadata.getExportProtocols().entrySet()) {
-			metadata.addAddress(e.getKey(), rpcProtocolProvider.newRPCProtocol4Server(e.getKey()).constructURL(metadata.getUniqueName(), e.getValue()).toString());
+		List<ServiceURL> sList = new ArrayList<ServiceURL>();
+		for(Map.Entry<String, Map<String, String>> e : metadata.getExportProtocols().entrySet()) {
+			sList.add(rpcProtocolProvider.newRPCProtocol4Server(e.getKey()).constructURL(metadata.getUniqueName(), e.getValue()));
 		}
-		this.metadataWriteService.register(metadata);
+		this.metadataWriteService.register(metadata, sList);
 	}
 
 	@Override
 	public void unregister(ServiceMetadata metadata) throws DiamondException {
 		metadataWriteService.unregister(metadata);
 	}
-	
-	/**
-	 * 
-	 * @param metadata
-	 * @return
-	 * @throws DiamondException
-	 */
-	private ServiceAddress metadata2Adress(ServiceMetadata metadata) throws DiamondException {
-		ServiceAddress sa = new ServiceAddress(metadata.getUniqueName());
-		for(Map.Entry<String, Properties> e : metadata.getExportProtocols().entrySet()) {
-			sa.addAddress(Protocol.toEnum(e.getKey()), rpcProtocolProvider.newRPCProtocol4Server(e.getKey()).constructURL(metadata.getUniqueName(), e.getValue()).toString());
-		}
-		return sa;
-	}
-
 }

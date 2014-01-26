@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.cache;
+package com.openteach.diamond.repository.client.cache;
 
 import java.io.File;
 import java.io.FileInputStream;

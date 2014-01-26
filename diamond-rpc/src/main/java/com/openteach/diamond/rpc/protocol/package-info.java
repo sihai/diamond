@@ -5,4 +5,4 @@
  * @author sihai
  *
  */
-package com.galaxy.diamond.rpc.protocol;
+package com.openteach.diamond.rpc.protocol;

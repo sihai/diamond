@@ -14,9 +14,9 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.repository.client.factory;
+package com.openteach.diamond.repository.client.factory;
 
-import com.galaxy.diamond.repository.client.RepositoryClient;
+import com.openteach.diamond.repository.client.RepositoryClient;
 
 /**
  * 

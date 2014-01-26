@@ -13,20 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.address.impl;
+package com.openteach.diamond.address.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.galaxy.diamond.address.AddressingService;
-import com.galaxy.diamond.address.Protocol;
-import com.galaxy.diamond.address.ServiceAddress;
-import com.galaxy.diamond.address.listener.Listener;
-import com.galaxy.diamond.common.exception.DiamondException;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.metadata.MetadataReadService;
-import com.galaxy.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.address.AddressingService;
+import com.openteach.diamond.address.Protocol;
+import com.openteach.diamond.address.ServiceAddress;
+import com.openteach.diamond.address.listener.Listener;
+import com.openteach.diamond.common.exception.DiamondException;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.metadata.MetadataReadService;
+import com.openteach.diamond.metadata.ServiceMetadata;
+import com.openteach.diamond.metadata.ServiceURL;
 
 /**
  * 
@@ -62,7 +63,7 @@ public class DefaultAddressingService extends AbstractLifeCycle implements Addre
 	public void initialize() {
 		super.initialize();
 		addressTable = new ConcurrentHashMap<String, ServiceAddress>();
-		metadataReadService.register(new com.galaxy.diamond.metadata.Listener() {
+		metadataReadService.register(new com.openteach.diamond.metadata.Listener() {
 
 			@Override
 			public void changed(ServiceMetadata metadata) {
@@ -101,6 +102,7 @@ public class DefaultAddressingService extends AbstractLifeCycle implements Addre
 		}
 		ServiceMetadata metadata = metadataReadService.subscribe(serviceName);
 		address = metadata2Address(metadata);
+		address.setServiceName(serviceName);
 		publish(address);
 		return address;
 	}
@@ -127,9 +129,9 @@ public class DefaultAddressingService extends AbstractLifeCycle implements Addre
 	 * @return
 	 */
 	private ServiceAddress metadata2Address(ServiceMetadata metadata) {
-		Map<String, List<String>> addressMap = metadata.getAddressMap();
+		Map<String, List<ServiceURL>> addressMap = metadata.getAddressMap();
 		ServiceAddress address = new ServiceAddress(metadata.getUniqueName());
-		for(Map.Entry<String, List<String>> e : addressMap.entrySet()) {
+		for(Map.Entry<String, List<ServiceURL>> e : addressMap.entrySet()) {
 			address.addAddress(Protocol.toEnum(e.getKey()), e.getValue());
 		}
 		return address;

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.session;
+package com.openteach.diamond.network.waverider.session;
 
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
@@ -29,11 +29,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.SlaveWorker;
-import com.galaxy.diamond.network.waverider.command.CommandDispatcher;
-import com.galaxy.diamond.network.waverider.common.WaveriderThreadFactory;
-import com.galaxy.diamond.network.waverider.config.WaveriderConfig;
-import com.galaxy.diamond.network.waverider.network.NetWorkServer;
+import com.openteach.diamond.network.waverider.SlaveWorker;
+import com.openteach.diamond.network.waverider.command.CommandDispatcher;
+import com.openteach.diamond.network.waverider.common.WaveriderThreadFactory;
+import com.openteach.diamond.network.waverider.config.WaveriderConfig;
+import com.openteach.diamond.network.waverider.network.NetWorkServer;
 
 /**
  * <p>

@@ -14,7 +14,7 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.request;
+package com.openteach.diamond.service.request;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -25,16 +25,16 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.common.Request;
-import com.galaxy.diamond.common.Response;
-import com.galaxy.diamond.common.lifecycle.AbstractLifeCycle;
-import com.galaxy.diamond.common.resource.ResourceConfig;
-import com.galaxy.diamond.common.thread.CommonThreadFactory;
-import com.galaxy.diamond.network.NetworkRequest;
-import com.galaxy.diamond.network.HSFNetworkServer.NetworkRequestHandler;
-import com.galaxy.diamond.network.HSFNetworkServer.ResponseCallback;
-import com.galaxy.diamond.service.DiamondServiceFactory;
-import com.galaxy.diamond.service.request.executor.HSFRequestExecutor;
+import com.openteach.diamond.common.Request;
+import com.openteach.diamond.common.Response;
+import com.openteach.diamond.common.lifecycle.AbstractLifeCycle;
+import com.openteach.diamond.common.resource.ResourceConfig;
+import com.openteach.diamond.common.thread.CommonThreadFactory;
+import com.openteach.diamond.network.NetworkRequest;
+import com.openteach.diamond.network.HSFNetworkServer.NetworkRequestHandler;
+import com.openteach.diamond.network.HSFNetworkServer.ResponseCallback;
+import com.openteach.diamond.service.DiamondServiceFactory;
+import com.openteach.diamond.service.request.executor.HSFRequestExecutor;
 
 /**
  * 
@@ -139,7 +139,7 @@ public class HSFNetworkRequestHandler extends AbstractLifeCycle implements Netwo
 		@Override
 		public void run() {
 			// FIXME
-			Response response = executor.execute(DiamondServiceFactory.getHSFService(), (Request)request.getPayload());
+			Response response = executor.execute(DiamondServiceFactory.getDiamondService(), (Request)request.getPayload());
 			callback.completed(request, response);
 		}
 	

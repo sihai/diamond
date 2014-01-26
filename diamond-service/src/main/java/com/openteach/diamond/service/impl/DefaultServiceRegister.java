@@ -14,10 +14,10 @@
  *  limitations under the License.
  * 
  */
-package com.galaxy.diamond.service.impl;
+package com.openteach.diamond.service.impl;
 
-import com.galaxy.diamond.metadata.MetadataWriteService;
-import com.galaxy.diamond.rpc.RPCProtocolProvider;
+import com.openteach.diamond.metadata.MetadataWriteService;
+import com.openteach.diamond.rpc.RPCProtocolProvider;
 
 /**
  * 

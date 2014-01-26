@@ -13,11 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.router;
+package com.openteach.diamond.router;
 
 import java.util.List;
 
-import com.galaxy.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.common.lifecycle.LifeCycle;
+import com.openteach.diamond.metadata.ServiceURL;
 
 /**
  * 
@@ -31,5 +32,5 @@ public interface ServiceRouter extends LifeCycle {
 	 * @param parameter
 	 * @return
 	 */
-	List<String> route(RouteParameter parameter);
+	List<ServiceURL> route(RouteParameter parameter);
 }

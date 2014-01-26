@@ -13,16 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.galaxy.diamond.network.waverider.command;
+package com.openteach.diamond.network.waverider.command;
 
 import java.nio.ByteBuffer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.galaxy.diamond.network.waverider.Node;
-import com.galaxy.diamond.network.waverider.master.MasterState;
-import com.galaxy.diamond.network.waverider.slave.SlaveState;
+import com.openteach.diamond.network.waverider.Node;
+import com.openteach.diamond.network.waverider.master.MasterState;
+import com.openteach.diamond.network.waverider.slave.SlaveState;
 
 /**
  * <p>
